@@ -43,7 +43,6 @@ action$.ofType(SELECT_NODE, INIT_STYLE_SERVICE)
         const layer = getSelectedLayer(state);
         return layer ? Rx.Observable.defer(() => getLayerByName(layer?.name))
         .map(data => {
-            console.log({data});
             const permissions = data?.layers[0]?.perms || [];
             const canEditStyles = permissions.includes("change_layer_style")
             const canEdit = permissions.includes("change_layer_data");
@@ -53,38 +52,6 @@ action$.ofType(SELECT_NODE, INIT_STYLE_SERVICE)
         .startWith(setPermission({canEdit: false}), setEditPermissionStyleEditor(false))
         .catch(() => {Rx.Observable.empty()}) : Rx.Observable.of(setPermission({canEdit: false}), setEditPermissionStyleEditor(false));
     });
-/**
- * @deprecated
- * When a user selects a layer, the app checks for layer editing permission.
- */
-export const _setFeatureEditPermission = (action$, { getState } = {}) =>
-    action$.ofType(SELECT_NODE).filter(({ nodeType }) => nodeType === "layer" && !getConfigProp("disableCheckEditPermissions"))
-        .switchMap(() => {
-            const layer = getSelectedLayer(getState() || {});
-            return layer ? layerEditPermissions(layer)
-                .map(permissions => setPermission(permissions))
-                .startWith(setPermission({ canEdit: false }))
-                .catch(() => Rx.Observable.empty()) : Rx.Observable.of(setPermission({ canEdit: false }));
-        });
-/**
- * @deprecated
- * When a user selects a layer, the app checks for style editing permission.
- * INIT_STYLE_SERVICE si needed for map editing, it ensures an user has permission to edit style of a specific layer retrieved from catalog
- */
-export const _setStyleEditorPermission = (action$, { getState } = {}) =>
-    action$.ofType(INIT_STYLE_SERVICE, SELECT_NODE)
-        .filter(({ nodeType }) =>
-            nodeType && nodeType === "layer" && !getConfigProp("disableCheckEditPermissions")
-            || !nodeType && !getConfigProp("disableCheckEditPermissions"))
-        .switchMap((action) => {
-            const layer = getSelectedLayer(getState() || {});
-            return layer
-                ? styleEditPermissions(layer)
-                    .map(({ canEdit }) => setEditPermissionStyleEditor(canEdit))
-                    .startWith(setEditPermissionStyleEditor(action.canEdit))
-                    .catch(() => Rx.Observable.empty())
-                : Rx.Observable.of(setEditPermissionStyleEditor(false));
-        });
 
 // Modified to accept map-layout from Config diff less NO_QUERYABLE_LAYERS, SET_CONTROL_PROPERTIES more action$.ofType(PURGE_MAPINFO_RESULTS)
 export const updateMapLayoutEpic = (action$, store) =>
