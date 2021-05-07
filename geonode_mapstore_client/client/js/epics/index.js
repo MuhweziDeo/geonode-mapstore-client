@@ -12,7 +12,6 @@
 import Rx from "rxjs";
 
 import { setEditPermissionStyleEditor, INIT_STYLE_SERVICE } from "@mapstore/framework/actions/styleeditor";
-import { layerEditPermissions, styleEditPermissions } from "@js/api/geonode";
 import { getSelectedLayer } from "@mapstore/framework/selectors/layers";
 import { getConfigProp } from "@mapstore/framework/utils/ConfigUtils";
 import { getLayerByName } from '@js/api/geonode/v2'
@@ -23,7 +22,7 @@ import { SIZE_CHANGE, CLOSE_FEATURE_GRID, OPEN_FEATURE_GRID, setPermission } fro
 import { CLOSE_IDENTIFY, ERROR_FEATURE_INFO, TOGGLE_MAPINFO_STATE, LOAD_FEATURE_INFO, EXCEPTIONS_FEATURE_INFO, PURGE_MAPINFO_RESULTS } from '@mapstore/framework/actions/mapInfo';
 import { SHOW_SETTINGS, HIDE_SETTINGS, SELECT_NODE } from '@mapstore/framework/actions/layers';
 import { isMapInfoOpen } from '@mapstore/framework/selectors/mapInfo';
-
+import { setUserResourcePermissions } from '@js/actions/gnresource';
 import { isFeatureGridOpen, getDockSize } from '@mapstore/framework/selectors/featuregrid';
 import head from 'lodash/head';
 import get from 'lodash/get';
@@ -46,11 +45,11 @@ action$.ofType(SELECT_NODE, INIT_STYLE_SERVICE)
             const permissions = data?.layers[0]?.perms || [];
             const canEditStyles = permissions.includes("change_layer_style")
             const canEdit = permissions.includes("change_layer_data");
-            return {canEdit, canEditStyles}
+            return {canEdit, canEditStyles, permissions}
         })
-        .map(({canEdit, canEditStyles}) => (setPermission({canEdit}), setEditPermissionStyleEditor(canEditStyles)))
-        .startWith(setPermission({canEdit: false}), setEditPermissionStyleEditor(false))
-        .catch(() => {Rx.Observable.empty()}) : Rx.Observable.of(setPermission({canEdit: false}), setEditPermissionStyleEditor(false));
+        .map(({canEdit, canEditStyles, permissions}) => (setPermission({canEdit}), setEditPermissionStyleEditor(canEditStyles),setUserResourcePermissions(permissions)))
+        .startWith(setPermission({canEdit: false}),  setUserResourcePermissions([]), setEditPermissionStyleEditor(false))
+        .catch(() => {Rx.Observable.empty()}) : Rx.Observable.of(setPermission({canEdit: false}), setEditPermissionStyleEditor(false), setUserResourcePermissions([]));
     });
 
 // Modified to accept map-layout from Config diff less NO_QUERYABLE_LAYERS, SET_CONTROL_PROPERTIES more action$.ofType(PURGE_MAPINFO_RESULTS)

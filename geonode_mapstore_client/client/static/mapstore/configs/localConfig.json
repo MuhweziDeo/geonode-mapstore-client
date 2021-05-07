@@ -74,6 +74,10 @@
         {
             "name": "geoNodeResourcesInfo",
             "path": "localConfig.geoNodeResourcesInfo"
+        },
+        {
+            "name": "selectedLayerPermissions",
+            "path": "gnresource.selectedLayerPermissions"
         }
 
     ],
@@ -2174,7 +2178,10 @@
                 "name": "Playback"
             },
             {
-                "name": "LayerDownload"
+                "name": "LayerDownload",
+                "cfg": {
+                    "disablePluginIf": "{!state('selectedLayerPermissions').includes('download_resourcebase')}"
+                }
             },
             {
                 "name": "AddLayer"
