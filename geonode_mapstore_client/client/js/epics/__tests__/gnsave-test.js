@@ -21,7 +21,8 @@ import {
     UPDATE_RESOURCE_PROPERTIES,
     RESOURCE_LOADING,
     SET_RESOURCE,
-    RESOURCE_ERROR
+    RESOURCE_ERROR,
+    SET_USER_RESOURCE_PERMISSIONS
 } from '@js/actions/gnresource';
 import {
     gnSaveContent,
@@ -178,11 +179,11 @@ describe('gnsave epics', () => {
     it("should trigger permission actions for style and edit", (done) => {
         mockAxios.onGet(new RegExp(`layers/*`)).reply(() => [200, 
                 {data: {layers: [{perms: ['change_layer_style', 'change_layer_data']}]}}]);
-        const NUM_ACTIONS = 2;
+        const NUM_ACTIONS = 3;
         testEpic(checkFeatureAndEditorPermissions, 
             NUM_ACTIONS, selectNode(1, "layer"),(actions) => {
             try {
-                expect(actions.map(({type}) => type)).toEqual([SET_PERMISSION, SET_EDIT_PERMISSION]);
+                expect(actions.map(({type}) => type)).toEqual([SET_PERMISSION,SET_USER_RESOURCE_PERMISSIONS, SET_EDIT_PERMISSION]);
                 done();
             } catch (error) {
                 done(error);

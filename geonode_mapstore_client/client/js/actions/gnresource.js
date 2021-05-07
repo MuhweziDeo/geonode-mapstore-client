@@ -14,6 +14,7 @@ export const SET_RESOURCE_TYPE = 'GEONODE:SET_RESOURCE_TYPE';
 export const SET_NEW_RESOURCE = 'GEONODE:SET_NEW_RESOURCE';
 export const SET_RESOURCE_ID = 'GEONODE:SET_RESOURCE_ID';
 export const SET_RESOURCE_PERMISSIONS = 'GEONODE:SET_RESOURCE_PERMISSIONS';
+export const SET_USER_RESOURCE_PERMISSIONS = "GEONODE:SET_USER_RESOURCE_PERMISSIONS"
 
 /**
 * Actions for GeoNode resource
@@ -113,4 +114,19 @@ export function setResourcePermissions(permissions) {
         type: SET_RESOURCE_PERMISSIONS,
         permissions
     };
+}
+
+/**
+* Set resource permissions
+* @memberof actions.gnresource
+* @param {object} permissions permissions info
+* @param {bool} permissions.canEdit can edit permission
+* @param {bool} permissions.canView can view permission
+*/
+
+export function setUserResourcePermissions(permissions) {
+    return {
+        type: SET_USER_RESOURCE_PERMISSIONS,
+        permissions
+    }
 }
