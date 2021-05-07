@@ -370,6 +370,12 @@ export const getResourceTypes = ({}, filterKey = 'resource-types') => {
         });
 };
 
+export const getLayerByName = name => {
+    const url = parseDevHostname(`${endpoints[LAYERS]}/?filter{alternate}=${name}`)
+    return axios.get(url)
+    .then(({data}) => data);
+}
+
 export const getResourcesTotalCount = () => {
     const params = {
         page_size: 1

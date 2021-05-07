@@ -15,7 +15,7 @@ import { setEditPermissionStyleEditor, INIT_STYLE_SERVICE } from "@mapstore/fram
 import { layerEditPermissions, styleEditPermissions } from "@js/api/geonode";
 import { getSelectedLayer } from "@mapstore/framework/selectors/layers";
 import { getConfigProp } from "@mapstore/framework/utils/ConfigUtils";
-
+import { getLayerByName } from '@js/api/geonode/v2'
 import { updateMapLayout } from '@mapstore/framework/actions/maplayout';
 import { TOGGLE_CONTROL, SET_CONTROL_PROPERTY, SET_CONTROL_PROPERTIES } from '@mapstore/framework/actions/controls';
 import { MAP_CONFIG_LOADED } from '@mapstore/framework/actions/config';
@@ -33,7 +33,28 @@ import get from 'lodash/get';
  */
 import { showCoordinateEditorSelector } from '@mapstore/framework/selectors/controls';
 
+
+export const checkFeatureAndEditorPermissions = (action$, { getState } = {}) =>
+action$.ofType(SELECT_NODE, INIT_STYLE_SERVICE)
+    .filter(({ nodeType }) => nodeType && nodeType === "layer" && !getConfigProp("disableCheckEditPermissions")
+        || !nodeType && !getConfigProp("disableCheckEditPermissions"))
+    .switchMap(() => {
+        const state = getState() || {}
+        const layer = getSelectedLayer(state);
+        return layer ? Rx.Observable.defer(() => getLayerByName(layer?.name))
+        .map(data => {
+            console.log({data});
+            const permissions = data?.layers[0]?.perms || [];
+            const canEditStyles = permissions.includes("change_layer_style")
+            const canEdit = permissions.includes("change_layer_data");
+            return {canEdit, canEditStyles}
+        })
+        .map(({canEdit, canEditStyles}) => (setPermission({canEdit}), setEditPermissionStyleEditor(canEditStyles)))
+        .startWith(setPermission({canEdit: false}), setEditPermissionStyleEditor(false))
+        .catch(() => {Rx.Observable.empty()}) : Rx.Observable.of(setPermission({canEdit: false}), setEditPermissionStyleEditor(false));
+    });
 /**
+ * @deprecated
  * When a user selects a layer, the app checks for layer editing permission.
  */
 export const _setFeatureEditPermission = (action$, { getState } = {}) =>
@@ -46,6 +67,7 @@ export const _setFeatureEditPermission = (action$, { getState } = {}) =>
                 .catch(() => Rx.Observable.empty()) : Rx.Observable.of(setPermission({ canEdit: false }));
         });
 /**
+ * @deprecated
  * When a user selects a layer, the app checks for style editing permission.
  * INIT_STYLE_SERVICE si needed for map editing, it ensures an user has permission to edit style of a specific layer retrieved from catalog
  */
@@ -135,7 +157,6 @@ export const updateMapLayoutEpic = (action$, store) =>
             }));
         });
 export default {
-    _setFeatureEditPermission,
-    _setStyleEditorPermission,
+    checkFeatureAndEditorPermissions,
     updateMapLayoutEpic
 };

@@ -25,8 +25,13 @@ import {
 } from '@js/actions/gnresource';
 import {
     gnSaveContent,
-    gnUpdateResource
+    gnUpdateResource,
 } from '@js/epics/gnsave';
+import {checkFeatureAndEditorPermissions} from '@js/epics';
+import { SET_PERMISSION } from '@mapstore/framework/actions/featuregrid'
+import {SET_EDIT_PERMISSION} from '@mapstore/framework/actions/styleeditor'
+import { selectNode } from '@mapstore/framework/actions/layers';
+
 
 let mockAxios;
 
@@ -169,4 +174,20 @@ describe('gnsave epics', () => {
             {}
         );
     });
+
+    it("should trigger permission actions for style and edit", (done) => {
+        mockAxios.onGet(new RegExp(`layers/*`)).reply(() => [200, 
+                {data: {layers: [{perms: ['change_layer_style', 'change_layer_data']}]}}]);
+        const NUM_ACTIONS = 2;
+        testEpic(checkFeatureAndEditorPermissions, 
+            NUM_ACTIONS, selectNode(1, "layer"),(actions) => {
+            try {
+                expect(actions.map(({type}) => type)).toEqual([SET_PERMISSION, SET_EDIT_PERMISSION]);
+                done();
+            } catch (error) {
+                done(error);
+            }
+        }, {layers:{flat: [{name: "testLayer", id: "test_id"}], selected: ["test_id"]}})
+
+    })
 });
