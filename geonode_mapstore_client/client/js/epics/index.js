@@ -12,15 +12,15 @@
 import Rx from "rxjs";
 
 import { setEditPermissionStyleEditor, INIT_STYLE_SERVICE } from "@mapstore/framework/actions/styleeditor";
-import { getSelectedLayer } from "@mapstore/framework/selectors/layers";
+import { getSelectedLayer, layersSelector } from "@mapstore/framework/selectors/layers";
 import { getConfigProp } from "@mapstore/framework/utils/ConfigUtils";
-import { getLayerByName } from '@js/api/geonode/v2'
+import { getLayerByName, getLayersByName } from '@js/api/geonode/v2'
 import { updateMapLayout } from '@mapstore/framework/actions/maplayout';
 import { TOGGLE_CONTROL, SET_CONTROL_PROPERTY, SET_CONTROL_PROPERTIES } from '@mapstore/framework/actions/controls';
 import { MAP_CONFIG_LOADED } from '@mapstore/framework/actions/config';
 import { SIZE_CHANGE, CLOSE_FEATURE_GRID, OPEN_FEATURE_GRID, setPermission } from '@mapstore/framework/actions/featuregrid';
 import { CLOSE_IDENTIFY, ERROR_FEATURE_INFO, TOGGLE_MAPINFO_STATE, LOAD_FEATURE_INFO, EXCEPTIONS_FEATURE_INFO, PURGE_MAPINFO_RESULTS } from '@mapstore/framework/actions/mapInfo';
-import { SHOW_SETTINGS, HIDE_SETTINGS, SELECT_NODE } from '@mapstore/framework/actions/layers';
+import { SHOW_SETTINGS, HIDE_SETTINGS, SELECT_NODE, updateNode, ADD_LAYER } from '@mapstore/framework/actions/layers';
 import { isMapInfoOpen } from '@mapstore/framework/selectors/mapInfo';
 import { setUserResourcePermissions } from '@js/actions/gnresource';
 import { isFeatureGridOpen, getDockSize } from '@mapstore/framework/selectors/featuregrid';
@@ -40,17 +40,37 @@ action$.ofType(SELECT_NODE, INIT_STYLE_SERVICE)
     .switchMap(() => {
         const state = getState() || {}
         const layer = getSelectedLayer(state);
-        return layer ? Rx.Observable.defer(() => getLayerByName(layer?.name))
-        .map(data => {
-            const permissions = data?.layers[0]?.perms || [];
-            const canEditStyles = permissions.includes("change_layer_style")
-            const canEdit = permissions.includes("change_layer_data");
-            return {canEdit, canEditStyles, permissions}
-        })
-        .map(({canEdit, canEditStyles, permissions}) => (setPermission({canEdit}), setEditPermissionStyleEditor(canEditStyles),setUserResourcePermissions(permissions)))
+        const permissions = layer?.perms || [];
+        const canEditStyles = permissions.includes("change_layer_style")
+        const canEdit = permissions.includes("change_layer_data");
+        return layer ? Rx.Observable.of(
+            setPermission({canEdit}), 
+            setEditPermissionStyleEditor(canEditStyles),
+            setUserResourcePermissions(permissions)
+        )
         .startWith(setPermission({canEdit: false}),  setUserResourcePermissions([]), setEditPermissionStyleEditor(false))
         .catch(() => {Rx.Observable.empty()}) : Rx.Observable.of(setPermission({canEdit: false}), setEditPermissionStyleEditor(false), setUserResourcePermissions([]));
     });
+
+
+export const setLayersPermissions = (actions$, { getState = () => {}} = {}) => 
+    actions$.ofType(MAP_CONFIG_LOADED, ADD_LAYER)
+    .switchMap((action) => {
+        if(action.type === MAP_CONFIG_LOADED) {
+            const layerNames = action.config?.map?.layers?.filter((l) => l?.group !== "background").map((l) => l.name);
+            return Rx.Observable.defer(() => getLayersByName(layerNames))            
+            .switchMap((layers = []) => {
+                const stateLayers = layers.map((l) => ({
+                    ...l,
+                    id: layersSelector(getState())?.find((la) => la.name === l.alternate)?.id
+                })); 
+                return Rx.Observable.of(...stateLayers.map((l) => updateNode(l.id, 'layer', {perms: l.perms || []}) ));
+            })
+        }
+        // TODO handle ADD_LAYER action
+        return Rx.Observable.empty()
+    })
+
 
 // Modified to accept map-layout from Config diff less NO_QUERYABLE_LAYERS, SET_CONTROL_PROPERTIES more action$.ofType(PURGE_MAPINFO_RESULTS)
 export const updateMapLayoutEpic = (action$, store) =>
@@ -124,5 +144,6 @@ export const updateMapLayoutEpic = (action$, store) =>
         });
 export default {
     checkFeatureAndEditorPermissions,
-    updateMapLayoutEpic
+    updateMapLayoutEpic,
+    setLayersPermissions
 };

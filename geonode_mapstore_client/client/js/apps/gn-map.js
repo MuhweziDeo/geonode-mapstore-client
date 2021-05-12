@@ -59,7 +59,8 @@ import { updateGeoNodeSettings } from '@js/actions/gnsettings';
 
 import {
     updateMapLayoutEpic,
-    checkFeatureAndEditorPermissions
+    checkFeatureAndEditorPermissions,
+    setLayersPermissions
 } from '@js/epics';
 import maplayout from '@mapstore/framework/reducers/maplayout';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -174,6 +175,7 @@ Promise.all([
                         ...configEpics,
                         updateMapLayoutEpic,
                         checkFeatureAndEditorPermissions,
+                        setLayersPermissions,
                         ...pluginsDefinition.epics
                     },
                     geoNodeConfiguration,
