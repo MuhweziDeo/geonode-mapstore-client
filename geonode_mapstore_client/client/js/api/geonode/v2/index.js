@@ -371,21 +371,21 @@ export const getResourceTypes = ({}, filterKey = 'resource-types') => {
 };
 
 export const getLayerByName = name => {
-    const url = parseDevHostname(`${endpoints[LAYERS]}/?filter{alternate}=${name}`)
+    const url = parseDevHostname(`${endpoints[LAYERS]}/?filter{alternate}=${name}`);
     return axios.get(url)
-    .then(({data}) => data?.layers[0]);
-}
+        .then(({data}) => data?.layers[0]);
+};
 
 export const getLayersByName = names => {
-    const url = parseDevHostname(endpoints[LAYERS])
+    const url = parseDevHostname(endpoints[LAYERS]);
     return axios.get(url, {
         params: {
             page_size: names.length,
             'filter{alternate.in}': names
         }
     })
-    .then(({data}) => data?.layers)
-}
+        .then(({data}) => data?.layers);
+};
 
 export const getResourcesTotalCount = () => {
     const params = {

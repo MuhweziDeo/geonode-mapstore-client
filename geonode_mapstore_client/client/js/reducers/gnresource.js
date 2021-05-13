@@ -15,7 +15,7 @@ import {
     SET_NEW_RESOURCE,
     SET_RESOURCE_ID,
     SET_RESOURCE_PERMISSIONS,
-    SET_USER_RESOURCE_PERMISSIONS
+    SET_SELECTED_LAYER_PERMISSIONS
 } from '@js/actions/gnresource';
 
 function gnresource(state = {selectedLayerPermissions: []}, action) {
@@ -75,11 +75,11 @@ function gnresource(state = {selectedLayerPermissions: []}, action) {
             permissions: action.permissions
         };
     }
-    case SET_USER_RESOURCE_PERMISSIONS:
+    case SET_SELECTED_LAYER_PERMISSIONS:
         return {
             ...state,
             selectedLayerPermissions: action.permissions
-        }
+        };
     default:
         return state;
     }

@@ -14,7 +14,7 @@ export const SET_RESOURCE_TYPE = 'GEONODE:SET_RESOURCE_TYPE';
 export const SET_NEW_RESOURCE = 'GEONODE:SET_NEW_RESOURCE';
 export const SET_RESOURCE_ID = 'GEONODE:SET_RESOURCE_ID';
 export const SET_RESOURCE_PERMISSIONS = 'GEONODE:SET_RESOURCE_PERMISSIONS';
-export const SET_USER_RESOURCE_PERMISSIONS = "GEONODE:SET_USER_RESOURCE_PERMISSIONS"
+export const SET_SELECTED_LAYER_PERMISSIONS = "GEONODE:SET_SELECTED_LAYER_PERMISSIONS";
 
 /**
 * Actions for GeoNode resource
@@ -124,9 +124,9 @@ export function setResourcePermissions(permissions) {
 * @param {bool} permissions.canView can view permission
 */
 
-export function setUserResourcePermissions(permissions) {
+export function setSelectedLayerPermissions(permissions) {
     return {
-        type: SET_USER_RESOURCE_PERMISSIONS,
+        type: SET_SELECTED_LAYER_PERMISSIONS,
         permissions
-    }
+    };
 }
