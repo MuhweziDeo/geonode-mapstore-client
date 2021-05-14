@@ -59,11 +59,11 @@ export const getUserInfo = () => {
 };
 
 export const getCategories = ({ q, idIn, ...params }, filterKey = 'categories') => {
-    const { endpointV1 = '/api' } = getConfigProp('geoNodeApi') || {};
+    const { endpointV2 = '/api/v2' } = getConfigProp('geoNodeApi') || {};
     const queryIn = idIn
         ? idIn.reduce((query, value, idx) => query + (idx === 0 ? '?' : '&') + 'identifier__in=' + value, '')
         : '';
-    return axios.get(`${endpointV1}/categories${queryIn}`, {
+    return axios.get(`${endpointV2}/categories${queryIn}`, {
         params: {
             limit: 9999,
             ...params,
@@ -89,11 +89,11 @@ export const getCategories = ({ q, idIn, ...params }, filterKey = 'categories') 
 };
 
 export const getKeywords = ({ q, idIn, ...params }, filterKey =  'keywords') => {
-    const { endpointV1 = '/api' } = getConfigProp('geoNodeApi') || {};
+    const { endpointV2 = '/api/v2' } = getConfigProp('geoNodeApi') || {};
     const queryIn = idIn
         ? idIn.reduce((query, value, idx) => query + (idx === 0 ? '?' : '&') + 'slug__in=' + value, '')
         : '';
-    return axios.get(`${endpointV1}/keywords${queryIn}`, {
+    return axios.get(`${endpointV2}/keywords${queryIn}`, {
         params: {
             limit: 9999,
             ...params,
@@ -119,11 +119,11 @@ export const getKeywords = ({ q, idIn, ...params }, filterKey =  'keywords') => 
 };
 
 export const getRegions = ({ q, idIn, ...params }, filterKey = 'regions') => {
-    const { endpointV1 = '/api' } = getConfigProp('geoNodeApi') || {};
+    const { endpointV2 = '/api/v2' } = getConfigProp('geoNodeApi') || {};
     const queryIn = idIn
         ? idIn.reduce((query, value, idx) => query + (idx === 0 ? '?' : '&') + 'name__in=' + value, '')
         : '';
-    return axios.get(`${endpointV1}/regions${queryIn}`, {
+    return axios.get(`${endpointV2}/regions${queryIn}`, {
         params: {
             limit: 9999,
             ...params,
@@ -149,11 +149,11 @@ export const getRegions = ({ q, idIn, ...params }, filterKey = 'regions') => {
 };
 
 export const getOwners = ({ q, idIn, ...params }, filterKey = 'owners') => {
-    const { endpointV1 = '/api' } = getConfigProp('geoNodeApi') || {};
+    const { endpointV2 = '/api/v2' } = getConfigProp('geoNodeApi') || {};
     const queryIn = idIn
         ? idIn.reduce((query, value, idx) => query + (idx === 0 ? '?' : '&') + 'username__in=' + value, '')
         : '';
-    return axios.get(`${endpointV1}/owners${queryIn}`, {
+    return axios.get(`${endpointV2}/owners${queryIn}`, {
         params: {
             limit: 9999,
             ...params,
