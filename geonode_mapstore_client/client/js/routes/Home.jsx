@@ -41,13 +41,8 @@ import {
 import { withResizeDetector } from 'react-resize-detector';
 import Footer from '@js/components/home/Footer';
 import { useInView } from 'react-intersection-observer';
-import {
-    getKeywords,
-    getCategories,
-    getRegions,
-    getOwners
-} from '@js/api/geonode/v1';
-import { getResourceTypes } from '@js/api/geonode/v2';
+
+import { getResourceTypes, getCategories, getRegions, getOwners, getKeywords } from '@js/api/geonode/v2';
 
 const DEFAULT_SUGGESTIONS = [];
 const DEFAULT_RESOURCES = [];

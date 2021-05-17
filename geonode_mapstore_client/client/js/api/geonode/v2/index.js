@@ -31,7 +31,11 @@ let endpoints = {
     'geoapps': '/api/v2/geoapps',
     'geostories': '/api/v2/geostories',
     'users': '/api/v2/users',
-    'resource_types': '/api/v2/resources/resource_types'
+    'resource_types': '/api/v2/resources/resource_types',
+    'categories': '/api/v2/categories',
+    'owners': '/api/v2/owners',
+    'keywords': '/api/v2/keywords',
+    'regions': '/api/v2/regions'
 };
 
 const RESOURCES = 'resources';
@@ -42,7 +46,16 @@ const GEOAPPS = 'geoapps';
 const GEOSTORIES = 'geostories';
 const USERS = 'users';
 const RESOURCE_TYPES = 'resource_types';
+const OWNERS = 'owners';
+const REGIONS = 'regions';
+const CATEGORIES = 'categories';
+const KEYWORDS = 'keywords';
+
 // const GROUPS = 'groups';
+
+function addCountToLabel(name, count) {
+    return `${name} (${count || 0})`;
+}
 
 const requestOptions = (name, requestFunc) => {
     const options = getRequestOptions(name);
@@ -406,6 +419,113 @@ export const getResourcesTotalCount = () => {
         });
 };
 
+export const getCategories = ({ q, idIn, ...params }, filterKey = 'categories') => {
+    return axios.get(parseDevHostname(`${endpoints[CATEGORIES]}`), {
+        params: {
+            limit: 9999,
+            ...params,
+            ...(idIn && {'filter{identifier.in}': idIn}),
+            ...(q && { 'filter{identifier.contains}': q })
+        }
+    })
+        .then(({ data }) => {
+            const results = (data?.TopicCategories || [])
+                .map((result) => {
+                    const selectOption = {
+                        value: result.identifier,
+                        label: addCountToLabel(result.gn_description || result.gn_description_en, result.total)
+                    };
+                    const category = {
+                        ...result,
+                        selectOption
+                    };
+                    setFilterById(filterKey + result.identifier, category);
+                    return category;
+                });
+            return results;
+        });
+};
+
+export const getRegions = ({ q, idIn, ...params }, filterKey = 'regions') => {
+    return axios.get(parseDevHostname(`${endpoints[REGIONS]}`), {
+        params: {
+            limit: 9999,
+            ...params,
+            ...(idIn && {'filter{name.in}': idIn}),
+            ...(q && { 'filter{name.contains}': q })
+        }
+    })
+        .then(({ data }) => {
+            const results = (data?.Regions || [])
+                .map((result) => {
+                    const selectOption = {
+                        value: result.name,
+                        label: addCountToLabel(result.name, result.total)
+                    };
+                    const region = {
+                        ...result,
+                        selectOption
+                    };
+                    setFilterById(filterKey + result.name, region);
+                    return region;
+                });
+            return results;
+        });
+};
+
+export const getOwners = ({ q, idIn, ...params }, filterKey = 'owners') => {
+    return axios.get(parseDevHostname(`${endpoints[OWNERS]}`), {
+        params: {
+            limit: 9999,
+            ...params,
+            ...(idIn && {'filter{username.in}': idIn}),
+            ...(q && { 'filter{username.contains}': q })
+        }
+    })
+        .then(({ data }) => {
+            const results = (data?.users || [])
+                .map((result) => {
+                    const selectOption = {
+                        value: result.username,
+                        label: addCountToLabel(result.username, result.total)
+                    };
+                    const owner = {
+                        ...result,
+                        selectOption
+                    };
+                    setFilterById(filterKey + result.username, owner);
+                    return owner;
+                });
+            return results;
+        });
+};
+
+export const getKeywords = ({ q, idIn, ...params }, filterKey =  'keywords') => {
+    return axios.get(parseDevHostname(`${endpoints[KEYWORDS]}`), {
+        params: {
+            limit: 9999,
+            ...params,
+            ...(idIn && {'filter{slug.in}': idIn}),
+            ...(q && { 'filter{slug.contains}': q })
+        }
+    })
+        .then(({ data }) => {
+            const results = (data?.HierarchicalKeywords || [])
+                .map((result) => {
+                    const selectOption = {
+                        value: result.slug,
+                        label: addCountToLabel(result.slug, result.total)
+                    };
+                    const keyword = {
+                        ...result,
+                        selectOption
+                    };
+                    setFilterById(filterKey + result.slug, keyword);
+                    return keyword;
+                });
+            return results;
+        });
+};
 export default {
     getEndpoints,
     getResources,
@@ -423,5 +543,9 @@ export default {
     getResourceTypes,
     getResourcesTotalCount,
     getLayerByPk,
-    getDocumentByPk
+    getDocumentByPk,
+    getCategories,
+    getRegions,
+    getOwners,
+    getKeywords
 };
