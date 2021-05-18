@@ -422,10 +422,10 @@ export const getResourcesTotalCount = () => {
 export const getCategories = ({ q, idIn, ...params }, filterKey = 'categories') => {
     return axios.get(parseDevHostname(`${endpoints[CATEGORIES]}`), {
         params: {
-            limit: 9999,
+            page_size: 9999,
             ...params,
             ...(idIn && {'filter{identifier.in}': idIn}),
-            ...(q && { 'filter{identifier.contains}': q })
+            ...(q && { 'filter{identifier.icontains}': q })
         }
     })
         .then(({ data }) => {
@@ -449,10 +449,10 @@ export const getCategories = ({ q, idIn, ...params }, filterKey = 'categories') 
 export const getRegions = ({ q, idIn, ...params }, filterKey = 'regions') => {
     return axios.get(parseDevHostname(`${endpoints[REGIONS]}`), {
         params: {
-            limit: 9999,
+            page_size: 9999,
             ...params,
             ...(idIn && {'filter{name.in}': idIn}),
-            ...(q && { 'filter{name.contains}': q })
+            ...(q && { 'filter{name.icontains}': q })
         }
     })
         .then(({ data }) => {
@@ -476,10 +476,10 @@ export const getRegions = ({ q, idIn, ...params }, filterKey = 'regions') => {
 export const getOwners = ({ q, idIn, ...params }, filterKey = 'owners') => {
     return axios.get(parseDevHostname(`${endpoints[OWNERS]}`), {
         params: {
-            limit: 9999,
+            page_size: 9999,
             ...params,
             ...(idIn && {'filter{username.in}': idIn}),
-            ...(q && { 'filter{username.contains}': q })
+            ...(q && { 'filter{username.icontains}': q })
         }
     })
         .then(({ data }) => {
@@ -503,10 +503,10 @@ export const getOwners = ({ q, idIn, ...params }, filterKey = 'owners') => {
 export const getKeywords = ({ q, idIn, ...params }, filterKey =  'keywords') => {
     return axios.get(parseDevHostname(`${endpoints[KEYWORDS]}`), {
         params: {
-            limit: 9999,
+            page_size: 9999,
             ...params,
             ...(idIn && {'filter{slug.in}': idIn}),
-            ...(q && { 'filter{slug.contains}': q })
+            ...(q && { 'filter{slug.icontains}': q })
         }
     })
         .then(({ data }) => {
