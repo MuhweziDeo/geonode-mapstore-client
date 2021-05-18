@@ -222,12 +222,12 @@ describe('gnsave epics', () => {
                 done(error);
             }
         },
-        {layers: {flat: [{name: "testLayer", id: "test_id", perms: ['download_resourcebase']}], selected: ["test_id"]}})
+        {layers: {flat: [{name: "testLayer", id: "test_id", perms: ['download_resourcebase']}], selected: ["test_id"]}});
     });
-    
+
     it('should trigger saveResource (gnSaveDirectContent)', (done) => {
         const NUM_ACTIONS = 2;
-        const pk = 1
+        const pk = 1;
         const resource = {
             'id': pk,
             'title': 'Map',
@@ -235,7 +235,7 @@ describe('gnsave epics', () => {
             'thumbnail_url': 'thumbnail.jpeg'
         };
         mockAxios.onGet(new RegExp(`resources/${pk}`))
-        .reply(200, resource);
+            .reply(200, resource);
         testEpic(
             gnSaveDirectContent,
             NUM_ACTIONS,

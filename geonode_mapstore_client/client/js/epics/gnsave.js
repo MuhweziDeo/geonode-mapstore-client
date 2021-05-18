@@ -7,7 +7,7 @@
  */
 
 import { Observable } from 'rxjs';
-import { mapSelector } from '@mapstore/framework/selectors/map';
+import { mapSelector, mapInfoSelector } from '@mapstore/framework/selectors/map';
 import { layersSelector, groupsSelector } from '@mapstore/framework/selectors/layers';
 import { backgroundListSelector } from '@mapstore/framework/selectors/backgroundselector';
 import { mapOptionsToSaveSelector } from '@mapstore/framework/selectors/mapsave';
@@ -20,7 +20,7 @@ import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import { currentStorySelector } from '@mapstore/framework/selectors/geostory';
 import { userSelector } from '@mapstore/framework/selectors/security';
 import { error as errorNotification, success as successNotification } from '@mapstore/framework/actions/notifications';
-import { mapInfoSelector } from '@mapstore/framework/selectors/map';
+
 
 import {
     creatMapStoreMap,
@@ -31,8 +31,8 @@ import {
     UPDATE_RESOURCE_BEFORE_SAVE,
     saveSuccess,
     saveError,
-    savingResource, 
-    SAVE_DIRECT_CONTENT, 
+    savingResource,
+    SAVE_DIRECT_CONTENT,
     saveContent
 } from '@js/actions/gnsave';
 import {
@@ -150,10 +150,10 @@ export const gnSaveContent = (action$, store) =>
                     return Observable.of(
                         saveError(error.data || error.message),
                         action.showNotifications && errorNotification({title: "map.mapError.errorTitle", message: "map.mapError.errorDefault"})
-                        );
-                })
+                    );
+                });
 
-        }).startWith(savingResource());;
+        }).startWith(savingResource());
 
 export const gnSaveDirectContent = (action$, store) =>
     action$.ofType(SAVE_DIRECT_CONTENT)
@@ -178,7 +178,7 @@ export const gnSaveDirectContent = (action$, store) =>
                     return Observable.of(
                         saveError(error.data || error.message),
                         errorNotification({title: "map.mapError.errorTitle", message: error.data || error.message || "map.mapError.errorDefault"})
-                        );
+                    );
                 });
         }).startWith(savingResource());
 
