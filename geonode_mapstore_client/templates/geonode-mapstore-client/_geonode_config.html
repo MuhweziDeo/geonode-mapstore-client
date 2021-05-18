@@ -20,7 +20,7 @@
             {% endif %}
             isNewResource: {{ is_new_resource|default:'false'|safe }},
             isEmbed: {{ is_embed|default:'false'|safe }},
-            permissionsList: {{ perms_list|default:'[]' }},
+            perms: {{ perms_list|default:'[]' }},
             pluginsConfigKey: '{{ plugins_config_key|default:"" }}',
             userDetails: username && token && {
                 user: {

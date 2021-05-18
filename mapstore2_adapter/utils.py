@@ -22,7 +22,7 @@ from urllib.parse import urljoin
 from mapstore2_adapter import DjangoMapstore2AdapterBaseException
 
 from django.conf import settings
-from django.utils.six.moves import range
+from six.moves import range
 try:
     from django.urls import reverse
 except Exception:

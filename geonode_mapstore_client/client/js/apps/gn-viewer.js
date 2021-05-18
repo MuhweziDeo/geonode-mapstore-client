@@ -61,8 +61,8 @@ import { updateGeoNodeSettings } from '@js/actions/gnsettings';
 
 import {
     updateMapLayoutEpic,
-    _setFeatureEditPermission,
-    _setStyleEditorPermission
+    gnCheckSelectedLayerPermissions,
+    setLayersPermissions
 } from '@js/epics';
 import gnviewerEpics from '@js/epics/gnviewer';
 import maplayout from '@mapstore/framework/reducers/maplayout';
@@ -214,8 +214,8 @@ Promise.all([
                         ...standardEpics,
                         ...configEpics,
                         updateMapLayoutEpic,
-                        _setFeatureEditPermission,
-                        _setStyleEditorPermission,
+                        gnCheckSelectedLayerPermissions,
+                        setLayersPermissions,
                         ...pluginsDefinition.epics,
                         ...gnviewerEpics
                     },

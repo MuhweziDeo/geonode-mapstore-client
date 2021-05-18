@@ -22,13 +22,21 @@ import {
     UPDATE_RESOURCE_PROPERTIES,
     RESOURCE_LOADING,
     SET_RESOURCE,
-    RESOURCE_ERROR
+    RESOURCE_ERROR,
+    SET_SELECTED_LAYER_PERMISSIONS
 } from '@js/actions/gnresource';
 import {
     gnSaveContent,
     gnUpdateResource,
     gnSaveDirectContent
 } from '@js/epics/gnsave';
+import {gnCheckSelectedLayerPermissions, setLayersPermissions} from '@js/epics';
+import { SET_PERMISSION } from '@mapstore/framework/actions/featuregrid';
+import { SET_EDIT_PERMISSION } from '@mapstore/framework/actions/styleeditor';
+import { configureMap } from '@mapstore/framework/actions/config';
+
+import { selectNode, addLayer } from '@mapstore/framework/actions/layers';
+
 
 let mockAxios;
 
@@ -172,9 +180,54 @@ describe('gnsave epics', () => {
         );
     });
 
+    it("gnCheckSelectedLayerPermissions should trigger permission actions for style and edit", (done) => {
+
+        const NUM_ACTIONS = 3;
+        testEpic(gnCheckSelectedLayerPermissions,
+            NUM_ACTIONS, selectNode(1, "layer"), (actions) => {
+                try {
+                    expect(actions.map(({type}) => type)).toEqual([SET_PERMISSION, SET_SELECTED_LAYER_PERMISSIONS, SET_EDIT_PERMISSION]);
+                    done();
+                } catch (error) {
+                    done(error);
+                }
+            }, {layers: {flat: [{name: "testLayer", id: "test_id", perms: ['download_resourcebase']}], selected: ["test_id"]}});
+
+    });
+
+    it('test setLayersPermissions trigger updateNode for MAP_CONFIG_LOADED', (done) => {
+        mockAxios.onGet().reply(() => [200,
+            {layers: [{perms: ['change_layer_style', 'change_layer_data'], alternate: "testLayer"}]}]);
+        const NUM_ACTIONS = 1;
+        testEpic(setLayersPermissions, NUM_ACTIONS, configureMap({map: {layers: [{name: "testLayer", id: "test_id"}]}}), (actions) => {
+            try {
+                expect(actions.map(({type}) => type)).toEqual(["UPDATE_NODE"]);
+                done();
+            } catch (error) {
+                done(error);
+            }
+        },
+        {layers: {flat: [{name: "testLayer", id: "test_id", perms: ['download_resourcebase']}], selected: ["test_id"]}});
+    });
+
+    it('test setLayersPermissions trigger updateNode for ADD_LAYER', (done) => {
+        mockAxios.onGet().reply(() => [200,
+            {layers: [{perms: ['change_layer_style', 'change_layer_data'], alternate: "testLayer"}]}]);
+        const NUM_ACTIONS = 1;
+        testEpic(setLayersPermissions, NUM_ACTIONS, addLayer({name: "testLayer"}), (actions) => {
+            try {
+                expect(actions.map(({type}) => type)).toEqual(["UPDATE_NODE"]);
+                done();
+            } catch (error) {
+                done(error);
+            }
+        },
+        {layers: {flat: [{name: "testLayer", id: "test_id", perms: ['download_resourcebase']}], selected: ["test_id"]}});
+    });
+
     it('should trigger saveResource (gnSaveDirectContent)', (done) => {
         const NUM_ACTIONS = 2;
-        const pk = 1
+        const pk = 1;
         const resource = {
             'id': pk,
             'title': 'Map',
@@ -182,7 +235,7 @@ describe('gnsave epics', () => {
             'thumbnail_url': 'thumbnail.jpeg'
         };
         mockAxios.onGet(new RegExp(`resources/${pk}`))
-        .reply(200, resource);
+            .reply(200, resource);
         testEpic(
             gnSaveDirectContent,
             NUM_ACTIONS,

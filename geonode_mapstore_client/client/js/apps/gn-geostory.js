@@ -20,7 +20,7 @@ import { registerMediaAPI } from '@mapstore/framework/api/media';
 import * as geoNodeMediaApi from '@js/observables/media/geonode';
 import {
     getEndpoints,
-    getConfiguration,getAccountInfo
+    getConfiguration, getAccountInfo
 } from '@js/api/geonode/v2';
 import {
     setResourceType,
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
     Promise.all([
         getConfiguration(),
         getAccountInfo(),
-        getEndpoints(),
+        getEndpoints()
     ])
         .then(([localConfig, user]) => {
             const {

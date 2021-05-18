@@ -49,10 +49,10 @@ import { saveDirectContent } from '@js/actions/gnsave';
  */
 function Save(props) {
     return props.saving ? (<div
-        style={{ position: 'absolute', width: '100%', 
+        style={{ position: 'absolute', width: '100%',
             height: '100%', backgroundColor: 'rgba(255, 255, 255, 0.75)',
             top: '0px', zIndex: 1000, display: 'flex',
-             alignItems: 'center', justifyContent: 'center', right: '0px'}}>
+            alignItems: 'center', justifyContent: 'center', right: '0px'}}>
         <Loader size={150}/>
     </div>) : null;
 }
