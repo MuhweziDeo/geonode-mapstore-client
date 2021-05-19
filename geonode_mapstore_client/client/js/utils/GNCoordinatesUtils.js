@@ -38,18 +38,18 @@ export const getFeatureFromExtent = (extent) => {
             coordinates: [
                 [
                     [
-                        [aMinx, aMiny],
-                        [aMinx, aMaxy],
+                        [aMinx === -180 ? 180 : aMinx, aMiny],
+                        [aMinx === -180 ? 180 : aMinx, aMaxy],
                         [aMaxx, aMaxy],
                         [aMaxx, aMiny],
-                        [aMinx, aMiny]
+                        [aMinx === -180 ? 180 : aMinx, aMiny]
                     ]
                 ],
 
                 ...(bMinx && bMiny && bMaxx && bMaxy
                     ? [
                         [bMinx, bMiny],
-                        [aMinx, bMaxy],
+                        [aMinx === -180 ? 180 : aMinx, bMaxy],
                         [bMaxx, bMaxy],
                         [bMaxx, bMiny],
                         [bMinx, bMiny]
