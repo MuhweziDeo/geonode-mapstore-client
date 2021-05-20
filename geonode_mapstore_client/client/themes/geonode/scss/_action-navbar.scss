@@ -114,6 +114,9 @@
             border-radius: 0.25rem;
         }
         .gn-language-selector {
+            .inline {
+                padding-right: 2.8rem;
+            }
             &> .btn-default {
                 &.active {
                     color: inherit;
