@@ -45,13 +45,17 @@ export const gnCheckSelectedLayerPermissions = (action$, { getState } = {}) =>
             const permissions = layer?.perms || [];
             const canEditStyles = permissions.includes("change_layer_style");
             const canEdit = permissions.includes("change_layer_data");
-            return layer ? Rx.Observable.of(
-                setPermission({canEdit}),
-                setEditPermissionStyleEditor(canEditStyles),
-                setSelectedLayerPermissions(permissions)
-            )
-                .startWith(setPermission({canEdit: false}),  setSelectedLayerPermissions([]), setEditPermissionStyleEditor(false))
-                .catch(() => {Rx.Observable.empty();}) : Rx.Observable.of(setPermission({canEdit: false}), setEditPermissionStyleEditor(false), setSelectedLayerPermissions([]));
+            return layer
+                ? Rx.Observable.of(
+                    setPermission({canEdit}),
+                    setEditPermissionStyleEditor(canEditStyles),
+                    setSelectedLayerPermissions(permissions)
+                )
+                : Rx.Observable.of(
+                    setPermission({canEdit: false}),
+                    setEditPermissionStyleEditor(false),
+                    setSelectedLayerPermissions([])
+                );
         });
 
 
@@ -59,7 +63,7 @@ export const gnCheckSelectedLayerPermissions = (action$, { getState } = {}) =>
  * Checks the permissions for layers when a map is loaded and when a new layer is added
  * to a map
  */
-export const setLayersPermissions = (actions$, { getState = () => {}} = {}) =>
+export const gnSetLayersPermissions = (actions$, { getState = () => {}} = {}) =>
     actions$.ofType(MAP_CONFIG_LOADED, ADD_LAYER)
         .switchMap((action) => {
             if (action.type === MAP_CONFIG_LOADED) {
@@ -153,5 +157,5 @@ export const updateMapLayoutEpic = (action$, store) =>
 export default {
     gnCheckSelectedLayerPermissions,
     updateMapLayoutEpic,
-    setLayersPermissions
+    gnSetLayersPermissions
 };

@@ -96,10 +96,10 @@ export function setupConfiguration({
         ...config
     } = localConfig;
     const geoNodePageConfig = window.__GEONODE_CONFIG__ || {};
-    const permissionsList = geoNodePageConfig.permissionsList || [];
+    const perms = geoNodePageConfig.perms || [];
 
-    const canEdit = geoNodePageConfig.isNewResource || permissionsList.indexOf('change_resourcebase') !== -1;
-    const canView = geoNodePageConfig.isNewResource || permissionsList.indexOf('view_resourcebase') !== -1;
+    const canEdit = geoNodePageConfig.isNewResource || perms.indexOf('change_resourcebase') !== -1;
+    const canView = geoNodePageConfig.isNewResource || perms.indexOf('view_resourcebase') !== -1;
     Object.keys(config).forEach((key) => {
         setConfigProp(key, config[key]);
     });

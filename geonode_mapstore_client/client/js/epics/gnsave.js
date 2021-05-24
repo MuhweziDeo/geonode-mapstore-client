@@ -151,9 +151,10 @@ export const gnSaveContent = (action$, store) =>
                         saveError(error.data || error.message),
                         action.showNotifications && errorNotification({title: "map.mapError.errorTitle", message: "map.mapError.errorDefault"})
                     );
-                });
+                })
+                .startWith(savingResource());
 
-        }).startWith(savingResource());
+        });
 
 export const gnSaveDirectContent = (action$, store) =>
     action$.ofType(SAVE_DIRECT_CONTENT)
@@ -179,8 +180,9 @@ export const gnSaveDirectContent = (action$, store) =>
                         saveError(error.data || error.message),
                         errorNotification({title: "map.mapError.errorTitle", message: error.data || error.message || "map.mapError.errorDefault"})
                     );
-                });
-        }).startWith(savingResource());
+                })
+                .startWith(savingResource());
+        });
 
 export const gnUpdateResource = (action$, store) =>
     action$.ofType(UPDATE_RESOURCE_BEFORE_SAVE)

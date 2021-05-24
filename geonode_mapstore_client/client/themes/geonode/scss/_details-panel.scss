@@ -58,13 +58,19 @@
     h1 {
         flex: 1;
         word-break: break-word;
-        font-size: 1.2rem;
+        font-size: 1rem;
         margin: 0;
         .fa {
             margin: 0;
             margin-right: 0.6rem;
         }
     }
+    .gn-details-panel-tools{
+        button, a{
+            padding: 0 0 0 0.5rem;
+        }
+    }
+
 }
 
 .gn-details-panel-description {
