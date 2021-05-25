@@ -49,8 +49,7 @@ function FilterByExtent({
     projection,
     onChange,
     vectorLayerStyle,
-    layers,
-    isFiltersPanelEnabled
+    layers
 }) {
 
     const enabled = !!extent;
@@ -142,7 +141,7 @@ function FilterByExtent({
                         )
                     ]}
                 >
-                    {!isFiltersPanelEnabled && <ZoomTo extent={queryExtent} />}
+                    <ZoomTo extent={queryExtent} />
                 </Map>
             </div>
         </Form.Group>

@@ -31,8 +31,7 @@ function FilterForm({
     onChange,
     onClose,
     extentProps,
-    suggestionsRequestTypes,
-    isFiltersPanelEnabled
+    suggestionsRequestTypes
 }) {
 
     const [values, setValues] = useState({});
@@ -122,7 +121,6 @@ function FilterForm({
                                     extent
                                 })
                             }
-                            isFiltersPanelEnabled={isFiltersPanelEnabled}
                         />
                     </Form>
                 </div>
@@ -156,8 +154,7 @@ FilterForm.defaultProps = {
     onChange: PropTypes.func,
     onClose: PropTypes.func,
     extentProps: PropTypes.object,
-    suggestionsRequestTypes: PropTypes.object,
-    isFiltersPanelEnabled: PropTypes.bool
+    suggestionsRequestTypes: PropTypes.object
 };
 
 FilterForm.defaultProps = {
@@ -165,8 +162,7 @@ FilterForm.defaultProps = {
     fields: [],
     onChange: () => {},
     onClose: () => {},
-    suggestionsRequestTypes: {},
-    isFiltersPanelEnabled: false
+    suggestionsRequestTypes: {}
 };
 
 const arePropsEqual = (prevProps, nextProps) => {

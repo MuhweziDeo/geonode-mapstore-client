@@ -431,7 +431,6 @@ function Home({
                                 query={query}
                                 onChange={isSmallDevice && handleUpdateSmallDevice || handleUpdate}
                                 onClose={handleShowFilterForm}
-                                isFiltersPanelEnabled={isFiltersPanelEnabled}
                             />
 
                         </div>
