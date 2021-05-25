@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Form } from 'react-bootstrap-v1';
 import BaseMap from '@mapstore/framework/components/map/BaseMap';
 import mapType from '@mapstore/framework/components/map/enhancers/mapType';
@@ -25,8 +25,9 @@ function ZoomTo({
     map,
     extent
 }) {
+    const once = useRef();
     useEffect(() => {
-        if (map && extent) {
+        if (map && extent && !once.current) {
             const [
                 minx, miny, maxx, maxy
             ] = extent.split(',');
@@ -36,6 +37,7 @@ function ZoomTo({
                 size: map.getSize(),
                 duration: 300
             });
+            once.current = true;
         }
     }, [ extent ]);
 
@@ -76,10 +78,6 @@ function FilterByExtent({
         }
         setTmpExtent(newExtent);
     }
-
-    const isExtentInIDL = useMemo(() => {
-        return queryExtent && queryExtent.split(',').length === 8;
-    }, [queryExtent]);
 
     return (
         <Form.Group
@@ -127,14 +125,13 @@ function FilterByExtent({
                                 type: 'vector',
                                 features: [getFeatureFromExtent(queryExtent)],
                                 style: vectorLayerStyle
-                                    ? {...vectorLayerStyle, stroke: isExtentInIDL && {width: 0, color: '#397AAB'}}
+                                    ? {...vectorLayerStyle,  weight: 0.001}
                                     : {
                                         color: '#397AAB',
                                         opacity: 0.8,
                                         fillColor: '#397AAB',
                                         fillOpacity: 0.4,
-                                        weight: 4,
-                                        stroke: isExtentInIDL && {width: 0, color: '#397AAB'}
+                                        weight: 0.001
                                     }
                             }]
                             : []
