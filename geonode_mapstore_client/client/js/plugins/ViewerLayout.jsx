@@ -35,15 +35,33 @@ function ViewerLayout({
                     .filter(({ target }) => target === 'header')
                     .map(({ Component, name }) => <Component key={name} />)}
             </header>
-            <div
-                style={{
-                    flex: 1,
-                    position: 'relative'
-                }}
-            >
-                {configuredItems
-                    .filter(({ target }) => !target)
-                    .map(({ Component, name }) => <Component key={name} />)}
+            <div style={{display: 'flex'}}>
+                <div
+                    style={{
+                        display: 'flex',
+                        flex: 1,
+                        position: 'relative'
+                    }}
+                >
+                    {configuredItems
+                        .filter(({ target }) => !target)
+                        .map(({ Component, name }) => <Component key={name} />)}
+                </div>
+                <div>
+                    <div
+                        className={`rightColumn`}
+                        style={{
+                            display: 'flex',
+                            flex: 1,
+                            position: 'relative'
+                        }}
+                    >
+                        {configuredItems
+                            .filter(({ target }) => target === 'rightColumn')
+                            .map(({ Component, name }) => <Component key={name} />)}
+
+                    </div>
+                </div>
             </div>
             <footer>
                 {configuredItems

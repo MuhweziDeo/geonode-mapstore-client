@@ -19,6 +19,30 @@ import {
 
 import CopyToClipboard from 'react-copy-to-clipboard';
 import url from 'url';
+import {TextEditable, ThumbnailEditable} from '@js/components/ContentsEditable/';
+
+const EditTitle = ({title, onEdit}) => {
+    return (
+        <div className="editContainer">
+            <h1><TextEditable  onEdit={ onEdit } text={title} /></h1>
+        </div>);
+};
+
+const EditAbstract = ({abstract, onEdit}) => (
+    <div className="editContainer">
+        <TextEditable onEdit={ onEdit } text={abstract} />
+    </div>
+
+);
+
+
+const EditThumbnail = ({image, onEdit}) => (
+    <div className="editContainer imagepreview">
+        <ThumbnailEditable onEdit={onEdit} defaultImage={image} />
+    </div>
+
+);
+
 
 function formatResourceLinkUrl(resourceUrl = '') {
     if (resourceUrl.indexOf('http') === 0) {
@@ -62,17 +86,33 @@ function ThumbnailPreview({
 
 function DetailsPanel({
     resource,
-    // filters,
     formatHref,
+    linkHref,
     sectionStyle,
     loading,
-    getTypesInfo
+    getTypesInfo,
+    editTitle,
+    editAbstract,
+    editThumbnail,
+    activeEditMode,
+    closePanel
 }) {
+
+
+    const [editModeTitle, setEditModeTitle] = useState(false);
+    const [editModeAbstract, setEditModeAbstract] = useState(false);
+
+    const handleEditModeTitle = () => {
+        setEditModeTitle(!editModeTitle);
+    };
+
+    const handleEditModeAbstract = () => {
+        setEditModeAbstract(!editModeAbstract);
+    };
 
     const detailsContainerNode = useRef();
     const isMounted = useRef();
     const [copiedResourceLink, setCopiedResourceLink] = useState(false);
-
     useEffect(() => {
         isMounted.current = true;
         return () => {
@@ -108,20 +148,20 @@ function DetailsPanel({
         <div
             ref={detailsContainerNode}
             className={`gn-details-panel${loading ? ' loading' : ''}`}
-            style={{ width: sectionStyle.width }}
+            style={{ width: sectionStyle?.width }}
         >
             <section style={sectionStyle}>
-                <div className="gn-details-panel-header">
+                {<div className="gn-details-panel-header">
                     <Button
                         variant="default"
-                        href={formatHref({
-                            pathname: '/search/'
-                        })}
+                        href={linkHref()}
+                        onClick={closePanel}
                         size="sm">
                         <FaIcon name="times" />
                     </Button>
                 </div>
-                <div className="gn-details-panel-preview">
+                }
+                {!activeEditMode && <div className="gn-details-panel-preview">
                     <div
                         className="gn-loader-placeholder"
                         style={{
@@ -145,7 +185,7 @@ function DetailsPanel({
                             }}
                             frameBorder="0"
                         />
-                        : <ThumbnailPreview
+                        : (<ThumbnailPreview
                             src={resource?.thumbnail_url}
                             style={{
                                 position: 'absolute',
@@ -154,7 +194,7 @@ function DetailsPanel({
                                 top: 0,
                                 left: 0,
                                 backgroundColor: 'inherit'
-                            }}/>
+                            }}/> )
                     }
                     {loading && <div
                         className="gn-details-panel-preview-loader"
@@ -172,45 +212,64 @@ function DetailsPanel({
                             <span className="sr-only">Loading resource detail...</span>
                         </Spinner>
                     </div>}
-                </div>
+                </div> }
+
+                {activeEditMode && editThumbnail && <div className="gn-details-panel-preview inediting"> <EditThumbnail onEdit={editThumbnail} image={resource?.thumbnail_url} /> </div>}
+
+
                 <div className="gn-details-panel-content">
-                    <div className="gn-details-panel-title">
-                        <h1>
-                            {icon && <><FaIcon name={icon}/></>}
-                            {resource?.title}
+                    <div className="gn-details-panel-title" >
+
+                        {!editModeTitle && <h1>
+                            { icon && <><FaIcon name={icon}/></>}
+                            { resource?.title }
                         </h1>
-                        <div className="gn-details-panel-tools">
-                            {detailUrl && <OverlayTrigger
-                                placement="top"
-                                overlay={(props) =>
-                                    <Tooltip id="share-resource-tooltip" {...props}>
-                                        <Message msgId={
-                                            copiedResourceLink
-                                                ? 'gnhome.copiedResourceUrl'
-                                                : 'gnhome.copyResourceUrl'
-                                        }/>
-                                    </Tooltip>}
-                            >
-                                <CopyToClipboard
-                                    text={formatResourceLinkUrl(detailUrl)}
+                        }
+                        { activeEditMode && !editModeTitle && <span className="inEdit" onClick={handleEditModeTitle} ><FaIcon name={'edit'}/></span>}
+
+
+                        {editModeTitle && <><h1><EditTitle title={resource?.title} onEdit={editTitle} />
+                        </h1>
+                        <span className="inEdit" onClick={handleEditModeTitle} ><FaIcon name={'check-circle'}/></span></>
+                        }
+                        {
+                            <div className="gn-details-panel-tools">
+                                {detailUrl && <OverlayTrigger
+                                    placement="top"
+                                    overlay={(props) =>
+                                        <Tooltip id="share-resource-tooltip" {...props}>
+                                            <Message msgId={
+                                                copiedResourceLink
+                                                    ? 'gnhome.copiedResourceUrl'
+                                                    : 'gnhome.copyResourceUrl'
+                                            }/>
+                                        </Tooltip>}
                                 >
-                                    <Button
-                                        variant="default"
-                                        onClick={handleCopyPermalink}>
-                                        <FaIcon name="share-alt" />
-                                    </Button>
-                                </CopyToClipboard>
-                            </OverlayTrigger>}
-                            {detailUrl && <Button
-                                variant="default"
-                                href={detailUrl}
-                                target="_blank"
-                                rel="noopener noreferrer">
-                                <Message msgId={`gnhome.view${name || ''}`}/>
-                            </Button>}
-                        </div>
+                                    <CopyToClipboard
+                                        text={formatResourceLinkUrl(detailUrl)}
+                                    >
+                                        <Button
+                                            variant="default"
+                                            onClick={handleCopyPermalink}>
+                                            <FaIcon name="share-alt" />
+                                        </Button>
+                                    </CopyToClipboard>
+                                </OverlayTrigger>}
+                                {detailUrl && <Button
+                                    variant="default"
+                                    href={detailUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                    <Message msgId={`gnhome.view${name || ''}`}/>
+                                </Button>}
+                            </div>
+                        }
+
+
                     </div>
-                    <p>
+
+
+                    {<p>
                         {resource?.owner && <><a href={formatHref({
                             query: {
                                 'filter{owner.username.in}': resource.owner.username
@@ -219,13 +278,23 @@ function DetailsPanel({
                         {(resource?.date_type && resource?.date)
                             && <>{' '}/{' '}{ moment(resource.date).format('MMMM Do YYYY')}</>}
                     </p>
+                    }
                     <p>
-                        <div className="gn-details-panel-description">{
-                            resource?.abstract ?
-                                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(resource.abstract) }} />
-                                : null
-                        }</div>
+                        { activeEditMode && !editModeAbstract && <span className="inEdit" onClick={handleEditModeAbstract} ><FaIcon name={'edit'}/></span>}
+                        <div className="gn-details-panel-description">
+                            {editModeAbstract && <>
+                                <span className="inEdit" onClick={handleEditModeAbstract} ><FaIcon name={'check-circle'}/></span>
+                                <EditAbstract abstract={resource?.abstract} onEdit={editAbstract} />
+                            </>
+                            }
+                            {
+                                !editModeAbstract && resource?.abstract ?
+                                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(resource.abstract) }} />
+                                    : null
+                            }
+                        </div>
                     </p>
+
                     <p>
                         {resource?.category?.identifier && <div>
                             <Message msgId="gnhome.category"/>:{' '}
@@ -245,6 +314,7 @@ function DetailsPanel({
 DetailsPanel.defaultProps = {
     onClose: () => { },
     formatHref: () => '#',
+    linkHref: () => '#',
     width: 696,
     getTypesInfo: getResourceTypesInfo
 };

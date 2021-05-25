@@ -19,8 +19,10 @@
                     ctrlKey: false
                 });
                 function editPermissionListener(action) {
-                    if(action.canEdit) {
-                        MapStoreAPI.offAction('STYLEEDITOR:SET_EDIT_PERMISSION', editPermissionListener);
+                    const perms = action && action.options && action.options.perms || [];
+                    const canEditStyle = perms.includes('change_layer_style');
+                    if(canEditStyle) {
+                        MapStoreAPI.offAction('UPDATE_NODE', editPermissionListener);
                         MapStoreAPI.triggerAction({
                             type: 'SHOW_SETTINGS',
                             node: layer.id,
@@ -42,7 +44,7 @@
                         });
                     };
                 };
-                MapStoreAPI.onAction('STYLEEDITOR:SET_EDIT_PERMISSION', editPermissionListener);
+                MapStoreAPI.onAction('UPDATE_NODE', editPermissionListener);
             }
         }
         window.onInitMapStoreAPI = function(MapStoreAPI, config) {

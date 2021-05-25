@@ -62,7 +62,7 @@ import { updateGeoNodeSettings } from '@js/actions/gnsettings';
 import {
     updateMapLayoutEpic,
     gnCheckSelectedLayerPermissions,
-    setLayersPermissions
+    gnSetLayersPermissions
 } from '@js/epics';
 import gnviewerEpics from '@js/epics/gnviewer';
 import maplayout from '@mapstore/framework/reducers/maplayout';
@@ -72,6 +72,12 @@ import 'react-select/dist/react-select.css';
 import pluginsDefinition from '@js/plugins/index';
 import ReactSwipe from 'react-swipeable-views';
 import SwipeHeader from '@mapstore/framework/components/data/identify/SwipeHeader';
+
+// TODO: we should compile .scss as .less file in MapStore
+// and add a link tag with the compiled css in the template
+// this will ensure more control on override or custom css
+import '../../themes/geonode/scss/geonode.scss';
+
 const requires = {
     ReactSwipe,
     SwipeHeader
@@ -215,7 +221,7 @@ Promise.all([
                         ...configEpics,
                         updateMapLayoutEpic,
                         gnCheckSelectedLayerPermissions,
-                        setLayersPermissions,
+                        gnSetLayersPermissions,
                         ...pluginsDefinition.epics,
                         ...gnviewerEpics
                     },

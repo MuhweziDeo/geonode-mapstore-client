@@ -67,6 +67,7 @@ class GeoStorySerializer(ResourceBaseSerializer):
     class Meta:
         model = GeoStory
         name = 'geostory'
+        view_name = 'geostories-list'
         fields = (
             'pk', 'uuid', 'app_type',
             'zoom', 'projection', 'center_x', 'center_y',
