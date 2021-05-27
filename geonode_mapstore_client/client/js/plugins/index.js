@@ -266,6 +266,10 @@ export const plugins = {
     DetailViewerPlugin: toLazyPlugin(
         'DetailViewer',
         import(/* webpackChunkName: 'plugins/detail-viewer-plugin' */ '@js/plugins/DetailViewer')
+    ),
+    MediaViewerPlugin: toLazyPlugin(
+        'MediaViewer',
+        import(/* webpackChunkName: 'plugins/media-viewer-plugin' */ '@js/plugins/MediaViewer')
     )
 
 

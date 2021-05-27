@@ -43,5 +43,5 @@
       "proxyTargetHost": "localhost:8000",
       "protocol": "http"
     }
-  }
+  } 
 }
