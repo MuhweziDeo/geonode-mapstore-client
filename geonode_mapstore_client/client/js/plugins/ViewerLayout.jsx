@@ -35,7 +35,7 @@ function ViewerLayout({
                     .filter(({ target }) => target === 'header')
                     .map(({ Component, name }) => <Component key={name} />)}
             </header>
-            <div style={{display: 'flex'}}>
+            <div style={{display: 'flex', flex: 1}}>
                 <div
                     style={{
                         display: 'flex',

@@ -1,0 +1,19 @@
+.gn-media-viewer {
+    top: 0;
+    left: 0;
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+    position: absolute;
+    margin: 1rem;
+
+    .ms-media, .ms-media img {
+        position: relative;
+        height: 100%;
+        width:100%
+    }
+}
+
+// this gives a higher z-index than #ms-container inorder to make lightbox show
+.ReactModal__Overlay.ReactModal__Overlay--after-open {
+    z-index: 100000 !important;
+}

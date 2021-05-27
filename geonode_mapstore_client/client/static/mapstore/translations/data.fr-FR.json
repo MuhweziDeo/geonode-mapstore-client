@@ -104,6 +104,11 @@
             "customFiltersTitle": "Ressources",
             "myResources": "Mes ressources",
             "pendingApproval": "En attente de validation"
+        },
+        "viewer":{
+            "document": {
+                "unSupportedMedia": "Le format multimédia n'est pas pris en charge"
+            }
         }
     }
 }

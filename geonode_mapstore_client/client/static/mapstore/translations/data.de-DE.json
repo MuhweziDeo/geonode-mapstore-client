@@ -104,6 +104,11 @@
             "customFiltersTitle": "Ressourcen",
             "myResources": "Meine Ressourcen",
             "pendingApproval": "Ausstehende Genehmigung"
+        },
+        "viewer":{
+            "document": {
+                "unSupportedMedia": "Das Medienformat wird nicht unterstützt"
+            }
         }
     }
 }

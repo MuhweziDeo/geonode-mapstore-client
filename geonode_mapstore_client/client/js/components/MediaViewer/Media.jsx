@@ -8,6 +8,7 @@
 
 import React from 'react';
 import MediaComponent from '@mapstore/framework/components/geostory/media';
+import HTML from '@mapstore/framework/components/I18N/HTML';
 
 // Determines if a resource is an image video or pdf
 const imageExtensions = ['jpg', 'jpeg', 'png'];
@@ -23,22 +24,46 @@ const determineResourceType = extension => {
 const mediaMap = {
     image: MediaComponent,
     video: MediaComponent,
-    pdf: () => <div/>,
-    unsupported: () => <div/>
+    pdf: (props) => <iframe type="application/pdf"
+        frameBorder="0"
+        scrolling="auto"
+        height="100%"
+        width="100%" {...props}/>,
+    unsupported: MediaComponent
 };
 
-const Media = ({resource, ...props}) => {
-    console.log(props, resource);
+const mediaDefaultProps = {
+    video: {
+        mode: "view",
+        inView: true
+    },
+    image: {
+        fit: "contain",
+        enableFullscreen: true
+    },
+    pdf: {
+        src: "http://192.168.0.106:8000/uploaded/documents/document/QkQ57wUWT8ardQcQ-5mQag.pdf",
+        style: {
+            height: '80vh'
+        }
+    },
+    unsupported: {
+        showCaption: true,
+        caption: <h1><HTML msgId={'viewer.document.unSupportedMedia'}/></h1>
+    }
+};
+
+const Media = ({resource}) => {
     if (resource) {
         const mediaType = determineResourceType(resource.extension);
         const CMP =  mediaMap[mediaType];
         return (<CMP
-            mediaType
-            // mode="view"
-            // inView
-            // thumbnail={resource.thumbnail_url}
-            src={resource.thumbnail_url}
-            fit={mediaType === 'image' ? "cover" : undefined}
+            mediaType={mediaType}
+            {...mediaDefaultProps[mediaType]}
+            description={resource.abstract}
+            id={resource.pk}
+            thumbnail={resource.thumbnail_url}
+            src={mediaType === 'unsupported' ? resource.thumbnail_url : resource.href}
         />);
     }
     return null;

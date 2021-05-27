@@ -105,6 +105,11 @@
             "myResources": "My resources",
             "pendingApproval": "Pending approval"
 
+        },
+        "viewer":{
+            "document": {
+                "unSupportedMedia": "Media format is unsupported"
+            }
         }
     }
 }
