@@ -45,7 +45,6 @@ const mediaDefaultProps = {
     },
     unsupported: {
         showCaption: true,
-        // TODO caption is hiding thumbnail
         caption: <h3><HTML msgId={'viewer.document.unSupportedMedia'}/></h3>,
         enableFullscreen: false
     }
