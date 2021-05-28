@@ -10,17 +10,8 @@ import React  from 'react';
 import MediaComponent from '@mapstore/framework/components/geostory/media';
 import HTML from '@mapstore/framework/components/I18N/HTML';
 import PdfViewer from '@js/components/MediaViewer/PdfViewer';
+import { determineResourceType } from '@js/utils/FileUtils';
 
-// Determines if a resource is an image video or pdf
-const imageExtensions = ['jpg', 'jpeg', 'png'];
-const videoExtensions = ['mp4', 'mpg', 'avi', 'm4v'];
-
-const determineResourceType = extension => {
-    if (extension === 'pdf') return 'pdf';
-    if (imageExtensions.includes(extension)) return 'image';
-    if (videoExtensions.includes(extension)) return 'video';
-    return 'unsupported';
-};
 
 const mediaMap = {
     image: MediaComponent,
@@ -38,11 +29,7 @@ const mediaDefaultProps = {
         fit: "contain",
         enableFullscreen: true
     },
-    pdf: {
-        style: {
-            height: '80vh'
-        }
-    },
+    pdf: {},
     unsupported: {
         showCaption: true,
         caption: <h3><HTML msgId={'viewer.document.unSupportedMedia'}/></h3>,
@@ -60,7 +47,6 @@ const Media = ({resource}) => {
             description={resource.abstract}
             id={resource.pk}
             thumbnail={resource.thumbnail_url}
-            resource={resource}
             src={mediaType === 'unsupported' ? resource.thumbnail_url : resource.href}
         />);
     }

@@ -3,13 +3,13 @@ import Loader from '@mapstore/framework/components/misc/Loader';
 
 import { getFileFromDownload } from '@js/utils/FileUtils';
 
-const PdfViewer = ({resource}) => {
+const PdfViewer = ({src}) => {
     const [filePath, setFilePath] = useState(null);
     const [loading, setLoading] = useState('');
 
     useEffect(() => {
         setLoading(true);
-        getFileFromDownload(resource.href)
+        getFileFromDownload(src)
             .then((fileURL) => {
                 setLoading(false);
                 setFilePath(fileURL);
