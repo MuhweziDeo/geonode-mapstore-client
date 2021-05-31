@@ -11,6 +11,7 @@ import MediaComponent from '@mapstore/framework/components/geostory/media';
 import HTML from '@mapstore/framework/components/I18N/HTML';
 import PdfViewer from '@js/components/MediaViewer/PdfViewer';
 import { determineResourceType } from '@js/utils/FileUtils';
+import Loader from '@mapstore/framework/components/misc/Loader';
 
 
 const mediaMap = {
@@ -20,6 +21,8 @@ const mediaMap = {
     unsupported: MediaComponent
 };
 
+const loaderComponent = () => <div className="pdf-loader"><Loader size={70}/></div>;
+
 const mediaDefaultProps = {
     video: {
         mode: "view",
@@ -27,7 +30,8 @@ const mediaDefaultProps = {
     },
     image: {
         fit: "contain",
-        enableFullscreen: true
+        enableFullscreen: true,
+        loaderComponent
     },
     pdf: {},
     unsupported: {

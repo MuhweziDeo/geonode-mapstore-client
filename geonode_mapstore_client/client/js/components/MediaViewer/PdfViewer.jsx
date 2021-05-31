@@ -5,7 +5,7 @@ import { getFileFromDownload } from '@js/utils/FileUtils';
 
 const PdfViewer = ({src}) => {
     const [filePath, setFilePath] = useState(null);
-    const [loading, setLoading] = useState('');
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setLoading(true);
