@@ -38,4 +38,3 @@ export function requestDocumentConfig(pk) {
         pk
     };
 }
-

@@ -1,5 +1,6 @@
 {% load static %}
 {% load client_lib_tags %}
+{% load client_version %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -90,6 +91,6 @@
                 </div>
             </div>
         </div>
-        <script id="gn-script" src="{% static 'mapstore/dist/gn-viewer.js' %}"></script>
+        <script id="gn-script" src="{% static 'mapstore/dist/gn-viewer.js' %}?{% client_version %}"></script>
     </body>
 </html>

@@ -262,7 +262,13 @@ export const plugins = {
     BrandNavbarPlugin: toLazyPlugin(
         'BrandNavbar',
         import(/* webpackChunkName: 'plugins/brand-navbar-plugin' */ '@js/plugins/BrandNavbar')
+    ),
+    DetailViewerPlugin: toLazyPlugin(
+        'DetailViewer',
+        import(/* webpackChunkName: 'plugins/detail-viewer-plugin' */ '@js/plugins/DetailViewer')
     )
+
+
 };
 
 const pluginsDefinition = {

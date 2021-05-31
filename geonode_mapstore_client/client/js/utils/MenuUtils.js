@@ -14,6 +14,26 @@ function inAllowedGroups(user, allowedRoles) {
     return !allowedRoles || !!groups.find(group => allowedRoles.indexOf(group) !== -1);
 }
 
+
+/**
+* check if the menu perms is allowed by user or resource
+* @memberof MenuUtils
+* @param {array} perms array with perms of user or resource
+* @param {array} objResource menu or resource perms
+* @param {string} objType type of objcet (user / resource)
+* @return {boolean}
+*/
+
+export function hasPermissionsTo(perms, objResource, objType) {
+
+    const res = (objResource) ? objResource.filter(obj => obj.type === objType) : undefined;
+    return res === undefined
+    || (res && res.length === 0)
+    || (res && res.some((element) => {
+        return perms.includes(element?.value);
+    }));
+}
+
 export function readProperty(state, value) {
     if (value?.indexOf('${') === 0) {
         return get(state, value.replace(/^\$\{(.*)\}$/, '$1'));
@@ -28,6 +48,7 @@ export function buildHrefByTemplate(state, template, sep = '/') {
 }
 
 export function filterMenuItems(state, item, parent) {
+
     const isAuthenticated = !parent
         ? item.authenticated
         : parent.authenticated === undefined
@@ -35,7 +56,9 @@ export function filterMenuItems(state, item, parent) {
             : parent.authenticated;
 
     return isAuthenticated === undefined
-        || isAuthenticated === true && state?.user && inAllowedGroups(state.user, item.allowedGroups)
+        || (isAuthenticated === true && state?.user
+            && inAllowedGroups(state.user, item.allowedGroups)
+            && hasPermissionsTo(state?.user?.perms, item.perms, 'user'))
         || isAuthenticated === false && !state?.user;
 }
 

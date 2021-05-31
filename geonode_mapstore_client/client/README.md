@@ -127,8 +127,9 @@ Menu item object contains properties for a list item rendered in a menu. Configu
   "href": "/account/signup/?next=/",
   "badge": "{state.layersTotalCount}", // (menu configuration only) counter badge. variable available: layersTotalCount, mapsTotalCount,
   "authenticated": true, // true shows the item only when user authenticated while false only for anonymous user, if undefined the item is always visible
-  "permissions": [], // the value in array define the access to the contents
+  "perms": [], // the value in array define the access to the contents
   "allowedRoles": [] // user roles to access  to the contents
+
 }
 ```
 
@@ -139,7 +140,7 @@ Menu item object contains properties for a list item rendered in a menu. Configu
   "image": "", //the toogle image
   "type": "dropdown", // one of 'link', 'dropdown', 'divider' or 'filter'
   "authenticated": true, // true shows the item only when user authenticated while false only for anonymous user, if undefined the item is always visible
-  "permissions": [], // the value in array define the access to the contents
+  "perms": [], // the value in array define the access to the contents
   "allowedRoles": [], // user roles to access  to the contents
   "items": []  // menu items of type link or divider
 }
@@ -150,7 +151,7 @@ Menu item object contains properties for a list item rendered in a menu. Configu
 {
   "type": "divider", // one of 'link', 'dropdown', 'divider' or 'filter'
   "authenticated": true, // true shows the item only when user authenticated while false only for anonymous user, if undefined the item is always visible
-  "permissions": [], // the value in array define the access to the contents
+  "perms": [], // the value in array define the access to the contents
   "allowedRoles": [], // user roles to access  to the contents
 }
 ```
@@ -162,7 +163,7 @@ Menu item object contains properties for a list item rendered in a menu. Configu
   "id": "landuse", // unique id of the filter
   "labelId": "gnhome.customFilterExample", // label message id
   "authenticated": true, // true shows the item only when user authenticated while false only for anonymous user, if undefined the item is always visible
-  "permissions": [], // the value in array define the access to the contents
+  "perms": [], // the value in array define the access to the contents
   "allowedRoles": [],  // user roles to access  to the contents
   "query": { // query filter to use
     "filter{regions.name.in}": [

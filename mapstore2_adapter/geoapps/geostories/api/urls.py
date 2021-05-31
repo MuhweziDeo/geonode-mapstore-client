@@ -23,7 +23,7 @@ from geonode.api.urls import router
 
 from mapstore2_adapter.geoapps.geostories.api import views
 
-router.register(r'geostories', views.GeoStoryViewSet)
+router.register(r'geostories', views.GeoStoryViewSet, 'geostories')
 
 urlpatterns = [
     url(r'^api/v2/', include(router.urls)),

@@ -29,8 +29,8 @@
             "remoteServices": "Servizi remoti",
             "maps": "Mappe",
             "map": "Mappa",
-            "layer": "Couche",
-            "geostory": "Layer",
+            "layer": "Layer",
+            "geostory": "Geostory",
             "createNew": "Crea nuova",
             "about": "A proposito",
             "people": "Utenti",
@@ -66,7 +66,6 @@
             "privacy": "Privacy",
             "extent": "Estensione",
             "enableFilterByExtent": "Abilita filtro per estensione",
-            "advancedSearch": "Ricerca avanzata",
             "apply": "Applica",
             "clearFilters": "Cancella filtri",
 

@@ -13,6 +13,7 @@ import FaIcon from '@js/components/home/FaIcon';
 import ResourceCard from '@js/components/home/ResourceCard';
 import { withResizeDetector } from 'react-resize-detector';
 import useLocalStorage from '@js/hooks/useLocalStorage';
+import { hasPermissionsTo } from '@js/utils/MenuUtils';
 
 const Cards = withResizeDetector(({
     resources,
@@ -83,6 +84,10 @@ const Cards = withResizeDetector(({
             style={cardLayoutStyle === 'list' ? {} : containerStyle}
         >
             {resources.map((resource, idx) => {
+
+                const allowedOptions = options
+                    .filter((opt) => hasPermissionsTo(resource?.perms, opt?.perms, 'resource'));
+
                 return (
                     <li
                         key={resource.pk}
@@ -92,7 +97,7 @@ const Cards = withResizeDetector(({
                             active={isCardActive(resource)}
                             data={resource}
                             formatHref={formatHref}
-                            options={options}
+                            options={allowedOptions}
                             buildHrefByTemplate={buildHrefByTemplate}
                             layoutCardsStyle={cardLayoutStyle}
                         />

@@ -67,6 +67,7 @@ class GeoStorySerializer(ResourceBaseSerializer):
     class Meta:
         model = GeoStory
         name = 'geostory'
+        view_name = 'geostories-list'
         fields = (
             'pk', 'uuid', 'app_type',
             'zoom', 'projection', 'center_x', 'center_y',
@@ -81,6 +82,12 @@ class GeoStorySerializer(ResourceBaseSerializer):
             if self.is_valid():
                 data['blob'] = _data
 
+        return data
+
+    def validate(self, data):
+        request = self.context.get('request')
+        if request:
+            data['owner'] = request.user
         return data
 
     def create(self, validated_data):

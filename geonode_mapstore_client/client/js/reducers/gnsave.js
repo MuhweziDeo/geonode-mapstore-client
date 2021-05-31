@@ -19,7 +19,9 @@ function gnsave(state = {}, action) {
     case SAVING_RESOURCE :
     case SAVE_DIRECT_CONTENT: {
         return {
-            saving: true
+            saving: true,
+            error: undefined,
+            success: undefined
         };
     }
     case SAVE_SUCCESS: {
