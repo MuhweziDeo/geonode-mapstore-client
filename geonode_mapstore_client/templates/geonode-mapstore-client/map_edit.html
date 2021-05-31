@@ -1,4 +1,5 @@
-
+{% load static %}
+{% load client_version %}
 <style>
     .gn-main-loader-container {
         position: absolute;
@@ -85,5 +86,5 @@
         </div>
     </div>
 </div>
-<script id="gn-script" src="/static/mapstore/dist/gn-map.js"></script>
+<script id="gn-script" src="{% static 'mapstore/dist/gn-map.js' %}?{% client_version %}""></script>
 {% endblock %}
