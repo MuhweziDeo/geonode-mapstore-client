@@ -143,13 +143,17 @@ export const gnSaveContent = (action$, store) =>
                             'abstract': action.metadata.description,
                             'thumbnail_url': action.metadata.thumbnail
                         }),
-                        action.showNotifications && successNotification({title: "saveDialog.saveSuccessTitle", message: "saveDialog.saveSuccessMessage"})
+                        ...(action.showNotifications
+                            ? [successNotification({title: "saveDialog.saveSuccessTitle", message: "saveDialog.saveSuccessMessage"})]
+                            : [])
                     );
                 })
                 .catch((error) => {
                     return Observable.of(
                         saveError(error.data || error.message),
-                        action.showNotifications && errorNotification({title: "map.mapError.errorTitle", message: "map.mapError.errorDefault"})
+                        ...(action.showNotifications
+                            ? [errorNotification({title: "map.mapError.errorTitle", message: "map.mapError.errorDefault"})]
+                            : [])
                     );
                 })
                 .startWith(savingResource());

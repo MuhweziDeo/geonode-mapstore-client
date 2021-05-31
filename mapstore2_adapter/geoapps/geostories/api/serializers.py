@@ -84,6 +84,12 @@ class GeoStorySerializer(ResourceBaseSerializer):
 
         return data
 
+    def validate(self, data):
+        request = self.context.get('request')
+        if request:
+            data['owner'] = request.user
+        return data
+
     def create(self, validated_data):
         # Sanity checks
         if 'name' not in validated_data or \
