@@ -16,9 +16,6 @@ const PdfViewer = ({src}) => {
             }).finally(() => {
                 setLoading(false);
             });
-        return () => {
-            setFilePath(null);
-        };
     }, []);
 
     if (loading) {
