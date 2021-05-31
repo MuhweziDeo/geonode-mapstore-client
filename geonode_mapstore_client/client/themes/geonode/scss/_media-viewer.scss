@@ -6,11 +6,37 @@
     position: absolute;
     margin: 1rem;
 
-    .ms-media, .ms-media img {
+    .ms-media,
+    .ms-media img {
         position: relative;
         height: 100%;
-        width:100%
+        width: 100%
     }
+
+    .pdf-loader {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center
+    }
+}
+.gn-media-viewer .pdf-loader {
+    position: 'absolute';
+    top: 0;
+    left: 0;
+    width: '100%';
+    height: '100%';
+    background-color: 'rgba(255, 255, 255, 0.8)';
+    z-index: 2;
+    display: 'flex';
+    align-items: 'center';
+    justify-content: 'center'
 }
 
 // this gives a higher z-index than #ms-container inorder to make lightbox show
