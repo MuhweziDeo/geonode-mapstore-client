@@ -137,7 +137,7 @@ function FilterByExtent({
                                 type: 'vector',
                                 features: [getFeatureFromExtent(queryExtent)],
                                 style: vectorLayerStyle
-                                    ? {...vectorLayerStyle,  weight: 0.001}
+                                    ? { ...vectorLayerStyle,  weight: 0.001 }
                                     : {
                                         color: '#397AAB',
                                         opacity: 0.8,
