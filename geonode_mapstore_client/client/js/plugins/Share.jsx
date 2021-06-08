@@ -18,7 +18,11 @@ import controls from '@mapstore/framework/reducers/controls';
 import ShareEmbed from '@mapstore/framework/components/share/ShareEmbed';
 import ShareLink from '@mapstore/framework/components/share/ShareLink';
 import ResizableModal from '@mapstore/framework/components/misc/ResizableModal';
-import { mapInfoSelector } from '@mapstore/framework/selectors/map';
+import { mapInfoSelector, mapSelector } from '@mapstore/framework/selectors/map';
+import AdvancedSettings from '@js/components/share/AdvancedSettings';
+import {getExtentFromViewport} from '@mapstore/framework/utils/CoordinatesUtils';
+import ConfigUtils from '@mapstore/framework/utils/ConfigUtils';
+
 import url from 'url';
 
 function getShareUrl({
@@ -41,12 +45,26 @@ function Share({
     resourceId,
     pathTemplate,
     enabled,
-    onClose
+    onClose,
+    bbox,
+    formatCoord,
+    zoom,
+    center
 }) {
     const shareUrl = getShareUrl({
         resourceId,
         pathTemplate
     });
+    // Share URL needs to include # at the end inorder to work with queryparams epic
+    const [settings, setSettings] = React.useState({advancedSettings: {
+        centerAndZoomEnabled: true,
+        bbox: true,
+        centerAndZoom: true
+    }, settings: {
+        bboxEnabled: false,
+        centerAndZoomEnabled: false,
+        markerEnabled: false
+    }});
     return (
         <ResizableModal
             modalClassName="gn-share-modal"
@@ -62,6 +80,14 @@ function Share({
             <ShareEmbed
                 showTOCToggle={false}
                 shareUrl={shareUrl}
+            />
+
+            <AdvancedSettings onUpdateSettings={(newSettings) => setSettings({...settings, settings: newSettings})}
+                advancedSettings={settings.advancedSettings}
+                settings={settings.settings}
+                formatCoord={formatCoord}
+                zoom={zoom}
+                coordinate={center}
             />
         </ResizableModal>
     );
@@ -85,10 +111,18 @@ const SharePlugin = connect(
     createSelector([
         state => state?.controls?.share?.enabled,
         state => state?.gnresource?.id,
-        mapInfoSelector
-    ], (enabled, resourceId, mapInfo) => ({
+        mapInfoSelector,
+        state => state.controls && state.controls.share && state.controls.share.enabled,
+        mapSelector,
+        (state) => state.mapInfo && state.mapInfo.formatCoord || ConfigUtils.getConfigProp("defaultCoordinateFormat")
+    ], (enabled, resourceId, mapInfo, isVisible, map, formatCoord) => ({
         enabled,
-        resourceId: resourceId || mapInfo?.id
+        resourceId: resourceId || mapInfo?.id,
+        bbox: isVisible && map && map.bbox && getExtentFromViewport(map.bbox),
+        formatCoord,
+        zoom: map && map.zoom,
+        center: map && map.center && ConfigUtils.getCenter(map.center)
+
     })),
     {
         onClose: toggleControl.bind(null, 'share', null)
