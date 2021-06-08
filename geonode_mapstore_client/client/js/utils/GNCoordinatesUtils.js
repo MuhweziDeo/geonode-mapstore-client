@@ -47,15 +47,22 @@ export const getFeatureFromExtent = (extent) => {
                 ],
 
                 ...(bMinx && bMiny && bMaxx && bMaxy
-                    ? [
-                        [bMinx, bMiny],
-                        [aMinx, bMaxy],
-                        [bMaxx, bMaxy],
-                        [bMaxx, bMiny],
-                        [bMinx, bMiny]
+                    ?
+
+                    [
+                        [
+                            [
+                                [bMinx, bMiny],
+                                [bMinx, bMaxy],
+                                [bMaxx, bMaxy],
+                                [bMaxx, bMiny],
+                                [bMinx, bMiny]
+                            ]
+                        ]
                     ]
-                    : [])
-            ]
+
+                    : [])]
+
         },
         properties: {}
     };

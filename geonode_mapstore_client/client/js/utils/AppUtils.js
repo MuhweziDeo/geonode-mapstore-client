@@ -179,3 +179,13 @@ export function setupConfiguration({
         }
     };
 }
+
+export function getPageSize(width) {
+    if (width < 968) {
+        return 'sm';
+    }
+    if (width < 1400) {
+        return 'md';
+    }
+    return 'lg';
+}

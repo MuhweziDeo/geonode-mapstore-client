@@ -32,7 +32,7 @@ const LanguageSelector = forwardRef(({
     return (
         <div
             ref={ref}
-            className="gn-language-selector"
+            className={`gn-language-selector ${inline ? 'inline' : ''}`}
             style={style}
         >
             {inline

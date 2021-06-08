@@ -44,6 +44,10 @@ import { useInView } from 'react-intersection-observer';
 
 import { getResourceTypes, getCategories, getRegions, getOwners, getKeywords } from '@js/api/geonode/v2';
 
+import {
+    getPageSize
+} from '@js/utils/AppUtils';
+
 const DEFAULT_SUGGESTIONS = [];
 const DEFAULT_RESOURCES = [];
 const ConnectedLanguageSelector = connect(
@@ -153,16 +157,6 @@ const suggestionsRequestTypes = {
             .catch(() => null)
     }
 };
-
-function getPageSize(width) {
-    if (width < 968) {
-        return 'sm';
-    }
-    if (width < 1400) {
-        return 'md';
-    }
-    return 'lg';
-}
 
 function Home({
     location,
@@ -367,7 +361,6 @@ function Home({
     const isHeroVisible = !hideHero && inView;
     const stickyFiltersMaxHeight = (window.innerHeight - dimensions.brandNavbarHeight - dimensions.actionNavbarNodeHeight - dimensions.footerNodeHeight);
     const filterFormTop = dimensions.brandNavbarHeight + dimensions.actionNavbarNodeHeight;
-
 
 
     return (
