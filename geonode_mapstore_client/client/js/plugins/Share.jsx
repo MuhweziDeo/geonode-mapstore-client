@@ -15,8 +15,6 @@ import {toggleControl} from '@mapstore/framework/actions/controls';
 import Message from '@mapstore/framework/components/I18N/Message';
 import { Glyphicon } from 'react-bootstrap';
 import controls from '@mapstore/framework/reducers/controls';
-import search from '@mapstore/framework/reducers/search';
-import { addMarker } from '@mapstore/framework/actions/search';
 import ShareEmbed from '@mapstore/framework/components/share/ShareEmbed';
 import ShareLink from '@mapstore/framework/components/share/ShareLink';
 import ResizableModal from '@mapstore/framework/components/misc/ResizableModal';
@@ -56,7 +54,6 @@ function Share({
     formatCoord,
     zoom,
     center,
-    addMarker: addPoint,
     ...props
 }) {
     const shareUrl = getShareUrl({
@@ -148,7 +145,6 @@ function Share({
                 zoom={mapZoom}
                 coordinate={cordinates}
                 onChangeFormat={(format) => setCurrentFormatCoord(format)}
-                addMarker={addPoint}
                 setZoom={setZoom}
                 setCoordinates={setCoordinates}
             />
@@ -190,7 +186,6 @@ const SharePlugin = connect(
     })),
     {
         onClose: toggleControl.bind(null, 'share', null),
-        addMarker
     }
 )(Share);
 
@@ -215,7 +210,6 @@ export default createPlugin('Share', {
     },
     epics: {},
     reducers: {
-        controls,
-        search
+        controls
     }
 });
