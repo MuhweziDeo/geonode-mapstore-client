@@ -17,7 +17,6 @@ import {set} from '@mapstore/framework/utils/ImmutableUtils';
 
 const AdvancedSettings = (props = {}) => {
     // TODO handle point clicked and marker
-    const setMarkerSetting = () => ({});
     const [showAdvanced, setShowAdvanced] = useState(false);
     return (
         <SwitchPanel
@@ -42,7 +41,6 @@ const AdvancedSettings = (props = {}) => {
                     props.onUpdateSettings({
                         ...props.settings,
                         centerAndZoomEnabled: !props.settings?.centerAndZoomEnabled,
-                        ...setMarkerSetting(),
                         bboxEnabled: false
                     });
                     props.settings?.centerAndZoomEnabled && props.hideMarker();
@@ -63,8 +61,7 @@ const AdvancedSettings = (props = {}) => {
                         onSubmit={(val)=>{
                             const lat = !isNil(val.lat) && !isNaN(val.lat) ? parseFloat(val.lat) : 0;
                             const lng = !isNil(val.lon) && !isNaN(val.lon) ? parseFloat(val.lon) : 0;
-                            let newPoint = set('latlng.lng', lng, set('latlng.lat', lat, props.point));
-                            props.addMarker(newPoint);
+                            props.setCoordinates([lng, lat]);
                         }}
                         onChangeFormat={props.onChangeFormat}
                     />
@@ -102,11 +99,8 @@ AdvancedSettings.defaultProps = {
         centerAndZoomEnabled: true
     },
     onUpdateSettings: () => {},
-    hideMarker: () => {},
     onChangeFormat: () => {},
     coordinate: [],
-    onSubmitClickPoint: () => {},
-    addMarker: () => {},
     setZoom: () => {}
 };
 export default AdvancedSettings;

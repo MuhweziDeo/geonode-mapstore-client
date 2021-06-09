@@ -41,7 +41,9 @@ function getShareUrl({
     return url.format({
         host,
         protocol,
-        pathname
+        pathname,
+        hash: "#"
+
     });
 }
 
@@ -61,7 +63,8 @@ function Share({
         resourceId,
         pathTemplate
     });
-    // Share URL needs to include # at the end inorder to work with queryparams epic
+
+    const [shareApiUrl, setShareApiUrl] = React.useState(shareUrl);
     const [settings, setSettings] = React.useState({advancedSettings: {
         centerAndZoomEnabled: true,
         bbox: true,
@@ -102,6 +105,24 @@ function Share({
         setCoordinates(getCoordinates());
     }, [props.point]);
 
+    console.log(props.point);
+
+    React.useEffect(() => {
+        if (settings.settings.bboxEnabled) {
+            const bboxParam = bbox?.join(',');
+            setShareApiUrl(shareUrl + `?bbox=${bboxParam}`);
+        } else {
+            setShareApiUrl(shareUrl);
+        }
+    }, [settings.settings.bboxEnabled, bbox]);
+
+    React.useEffect(() => {
+        if (settings.settings.centerAndZoomEnabled) {
+            setShareApiUrl(shareUrl + `?center=${cordinates[0]},${cordinates[1]}&zoom=${mapZoom}`);
+        } else {
+            setShareApiUrl(shareUrl);
+        }
+    }, [settings.settings.centerAndZoomEnabled, mapZoom, cordinates]);
 
     return (
         <ResizableModal
@@ -113,11 +134,11 @@ function Share({
             onClose={() => onClose()}
         >
             <ShareLink
-                shareUrl={shareUrl}
+                shareUrl={shareApiUrl}
             />
             <ShareEmbed
                 showTOCToggle={false}
-                shareUrl={shareUrl}
+                shareUrl={shareApiUrl}
             />
 
             <AdvancedSettings onUpdateSettings={(newSettings) => setSettings({...settings, settings: newSettings})}
@@ -129,6 +150,7 @@ function Share({
                 onChangeFormat={(format) => setCurrentFormatCoord(format)}
                 addMarker={addPoint}
                 setZoom={setZoom}
+                setCoordinates={setCoordinates}
             />
         </ResizableModal>
     );
