@@ -19,7 +19,6 @@ import ShareEmbed from '@mapstore/framework/components/share/ShareEmbed';
 import ShareLink from '@mapstore/framework/components/share/ShareLink';
 import ResizableModal from '@mapstore/framework/components/misc/ResizableModal';
 import { mapInfoSelector, mapSelector } from '@mapstore/framework/selectors/map';
-import { clickPointSelector} from '@mapstore/framework/selectors/mapInfo';
 
 import AdvancedSettings from '@js/components/share/AdvancedSettings';
 import {getExtentFromViewport} from '@mapstore/framework/utils/CoordinatesUtils';
@@ -53,8 +52,7 @@ function Share({
     bbox,
     formatCoord,
     zoom,
-    center,
-    ...props
+    center
 }) {
     const shareUrl = getShareUrl({
         resourceId,
@@ -76,37 +74,18 @@ function Share({
     const [cordinates, setCoordinates] = React.useState([]);
     const [mapZoom, setZoom] = React.useState(zoom);
 
-    const getLonLat = (point) => {
-        const latlng = point && point.latlng || null;
-        let lngCorrected = null;
-        /* lngCorrected is the converted longitude in order to have the value between
-             * the range (-180 / +180).
-             * Precision has to be >= than the coordinate editor precision
-             * especially in the case of aeronautical degree editor which is 12
-        */
-        if (latlng) {
-            lngCorrected = latlng && Math.round(latlng.lng * 100000000000000000) / 100000000000000000;
-            lngCorrected = lngCorrected - 360 * Math.floor(lngCorrected / 360 + 0.5);
-        }
-        return  [lngCorrected, latlng && latlng.lat];
-    };
-
     const getCoordinates = () => {
-        const lonLat = getLonLat(props.point);
         const {x, y} = center || {x: "", y: ""};
-        const isValidLatLng = lonLat.filter(coord=> coord !== null);
-        return isValidLatLng.length > 0 ? lonLat : [x, y];
+        return  [x, y];
     };
 
     React.useEffect(() => {
         setCoordinates(getCoordinates());
-    }, [props.point]);
-
-    console.log(props.point);
+    }, [center]);
 
     React.useEffect(() => {
-        if (settings.settings.bboxEnabled) {
-            const bboxParam = bbox?.join(',');
+        if (settings.settings.bboxEnabled && bbox) {
+            const bboxParam = bbox.join(',');
             setShareApiUrl(shareUrl + `?bbox=${bboxParam}`);
         } else {
             setShareApiUrl(shareUrl);
@@ -128,7 +107,18 @@ function Share({
             show={enabled}
             fitContent
             clickOutEnabled={false}
-            onClose={() => onClose()}
+            onClose={() => {
+                onClose();
+                setSettings({advancedSettings: {
+                    centerAndZoomEnabled: true,
+                    bbox: true,
+                    centerAndZoom: true
+                }, settings: {
+                    bboxEnabled: false,
+                    centerAndZoomEnabled: false,
+                    markerEnabled: false
+                }});
+            }}
         >
             <ShareLink
                 shareUrl={shareApiUrl}
@@ -173,19 +163,17 @@ const SharePlugin = connect(
         mapInfoSelector,
         state => state.controls && state.controls.share && state.controls.share.enabled,
         mapSelector,
-        (state) => state.mapInfo && state.mapInfo.formatCoord || ConfigUtils.getConfigProp("defaultCoordinateFormat"),
-        clickPointSelector
-    ], (enabled, resourceId, mapInfo, isVisible, map, formatCoord, point) => ({
+        (state) => state.mapInfo && state.mapInfo.formatCoord || ConfigUtils.getConfigProp("defaultCoordinateFormat")
+    ], (enabled, resourceId, mapInfo, isVisible, map, formatCoord) => ({
         enabled,
         resourceId: resourceId || mapInfo?.id,
         bbox: isVisible && map && map.bbox && getExtentFromViewport(map.bbox),
         formatCoord,
         zoom: map && map.zoom,
-        center: map && map.center && ConfigUtils.getCenter(map.center),
-        point
+        center: map && map.center && ConfigUtils.getCenter(map.center)
     })),
     {
-        onClose: toggleControl.bind(null, 'share', null),
+        onClose: toggleControl.bind(null, 'share', null)
     }
 )(Share);
 

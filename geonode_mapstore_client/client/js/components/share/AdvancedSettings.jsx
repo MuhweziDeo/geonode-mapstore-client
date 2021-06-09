@@ -13,10 +13,8 @@ import isNil from 'lodash/isNil';
 import inRange from 'lodash/inRange';
 import Message from '@mapstore/framework/components/I18N/Message';
 import Editor from '@mapstore/framework/components/data/identify/coordinates/Editor';
-import {set} from '@mapstore/framework/utils/ImmutableUtils';
 
 const AdvancedSettings = (props = {}) => {
-    // TODO handle point clicked and marker
     const [showAdvanced, setShowAdvanced] = useState(false);
     return (
         <SwitchPanel
@@ -24,7 +22,7 @@ const AdvancedSettings = (props = {}) => {
             expanded={showAdvanced}
             onSwitch={() => setShowAdvanced(!showAdvanced)}
         >
-            {props.advancedSettings?.bbox && <Checkbox
+            {props.advancedSettings.bbox && <Checkbox
                 checked={props.settings?.bboxEnabled}
                 onChange={() =>
                     props.onUpdateSettings({
@@ -35,20 +33,19 @@ const AdvancedSettings = (props = {}) => {
                     })}>
                 <Message msgId="share.addBboxParam" />
             </Checkbox>}
-            {props.advancedSettings?.centerAndZoom && <Checkbox
-                checked={props.settings && props.settings?.centerAndZoomEnabled}
+            {props.advancedSettings.centerAndZoom && <Checkbox
+                checked={props.settings && props.settings.centerAndZoomEnabled}
                 onChange={() => {
                     props.onUpdateSettings({
                         ...props.settings,
-                        centerAndZoomEnabled: !props.settings?.centerAndZoomEnabled,
+                        centerAndZoomEnabled: !props.settings.centerAndZoomEnabled,
                         bboxEnabled: false
                     });
-                    props.settings?.centerAndZoomEnabled && props.hideMarker();
                 }
                 }>
-                <Message msgId={props.settings?.markerEnabled ? "share.addMarkerAndZoomParam" : "share.addCenterAndZoomParam"} />
+                <Message msgId="share.addCenterAndZoomParam" />
             </Checkbox>}
-            {props.settings?.centerAndZoomEnabled && <div>
+            {props.settings.centerAndZoomEnabled && <div>
                 <FormGroup id={"share-container"}>
                     <ControlLabel><Message msgId="share.coordinate" /></ControlLabel>
                     <OverlayTrigger placement="top" overlay={<Tooltip id="share-coordinate"><Message msgId="share.coordTooltip"/></Tooltip>}>
