@@ -9,8 +9,11 @@ import {
     Tooltip,
     OverlayTrigger
 } from 'react-bootstrap';
+import isNil from 'lodash/isNil';
+import inRange from 'lodash/inRange';
 import Message from '@mapstore/framework/components/I18N/Message';
 import Editor from '@mapstore/framework/components/data/identify/coordinates/Editor';
+import {set} from '@mapstore/framework/utils/ImmutableUtils';
 
 const AdvancedSettings = (props = {}) => {
     // TODO handle point clicked and marker
@@ -47,28 +50,6 @@ const AdvancedSettings = (props = {}) => {
                 }>
                 <Message msgId={props.settings?.markerEnabled ? "share.addMarkerAndZoomParam" : "share.addCenterAndZoomParam"} />
             </Checkbox>}
-            {props.advancedSettings?.homeButton && <Checkbox
-                checked={props.settings?.showHome}
-                onChange={() =>
-                    props.onUpdateSettings({
-                        // ...props.settings,
-                        showHome: !props.settings?.showHome
-                    })}>
-                <Message msgId="share.showHomeButton" />
-            </Checkbox>}
-            {
-                props.isScrollPosition
-                    && props.advancedSettings?.sectionId
-                    && <Checkbox
-                        checked={props.settings?.showSectionId}
-                        onChange={() =>
-                            props.onUpdateSettings({
-                                ...props.settings,
-                                showSectionId: !props.settings.showSectionId
-                            })}>
-                        <Message msgId="share.showSectionId" />
-                    </Checkbox>
-            }
             {props.settings?.centerAndZoomEnabled && <div>
                 <FormGroup id={"share-container"}>
                     <ControlLabel><Message msgId="share.coordinate" /></ControlLabel>
@@ -77,14 +58,13 @@ const AdvancedSettings = (props = {}) => {
                     </OverlayTrigger>
                     <Editor
                         removeVisible={false}
-                        formatCoord={props.formatCoords}
+                        formatCoord={props.formatCoord}
                         coordinate={{lat: props.coordinate[1] || "", lon: props.coordinate[0] || ""}}
                         onSubmit={(val)=>{
-                            console.log(val);
-                            // const lat = !isNil(val.lat) && !isNaN(val.lat) ? parseFloat(val.lat) : 0;
-                            // const lng = !isNil(val.lon) && !isNaN(val.lon) ? parseFloat(val.lon) : 0;
-                            // let newPoint = set('latlng.lng', lng, set('latlng.lat', lat, props.point));
-                            // props.addMarker(newPoint);
+                            const lat = !isNil(val.lat) && !isNaN(val.lat) ? parseFloat(val.lat) : 0;
+                            const lng = !isNil(val.lon) && !isNaN(val.lon) ? parseFloat(val.lon) : 0;
+                            let newPoint = set('latlng.lng', lng, set('latlng.lat', lat, props.point));
+                            props.addMarker(newPoint);
                         }}
                         onChangeFormat={props.onChangeFormat}
                     />
@@ -101,22 +81,10 @@ const AdvancedSettings = (props = {}) => {
                         name={"zoom"}
                         value={props.zoom || 21}
                         onChange={({target}) => {
-                            console.log(target);
-                            // const zoom = inRange(parseInt(target.value, 10), 1, 36) ? target.value : 1;
-                            // setState({...state, zoom});
+                            const zoom = inRange(parseInt(target.value, 10), 1, 36) ? target.value : 1;
+                            props.setZoom(zoom);
                         }}/>
                 </FormGroup>
-                <Checkbox
-                    checked={props.settings && props.settings?.markerEnabled}
-                    onChange={() => {
-                        props.onUpdateSettings({
-                            ...props.settings,
-                            markerEnabled: !props.settings?.markerEnabled
-                        });
-                    }
-                    }>
-                    <Message msgId="share.marker" />
-                </Checkbox>
             </div>
             }
         </SwitchPanel>
@@ -136,6 +104,9 @@ AdvancedSettings.defaultProps = {
     onUpdateSettings: () => {},
     hideMarker: () => {},
     onChangeFormat: () => {},
-    coordinate: []
+    coordinate: [],
+    onSubmitClickPoint: () => {},
+    addMarker: () => {},
+    setZoom: () => {}
 };
 export default AdvancedSettings;

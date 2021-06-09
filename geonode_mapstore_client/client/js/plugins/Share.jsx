@@ -15,10 +15,14 @@ import {toggleControl} from '@mapstore/framework/actions/controls';
 import Message from '@mapstore/framework/components/I18N/Message';
 import { Glyphicon } from 'react-bootstrap';
 import controls from '@mapstore/framework/reducers/controls';
+import search from '@mapstore/framework/reducers/search';
+import { addMarker } from '@mapstore/framework/actions/search';
 import ShareEmbed from '@mapstore/framework/components/share/ShareEmbed';
 import ShareLink from '@mapstore/framework/components/share/ShareLink';
 import ResizableModal from '@mapstore/framework/components/misc/ResizableModal';
 import { mapInfoSelector, mapSelector } from '@mapstore/framework/selectors/map';
+import { clickPointSelector} from '@mapstore/framework/selectors/mapInfo';
+
 import AdvancedSettings from '@js/components/share/AdvancedSettings';
 import {getExtentFromViewport} from '@mapstore/framework/utils/CoordinatesUtils';
 import ConfigUtils from '@mapstore/framework/utils/ConfigUtils';
@@ -49,7 +53,9 @@ function Share({
     bbox,
     formatCoord,
     zoom,
-    center
+    center,
+    addMarker: addPoint,
+    ...props
 }) {
     const shareUrl = getShareUrl({
         resourceId,
@@ -65,6 +71,38 @@ function Share({
         centerAndZoomEnabled: false,
         markerEnabled: false
     }});
+
+    const [currentFormatCoord, setCurrentFormatCoord] = React.useState(formatCoord);
+    const [cordinates, setCoordinates] = React.useState([]);
+    const [mapZoom, setZoom] = React.useState(zoom);
+
+    const getLonLat = (point) => {
+        const latlng = point && point.latlng || null;
+        let lngCorrected = null;
+        /* lngCorrected is the converted longitude in order to have the value between
+             * the range (-180 / +180).
+             * Precision has to be >= than the coordinate editor precision
+             * especially in the case of aeronautical degree editor which is 12
+        */
+        if (latlng) {
+            lngCorrected = latlng && Math.round(latlng.lng * 100000000000000000) / 100000000000000000;
+            lngCorrected = lngCorrected - 360 * Math.floor(lngCorrected / 360 + 0.5);
+        }
+        return  [lngCorrected, latlng && latlng.lat];
+    };
+
+    const getCoordinates = () => {
+        const lonLat = getLonLat(props.point);
+        const {x, y} = center || {x: "", y: ""};
+        const isValidLatLng = lonLat.filter(coord=> coord !== null);
+        return isValidLatLng.length > 0 ? lonLat : [x, y];
+    };
+
+    React.useEffect(() => {
+        setCoordinates(getCoordinates());
+    }, [props.point]);
+
+
     return (
         <ResizableModal
             modalClassName="gn-share-modal"
@@ -85,9 +123,12 @@ function Share({
             <AdvancedSettings onUpdateSettings={(newSettings) => setSettings({...settings, settings: newSettings})}
                 advancedSettings={settings.advancedSettings}
                 settings={settings.settings}
-                formatCoord={formatCoord}
-                zoom={zoom}
-                coordinate={center}
+                formatCoord={currentFormatCoord}
+                zoom={mapZoom}
+                coordinate={cordinates}
+                onChangeFormat={(format) => setCurrentFormatCoord(format)}
+                addMarker={addPoint}
+                setZoom={setZoom}
             />
         </ResizableModal>
     );
@@ -114,18 +155,20 @@ const SharePlugin = connect(
         mapInfoSelector,
         state => state.controls && state.controls.share && state.controls.share.enabled,
         mapSelector,
-        (state) => state.mapInfo && state.mapInfo.formatCoord || ConfigUtils.getConfigProp("defaultCoordinateFormat")
-    ], (enabled, resourceId, mapInfo, isVisible, map, formatCoord) => ({
+        (state) => state.mapInfo && state.mapInfo.formatCoord || ConfigUtils.getConfigProp("defaultCoordinateFormat"),
+        clickPointSelector
+    ], (enabled, resourceId, mapInfo, isVisible, map, formatCoord, point) => ({
         enabled,
         resourceId: resourceId || mapInfo?.id,
         bbox: isVisible && map && map.bbox && getExtentFromViewport(map.bbox),
         formatCoord,
         zoom: map && map.zoom,
-        center: map && map.center && ConfigUtils.getCenter(map.center)
-
+        center: map && map.center && ConfigUtils.getCenter(map.center),
+        point
     })),
     {
-        onClose: toggleControl.bind(null, 'share', null)
+        onClose: toggleControl.bind(null, 'share', null),
+        addMarker
     }
 )(Share);
 
@@ -150,6 +193,7 @@ export default createPlugin('Share', {
     },
     epics: {},
     reducers: {
-        controls
+        controls,
+        search
     }
 });
