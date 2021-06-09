@@ -40,8 +40,8 @@
   "geonode": {
     "devServer": {
       "host": "localhost",
-      "proxyTargetHost": "dev.nexus.geosolutionsgroup.com",
-      "protocol": "https"
+      "proxyTargetHost": "localhost:8000",
+      "protocol": "http"
     }
   }
 }
