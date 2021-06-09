@@ -1252,7 +1252,11 @@
             {
                 "name": "Share",
                 "cfg": {
-                    "pathTemplate": "/maps/{id}/embed"
+                    "pathTemplate": "/maps/{id}/embed",
+                    "advancedSettings": {
+                        "bbox": true,
+                        "centerAndZoom": true
+                    }
                 }
             },
             {
@@ -1527,7 +1531,11 @@
             {
                 "name": "Share",
                 "cfg": {
-                    "pathTemplate": "/maps/{id}/embed"
+                    "pathTemplate": "/maps/{id}/embed",
+                    "advancedSettings": {
+                        "bbox": true,
+                        "centerAndZoom": true
+                    }
                 }
             },
             {
@@ -1799,7 +1807,11 @@
             {
                 "name": "Share",
                 "cfg": {
-                    "pathTemplate": "/maps/{id}/embed"
+                    "pathTemplate": "/maps/{id}/embed",
+                    "advancedSettings": {
+                        "bbox": true,
+                        "centerAndZoom": true
+                    }
                 }
             },
             {
@@ -2069,7 +2081,11 @@
             {
                 "name": "Share",
                 "cfg": {
-                    "pathTemplate": "/maps/{id}/embed"
+                    "pathTemplate": "/maps/{id}/embed",
+                    "advancedSettings": {
+                        "bbox": true,
+                        "centerAndZoom": true
+                    }
                 }
             },
             {
@@ -2333,7 +2349,11 @@
             {
                 "name": "Share",
                 "cfg": {
-                    "pathTemplate": "/maps/{id}/embed"
+                    "pathTemplate": "/maps/{id}/embed",
+                    "advancedSettings": {
+                        "bbox": true,
+                        "centerAndZoom": true
+                    }
                 }
             },
             {
@@ -2788,7 +2808,11 @@
             {
                 "name": "Share",
                 "cfg": {
-                    "pathTemplate": "/maps/{id}/embed"
+                    "pathTemplate": "/maps/{id}/embed",
+                    "advancedSettings": {
+                        "bbox": true,
+                        "centerAndZoom": true
+                    }
                 }
             },
             {
@@ -3179,7 +3203,11 @@
             {
                 "name": "Share",
                 "cfg": {
-                    "pathTemplate": "/maps/{id}/embed"
+                    "pathTemplate": "/maps/{id}/embed",
+                    "advancedSettings": {
+                        "bbox": true,
+                        "centerAndZoom": true
+                    }
                 }
             },
             {

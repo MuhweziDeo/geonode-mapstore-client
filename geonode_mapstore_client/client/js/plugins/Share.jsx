@@ -52,7 +52,8 @@ function Share({
     bbox,
     formatCoord,
     zoom,
-    center
+    center,
+    advancedSettings = {}
 }) {
     const shareUrl = getShareUrl({
         resourceId,
@@ -60,14 +61,9 @@ function Share({
     });
 
     const [shareApiUrl, setShareApiUrl] = React.useState(shareUrl);
-    const [settings, setSettings] = React.useState({advancedSettings: {
-        centerAndZoomEnabled: true,
-        bbox: true,
-        centerAndZoom: true
-    }, settings: {
+    const [settings, setSettings] = React.useState({advancedSettings, settings: {
         bboxEnabled: false,
-        centerAndZoomEnabled: false,
-        markerEnabled: false
+        centerAndZoomEnabled: false
     }});
 
     const [currentFormatCoord, setCurrentFormatCoord] = React.useState(formatCoord);
@@ -115,8 +111,7 @@ function Share({
                     centerAndZoom: true
                 }, settings: {
                     bboxEnabled: false,
-                    centerAndZoomEnabled: false,
-                    markerEnabled: false
+                    centerAndZoomEnabled: false
                 }});
             }}
         >

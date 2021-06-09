@@ -27,9 +27,8 @@ const AdvancedSettings = (props = {}) => {
                 onChange={() =>
                     props.onUpdateSettings({
                         ...props.settings,
-                        bboxEnabled: !props.settings?.bboxEnabled,
-                        centerAndZoomEnabled: false,
-                        markerEnabled: false
+                        bboxEnabled: !props.settings.bboxEnabled,
+                        centerAndZoomEnabled: false
                     })}>
                 <Message msgId="share.addBboxParam" />
             </Checkbox>}
@@ -87,13 +86,12 @@ const AdvancedSettings = (props = {}) => {
 
 AdvancedSettings.defaultProps = {
     advancedSettings: {
-        centerAndZoomEnabled: true,
-        homeButton: false,
         bbox: true,
         centerAndZoom: true
     },
     settings: {
-        centerAndZoomEnabled: true
+        centerAndZoomEnabled: true,
+        bboxEnabled: false
     },
     onUpdateSettings: () => {},
     onChangeFormat: () => {},
