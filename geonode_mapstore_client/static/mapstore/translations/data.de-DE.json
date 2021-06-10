@@ -40,7 +40,7 @@
             "groups": "Gruppen",
             "groupsCategories": "Gruppenkategorien",
             "view": "Ansehen",
-            "viewLayer": "Ebene ansehen",
+            "viewLayer": "Ebene dataset",
             "viewMap": "Karte ansehen",
             "viewGeoStory": "GeoStory ansehen",
             "viewDocument": "Dokument ansehen",
@@ -87,7 +87,7 @@
             "inbox": "Inbox",
             "geoServer": "GeoServer",
             "help": "Hilfe",
-            "uploadLayer": "Ebene hochladen",
+            "uploadLayer": "Ebene dataset",
             "uploadDocument": "Dokument hochladen",
             "addRemoteService": "Remote Service hinzufügen",
             "exploreMaps": "Karten erkunden",
@@ -109,6 +109,10 @@
             "customFiltersTitle": "Ressourcen",
             "myResources": "Meine Ressourcen",
             "pendingApproval": "Ausstehende Genehmigung"
+        },
+        "gnviewer":{
+            "edit": "Bearbeiten"
         }
+
     }
 }

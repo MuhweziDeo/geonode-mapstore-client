@@ -99,6 +99,7 @@
             "templateFormatDescription": "Passen Sie das Ergebnis der Feature-Informationen an",
             "hideFormatTitle": "IDENTIFIZIERUNG DEAKTIVIEREN",
             "hideFormatDescription": "Deaktivieren Sie die Funktionsinformationen für diese Ebene",
+            "styleWarning": "Ebenenstil-Editor für Geometrietyp '{geometryType}' wird nicht unterstützt.",
             "templateFormatInfoAlert1": "Klicken Sie auf Bearbeiten, um eine neue Vorlage hinzuzufügen.",
             "templateFormatInfoAlert2": "Verwenden Sie ${ attribute }, um Attribut-Werte anzuzeigen",
             "templateFormatInfoAlertExample": "Die ID des Features lautet ${ properties }",
@@ -1300,7 +1301,11 @@
             "coordTooltip": "Klicken Sie auf die Karte, um die Koordinaten zu ändern / festzulegen",
             "zoomToolTip": "Min: 1 und Max: 35",
             "showSectionId": "Bildlaufposition einschließen",
-            "showConnections": "Verbindungen anzeigen"
+            "showConnections": "Verbindungen anzeigen",
+            "sizeOptions": {
+                "width": "Breite",
+                "height": "Höhe"
+            }
         },
         "snapshot": {
             "title": "Snapshot Vorschau",
@@ -1339,6 +1344,7 @@
         },
         "mapImport": {
                 "title": "Importieren",
+                "tooltip": "Importieren Sie eine Kartendatei oder Vektordaten",
                 "dropZone": {
                     "heading": "<p> <h4> Legen Sie hier Ihre Kartenkonfigurations- oder Vektordateien ab </h4> <small> oder nutzen Sie </small> </p>",
                     "selectFiles": "Dateien auswählen...",
@@ -1348,11 +1354,13 @@
                 "errors": {
                     "fileNotSupported": "Datei wird nicht unterstützt",
                     "unknownError": "Beim Import ist ein unbekannter Fehler aufgetreten",
-                    "projectionNotSupported": "Die Projektion der Datei, die Sie importieren möchten, wird nicht unterstützt"
+                    "projectionNotSupported": "Die Projektion der Datei, die Sie importieren möchten, wird nicht unterstützt",
+                    "fileBeyondBoundaries": "Die Datei {Dateiname} kann nicht importiert werden, da sie nicht zu den Kartengrenzen passt"
                 }
             },
         "mapExport": {
             "title": "Karte exportieren",
+            "tooltip": "Exportieren Sie die aktuelle Karte",
             "exportPanel": {
                 "title": "<p><h4>Wählen Sie ein Format</h4></p>",
                 "exportButtonLabel": "Export"
@@ -1376,13 +1384,13 @@
             "end": "Enddatum ",
             "notAvailable": "Nicht verfügbar",
             "title": "Katalog",
+            "tooltip": "Fügen Sie der Karte Ebenen hinzu",
             "autoload": "Suche in Serviceauswahl",
             "clearValueText": "Auswahl aufheben",
             "noResultsText": "keine Ergebnisse gefunden",
-            "tooltip": "Katalog durchsuchen",
             "addToMap": "Zur Karte hinzufügen",
             "getWMSLink": "WMS Link erhalten",
-            "error": "Es gab einen Fehler beim Laden von Einträgen aus dem Katalog",
+            "error": "Beim Laden der Daten ist ein Fehler aufgetreten",
             "pageInfo": "Resultat {start}-{end} von {total}",
             "resultInfo": "{total, plural, =0 {Keine Gegenstände} =1 {{total} von {total} stimmt überein} other {{start}-{end} von {total}}}",
             "pageInfoInfinite": "{total, plural, =undefined {} =0 {Keine Ergebnisse} =1 {{total} von {total} stimmt überein} other {Geladen {loaded} von {total} übereinstimmend}",
@@ -2996,6 +3004,7 @@
         },
         "mapCatalog": {
             "title": "Kartenkatalog",
+            "tooltip": "Karten durchsuchen und laden",
             "filterPlaceholder": "Karten suchen...",
             "deleteConfirmContent": "Möchten Sie die Karte \"{mapName}\" wirklich löschen?",
             "tooltips": {

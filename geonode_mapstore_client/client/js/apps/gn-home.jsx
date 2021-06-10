@@ -7,8 +7,8 @@
  */
 
 import main from '@mapstore/framework/components/app/main';
-import Router, { withRoutes } from '@js/components/app/Router';
-import MainLoader from '@js/components/app/MainLoader';
+import Router, { withRoutes } from '@js/components/Router';
+import MainLoader from '@js/components/MainLoader';
 import { connect } from 'react-redux';
 
 import security from '@mapstore/framework/reducers/security';
@@ -32,14 +32,9 @@ import {
 
 import {
     setupConfiguration,
-    initializeApp
+    initializeApp,
+    getVersion
 } from '@js/utils/AppUtils';
-
-// TODO: we should compile .scss as .less file in MapStore
-// and add a link tag with the compiled css in the template
-// this will ensure more control on override or custom css
-import '../../themes/geonode/scss/geonode.scss';
-
 
 const DEFAULT_LOCALE = {};
 const ConnectedRouter = connect((state) => ({
@@ -98,7 +93,13 @@ Promise.all([
                 }
             },
             pluginsConfig: localConfig.plugins || [],
-            themeCfg: null,
+            themeCfg: {
+                path: '/static/mapstore/dist/themes',
+                prefixContainer: 'body',
+                version: getVersion(),
+                prefix: 'msgapi',
+                theme: 'geonode'
+            },
             appReducers: {
                 gnsearch,
                 gnresource,

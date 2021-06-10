@@ -8,7 +8,7 @@
  */
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Form } from 'react-bootstrap-v1';
+import { FormGroup, Checkbox } from 'react-bootstrap';
 import BaseMap from '@mapstore/framework/components/map/BaseMap';
 import mapType from '@mapstore/framework/components/map/enhancers/mapType';
 import Message from '@mapstore/framework/components/I18N/Message';
@@ -92,18 +92,19 @@ function FilterByExtent({
     }
 
     return (
-        <Form.Group
+        <FormGroup
             key={id + '-extent'}
             controlId={id + '-extent'}
             className="gn-filter-by-extent"
         >
-            <Form.Check
+            <Checkbox
                 checked={enabled}
                 type="switch"
                 id="gn-filter-by-extent-switch"
-                label={<Message msgId="gnhome.extent"/>}
                 onChange={handleOnSwitch}
-            />
+            >
+                <Message msgId="gnhome.extent"/>
+            </Checkbox>
             <div
                 className="gn-filter-by-extent-map"
                 style={{
@@ -153,7 +154,7 @@ function FilterByExtent({
                     <ZoomTo extent={queryExtent} />
                 </Map>
             </div>
-        </Form.Group>
+        </FormGroup>
     );
 }
 

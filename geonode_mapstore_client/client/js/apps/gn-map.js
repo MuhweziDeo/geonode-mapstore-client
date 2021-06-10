@@ -7,8 +7,8 @@
  */
 
 import main from '@mapstore/framework/components/app/main';
-import Router, { withRoutes } from '@js/components/app/Router';
-import MainLoader from '@js/components/app/MainLoader';
+import Router, { withRoutes } from '@js/components/Router';
+import MainLoader from '@js/components/MainLoader';
 import { connect } from 'react-redux';
 import { getConfigProp, setConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import { configureMap } from '@mapstore/framework/actions/config';
@@ -116,7 +116,7 @@ Promise.all([
         setConfigProp('mapLayout', mapLayout[query.theme] || mapLayout.viewer);
 
         // register custom arcgis layer
-        import('@js/components/' + mapType + '/ArcGisMapServer')
+        import('@js/map/' + mapType + '/plugins/ArcGisMapServer')
             .then(() => {
                 main({
                     targetId,

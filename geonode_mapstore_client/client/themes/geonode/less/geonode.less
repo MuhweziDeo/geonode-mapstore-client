@@ -1,0 +1,51 @@
+@import '~bootstrap/less/bootstrap.less';
+@import 'ms-theme.less';
+@import '_base.less';
+
+@import '_action-navbar.less';
+@import '_brand-navbar.less';
+@import '_card-grid.less';
+@import '_details-panel.less';
+@import '_filter-by-extent.less';
+@import '_filter-form.less';
+@import '_filter-menu.less';
+@import '_footer.less';
+@import '_hero.less';
+@import '_loader.less';
+@import '_main-loader.less';
+@import '_menu-index.less';
+@import '_menu.less';
+@import '_resource-card.less';
+@import '_search-bar.less';
+@import '_spinner.less';
+@import '_swipe-menu.less';
+@import '_home-container.less';
+@import '_sub-flat-menu.less';
+@import '_tag.less';
+
+@import '_mixins.less';
+@import '_react-select.less';
+@import '_bootstrap-variables.less';
+@import '_variables.less';
+@import 'look.less';
+
+@import '~react-select/dist/react-select.css';
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+@import '~ol/ol.css';
+
+:root {
+    font-size: 16px;
+}
+
+@gn-theme-variants: light, dark;
+
+.generate-themes(length(@gn-theme-variants));
+
+.generate-themes(@n, @i: 1) when (@i =< @n) {
+  @current-theme-variant: extract(@gn-theme-variants, @i);
+  .gn-theme-@{current-theme-variant} {
+    @theme-var: #theme-library[@@current-theme-variant];
+    .write-gn-theme(@theme-var);
+  }
+  .generate-themes(@n, (@i + 1));
+}

@@ -11,7 +11,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import castArray from 'lodash/castArray';
 import Tag from '@js/components/home/Tag';
-import { Badge, Nav } from 'react-bootstrap-v1';
+import Badge from '@js/components/Badge';
+import NavLink from './NavLink';
 import Message from '@mapstore/framework/components/I18N/Message';
 import DropdownList from './DropdownList';
 import {
@@ -83,7 +84,7 @@ const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, cl
         }
 
         return (
-            <Nav.Link href={href}>{labelId && <Message msgId={labelId} /> || label}</Nav.Link>
+            <NavLink href={href}>{labelId && <Message msgId={labelId} /> || label}</NavLink>
         );
 
     }

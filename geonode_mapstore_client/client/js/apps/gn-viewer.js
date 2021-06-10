@@ -7,8 +7,8 @@
  */
 
 import main from '@mapstore/framework/components/app/main';
-import Router, { withRoutes } from '@js/components/app/Router';
-import MainLoader from '@js/components/app/MainLoader';
+import Router, { withRoutes } from '@js/components/Router';
+import MainLoader from '@js/components/MainLoader';
 import { connect } from 'react-redux';
 import { getConfigProp, setConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import { loadPrintCapabilities } from '@mapstore/framework/actions/print';
@@ -72,11 +72,6 @@ import 'react-select/dist/react-select.css';
 import pluginsDefinition from '@js/plugins/index';
 import ReactSwipe from 'react-swipeable-views';
 import SwipeHeader from '@mapstore/framework/components/data/identify/SwipeHeader';
-
-// TODO: we should compile .scss as .less file in MapStore
-// and add a link tag with the compiled css in the template
-// this will ensure more control on override or custom css
-import '../../themes/geonode/scss/geonode.scss';
 
 const requires = {
     ReactSwipe,
@@ -161,7 +156,7 @@ Promise.all([
         setConfigProp('mapLayout', mapLayout[query.theme] || mapLayout.viewer);
 
         // register custom arcgis layer
-        import('@js/components/' + mapType + '/ArcGisMapServer')
+        import('@js/map/' + mapType + '/plugins/ArcGisMapServer')
             .then(() => {
                 main({
                     targetId,
@@ -181,7 +176,7 @@ Promise.all([
                         prefixContainer: '#' + targetId,
                         version: getVersion(),
                         prefix: 'msgapi',
-                        theme: query.theme
+                        theme: 'geonode'
                     },
                     pluginsConfig: getPluginsConfiguration(localConfig.plugins, pluginsConfigKey),
                     lazyPlugins: pluginsDefinition.lazyPlugins,

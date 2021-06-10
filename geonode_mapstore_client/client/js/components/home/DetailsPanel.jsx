@@ -7,19 +7,23 @@
  */
 
 import React, { useRef, useState, useEffect } from 'react';
-import { Button, Spinner, Tooltip, OverlayTrigger } from 'react-bootstrap-v1';
 import DOMPurify from 'dompurify';
 import FaIcon from '@js/components/home/FaIcon';
+import Button from '@js/components/Button';
+import Spinner from '@js/components/Spinner';
 import Message from '@mapstore/framework/components/I18N/Message';
+import tooltip from '@mapstore/framework/components/misc/enhancers/tooltip';
 import moment from 'moment';
 import {
     getUserName,
     getResourceTypesInfo
 } from '@js/utils/GNSearchUtils';
 
-import CopyToClipboard from 'react-copy-to-clipboard';
+import CopyToClipboardCmp from 'react-copy-to-clipboard';
 import url from 'url';
 import {TextEditable, ThumbnailEditable} from '@js/components/ContentsEditable/';
+
+const CopyToClipboard = tooltip(CopyToClipboardCmp);
 
 const EditTitle = ({title, onEdit}) => {
     return (
@@ -234,27 +238,21 @@ function DetailsPanel({
                         }
                         {
                             <div className="gn-details-panel-tools">
-                                {detailUrl && <OverlayTrigger
-                                    placement="top"
-                                    overlay={(props) =>
-                                        <Tooltip id="share-resource-tooltip" {...props}>
-                                            <Message msgId={
-                                                copiedResourceLink
-                                                    ? 'gnhome.copiedResourceUrl'
-                                                    : 'gnhome.copyResourceUrl'
-                                            }/>
-                                        </Tooltip>}
+                                {detailUrl && <CopyToClipboard
+                                    tooltipPosition="top"
+                                    tooltipId={
+                                        copiedResourceLink
+                                            ? 'gnhome.copiedResourceUrl'
+                                            : 'gnhome.copyResourceUrl'
+                                    }
+                                    text={formatResourceLinkUrl(detailUrl)}
                                 >
-                                    <CopyToClipboard
-                                        text={formatResourceLinkUrl(detailUrl)}
-                                    >
-                                        <Button
-                                            variant="default"
-                                            onClick={handleCopyPermalink}>
-                                            <FaIcon name="share-alt" />
-                                        </Button>
-                                    </CopyToClipboard>
-                                </OverlayTrigger>}
+                                    <Button
+                                        variant="default"
+                                        onClick={handleCopyPermalink}>
+                                        <FaIcon name="share-alt" />
+                                    </Button>
+                                </CopyToClipboard>}
                                 {detailUrl && <Button
                                     variant="default"
                                     href={detailUrl}

@@ -7,7 +7,9 @@
  */
 
 import React, { forwardRef } from 'react';
-import { Dropdown, Button, Badge } from 'react-bootstrap-v1';
+import Dropdown from '@js/components/Dropdown';
+import Button from '@js/components/Button';
+import Badge from '@js/components/Badge';
 import Message from '@mapstore/framework/components/I18N/Message';
 import FaIcon from '@js/components/home/FaIcon';
 import useLocalStorage from '@js/hooks/useLocalStorage';
@@ -40,9 +42,8 @@ const FiltersMenu = forwardRef(({
             <div className="gn-filters-menu-container">
                 <div className="gn-filters-menu-main">
                     <Button
-                        variant="default"
+                        variant={filtersActive ? 'primary' : 'default'}
                         size="sm"
-                        active={filtersActive}
                         onClick={onClick}
                     >
                         <Message msgId="gnhome.filters" />
@@ -72,11 +73,12 @@ const FiltersMenu = forwardRef(({
                 </Button>
                 <div className="gn-filters-menu-tools">
 
-                    {orderOptions.length > 0 && <Dropdown alignRight>
+                    {orderOptions.length > 0 && <Dropdown pullRight>
                         <Dropdown.Toggle
                             id="sort-dropdown"
-                            variant="default"
-                            size="sm"
+                            bsStyle="default"
+                            bsSize="sm"
+                            noCaret
                         >
                             <Message msgId={selectedSort?.labelId || defaultLabelId} />
                         </Dropdown.Toggle>

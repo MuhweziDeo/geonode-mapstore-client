@@ -99,6 +99,7 @@
             "templateFormatDescription": "Personalizza il formato di risposta",
             "hideFormatTitle": "DISABILITA IDENTIFICA",
             "hideFormatDescription": "Disabilita le informazioni sulla funzionalità per questo livello",
+            "styleWarning": "L'editore dello stile di livello per il tipo di geometria '{geometryType}' non è supportato.",
             "templateFormatInfoAlert1": "Click sul bottone di modifica per aggiungere un nuovo template.",
             "templateFormatInfoAlert2": "Usa ${ attribute } per aggiungere gli attributi da visualizzare",
             "templateFormatInfoAlertExample": "id della feature è ${ properties }",
@@ -1299,7 +1300,11 @@
             "coordTooltip": "Clicca sulla mappa per ottenere le coordinate del centro",
             "zoomToolTip": "Min: 1 e Max: 35",
             "showSectionId": "Includi posizione di scorrimento",
-            "showConnections": "Mostra connessioni"
+            "showConnections": "Mostra connessioni",
+            "sizeOptions": {
+                "width": "larghezza",
+                "height": "altezza"
+            }
         },
         "snapshot": {
             "title": "Istantanea",
@@ -1338,6 +1343,7 @@
         },
         "mapImport": {
             "title": "Importa",
+            "tooltip": "Importa un file mappa o dati vettoriali",
             "dropZone": {
                 "heading": "<p> <h4> Rilascia qui i contesti di mappa o i file vettoriali </h4> <small> o </small> </p>",
                 "selectFiles": "Seleziona i file...",
@@ -1347,11 +1353,13 @@
             "errors": {
                 "fileNotSupported": "File non supportato",
                 "unknownError": "si è verificato un errore sconosciuto durante l'importazione",
-                "projectionNotSupported": "La proiezione del file che stai tentando di importare non è supportata"
+                "projectionNotSupported": "La proiezione del file che stai tentando di importare non è supportata",
+                "fileBeyondBoundaries": "Il file {nomefile} non può essere importato perché non si adatta ai confini della mappa"
             }
         },
         "mapExport": {
-            "title": "Esporta mappa",
+            "title": "Esporta",
+            "tooltip": "Esporta la mappa corrente",
             "exportPanel": {
                 "title": "<p><h4>Seleziona il tuo formato</h4></p>",
                 "exportButtonLabel": "Esportare"
@@ -1375,13 +1383,14 @@
             "end": "Data di fine ",
             "notAvailable": "Non disponibile",
             "title": "Catalogo",
+            "tooltip": "Aggiungi livelli alla mappa",
             "autoload": "Ricerca alla selezione del servizio",
             "clearValueText": "Cancella selezione",
             "noResultsText": "Nessun risultato trovato",
             "tooltip": "Sfoglia Catalogo",
             "addToMap": "Aggiungi alla mappa",
             "getWMSLink": "Ottieni link WMS",
-            "error": "C'è stato un errore durante il caricamento del catalogo",
+            "error": "C'è stato un errore durante il caricamento dei dati",
             "pageInfo": "Risultati {start}-{end} di {total}",
             "resultInfo": "{total, plural, =0 {Nessun Risultato} =1 {{total} Risultato di {total}} other {{start}-{end} di {total}}}",
             "pageInfoInfinite": "{total, plural, =undefined {} =0 {Nessun Risultato} =1 {{total} risultato} other {Caricati {loaded} di {total} risultati}}",
@@ -2978,10 +2987,10 @@
           "removeExtension": "Rimuovi Estensione"
         },
         "mapTemplates": {
-            "title": "Modelli di mappe",
+            "title": "Modelli di mappa",
             "favouritesTitle": "Preferiti",
             "allTitle": "Tutti",
-            "filterPlaceholder": "Filtra i modelli di mappe...",
+            "filterPlaceholder": "Filtra i modelli di mappa...",
             "transfer": "Sostituisci mappa con questo modello",
             "merge": "Aggiungi questo modello alla mappa",
             "favouriteAdd": "Aggiungi ai preferiti",
@@ -2996,6 +3005,7 @@
         },
         "mapCatalog": {
             "title": "Catalogo mappe",
+            "tooltip": "Sfoglia e carica mappe",
             "filterPlaceholder": "Cerca mappe...",
             "deleteConfirmContent": "Sei sicuro di voler eliminare la mappa \"{mapName}\"?",
             "tooltips": {

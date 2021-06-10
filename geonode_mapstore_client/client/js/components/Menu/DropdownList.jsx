@@ -10,7 +10,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Message from '@mapstore/framework/components/I18N/Message';
-import { Dropdown, Badge, Nav } from 'react-bootstrap-v1';
+import Dropdown from '@js/components/Dropdown';
+import Badge from '@js/components/Badge';
+import NavLink from './NavLink';
 import { createPortal } from 'react-dom';
 import FaIcon from '@js/components/home/FaIcon';
 import {
@@ -19,9 +21,9 @@ import {
 
 const itemElement = ({ labelId, href, badge }) =>  (
     <>
-        <Nav.Link href={href}>{labelId && <Message msgId={labelId} />}
+        <NavLink href={href}>{labelId && <Message msgId={labelId} />}
             { isValidBadgeValue(badge) && <Badge>{badge}</Badge>}
-        </Nav.Link>
+        </NavLink>
     </>);
 
 const itemsList = (items) => ( items && items.map(({ labelId, href, badge }) => itemElement({ labelId, href, badge })));
@@ -104,10 +106,11 @@ const DropdownList = ({
     const DropdownToogle = (
         <Dropdown.Toggle
             id={ `gn-toggle-dropdown-${id}`}
-            variant={`default`}
+            bsStyle={`default`}
             tabIndex={tabIndex}
             style={toogleStyle}
-            size={size}
+            bsSize={size}
+            noCaret
         >
             {toogleImage
                 ? <img src={toogleImage} />
@@ -128,7 +131,7 @@ const DropdownList = ({
     return (
         <Dropdown
             className={`${dropdownClass}`}
-            alignRight={alignRight}
+            pullRight={alignRight}
         >
             {DropdownToogle}
             {containerNode

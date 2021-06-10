@@ -40,7 +40,7 @@
             "groups": "Groups",
             "groupsCategories": "Groups categories",
             "view": "View",
-            "viewLayer": "View layer",
+            "viewLayer": "View dataset",
             "viewMap": "View map",
             "viewGeoStory": "View GeoStory",
             "viewDocument": "View document",
@@ -87,7 +87,7 @@
             "inbox": "Inbox",
             "geoServer": "GeoServer",
             "help": "Help",
-            "uploadLayer": "Upload layer",
+            "uploadLayer": "Upload dataset",
             "uploadDocument": "Upload document",
             "addRemoteService": "Add remote service",
             "exploreMaps": "Explore maps",
@@ -110,6 +110,9 @@
             "myResources": "My resources",
             "pendingApproval": "Pending approval"
 
+        },
+        "gnviewer":{
+            "edit": "Edit"
         }
     }
 }

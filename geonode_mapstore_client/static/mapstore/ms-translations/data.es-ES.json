@@ -99,6 +99,7 @@
             "templateFormatDescription": "Personalizar el formato de resultados de información de la capa",
             "hideFormatTitle": "DESACTIVAR IDENTIFICAR",
             "hideFormatDescription": "Deshabilite la información de la entidad para esta capa",
+            "styleWarning": "El editor de estilo de capa para el tipo de geometría '{geometryType}' no es compatible.",
             "templateFormatInfoAlert1": "Haga clic en el botón Editar para agregar una nueva plantilla.",
             "templateFormatInfoAlert2": "Use ${ attribute } para ajustar las propiedades que necesita visualizar",
             "visibilityLimits": {
@@ -1299,7 +1300,11 @@
             "coordTooltip": "Haga clic en el mapa para tomar las coordenadas.",
             "zoomToolTip": "Min: 1 y Max: 35",
             "showSectionId": "Incluir posición de desplazamiento",
-            "showConnections": "Mostrar conexiones"
+            "showConnections": "Mostrar conexiones",
+            "sizeOptions": {
+                "width": "ancho",
+                "height": "altura"
+            }
         },
         "snapshot": {
             "title": "Previsualización de la captura del mapa",
@@ -1338,6 +1343,7 @@
         },
         "mapImport": {
             "title": "Importar",
+            "tooltip": "Importar un archivo de mapa o datos vectoriales",
             "dropZone": {
                 "heading": "<p> <h4> Suelta contextos de mapas o archivos vectoriales aquí </h4> <small> o </small> </p>",
                 "selectFiles": "Selecciona archivos...",
@@ -1347,11 +1353,13 @@
             "errors": {
                 "fileNotSupported": "Archivo no compatible",
                 "unknownError": "hubo un error desconocido durante la importación",
-                "projectionNotSupported": "La proyección del archivo que está intentando importar no es compatible"
+                "projectionNotSupported": "La proyección del archivo que está intentando importar no es compatible",
+                "fileBeyondBoundaries": "El archivo {filename} no se pudo importar porque no encaja dentro de los límites del mapa"
             }
         },
         "mapExport": {
-            "title": "Exportar el mapa",
+            "title": "Exportar",
+            "tooltip": "Exportar el mapa actual",
             "exportPanel": {
                 "title": "<p><h4>Seleccione su formato</h4></p>",
                 "exportButtonLabel": "Exportar"
@@ -1375,13 +1383,13 @@
             "end": "Fecha de finalización ",
             "notAvailable": "No disponible",
             "title": "Catálogo",
+            "tooltip": "agregar capas al mapa",
             "autoload": "Buscar en la selección de servicios",
             "clearValueText": "Borrar selección",
             "noResultsText": "No se encontraron resultados",
-            "tooltip": "Buscar en el catálogo",
             "addToMap": "Añadir al mapa",
             "getWMSLink": "Enlace WMS",
-            "error": "Ha ocurrido un error cargando los datos del catálogo",
+            "error": "Ha ocurrido un error al cargar los datos.",
             "pageInfo": "{start}-{end} resultados de {total}",
             "resultInfo": "{total, plural, =0 No hay artículos} =1 {{total} artículo de {total}} other {{start}-{end} de {total}}}",
             "pageInfoInfinite": "{total, plural, =undefined {} =0 {No hay resultados} =1 {{total} de {total} emparejados} other {Cargado {loaded} de {total} emparejados}}",
@@ -2996,6 +3004,7 @@
         },
         "mapCatalog": {
             "title": "Catálogo de mapas",
+            "tooltip": "Examinar y cargar mapas",
             "filterPlaceholder": "Buscar mapas...",
             "deleteConfirmContent": "¿Estás seguro de que quieres eliminar el mapa \"{mapName}\"?",
             "tooltips": {

@@ -8,7 +8,7 @@
 
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { Jumbotron } from 'react-bootstrap-v1';
+import { Jumbotron } from 'react-bootstrap';
 import HTML from '@mapstore/framework/components/I18N/HTML';
 
 const Hero = forwardRef(({

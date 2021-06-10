@@ -7,10 +7,10 @@
  */
 
 import React, { forwardRef } from 'react';
-import { Card, Dropdown } from 'react-bootstrap-v1';
 import Message from '@mapstore/framework/components/I18N/Message';
 import FaIcon from '@js/components/home/FaIcon';
 import Tag from '@js/components/home/Tag';
+import Dropdown from '@js/components/Dropdown';
 import {
     getUserName,
     getResourceTypesInfo
@@ -30,7 +30,7 @@ const ResourceCard = forwardRef(({
     const { icon } = types[res.doc_type] || types[res.resource_type] || {};
 
     return (
-        <Card
+        <div
             ref={ref}
             className={`gn-resource-card${active ? ' active' : ''} gn-card-type-${layoutCardsStyle} ${layoutCardsStyle === 'list' ? 'rounded-0' : ''}`}
         >
@@ -41,12 +41,12 @@ const ResourceCard = forwardRef(({
                 })}
             />
             <div className={`card-resource-${layoutCardsStyle}`}>
-                <Card.Img
-                    variant={`${(layoutCardsStyle === 'list') ? 'left' : 'top'}`}
+                <img
+                    className={`${(layoutCardsStyle === 'list') ? 'card-img-left' : 'card-img-top'}`}
                     src={res.thumbnail_url}
                 />
-                <Card.Body>
-                    <Card.Title>
+                <div className="card-body">
+                    <div className="card-title">
                         {icon &&
                         <>
                             <Tag
@@ -61,31 +61,32 @@ const ResourceCard = forwardRef(({
                         <a href={res.detail_url}>
                             {res.title}
                         </a>
-                    </Card.Title>
-                    <Card.Text
-                        className="gn-card-description"
+                    </div>
+                    <p
+                        className="card-text gn-card-description"
                     >
                         {res.raw_abstract ? res.raw_abstract : '...'}
-                    </Card.Text>
-                    <Card.Text
-                        lassName="gn-card-user"
+                    </p>
+                    <p
+                        className="card-text gn-card-user"
                     >
                         <Message msgId="gnhome.author"/>: <a href={formatHref({
                             query: {
                                 'filter{owner.username.in}': res.owner.username
                             }
                         })}>{getUserName(res.owner)}</a>
-                    </Card.Text>
+                    </p>
 
-                </Card.Body>
+                </div>
                 {options && options.length > 0 && <Dropdown
                     className="gn-card-options"
-                    alignRight
+                    pullRight
                 >
                     <Dropdown.Toggle
                         id={`gn-card-options-${res.pk}`}
                         variant="default"
                         size="sm"
+                        noCaret
                     >
                         <FaIcon name="ellipsis-h" />
                     </Dropdown.Toggle>
@@ -104,9 +105,8 @@ const ResourceCard = forwardRef(({
                             })}
                     </Dropdown.Menu>
                 </Dropdown>}
-
             </div>
-        </Card>
+        </div>
     );
 });
 

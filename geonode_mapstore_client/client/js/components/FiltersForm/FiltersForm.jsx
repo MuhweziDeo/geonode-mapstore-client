@@ -9,7 +9,7 @@
 import React, { useState, useEffect, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import castArray from 'lodash/castArray';
-import { Form, Button } from 'react-bootstrap-v1';
+import Button from '@js/components/Button';
 import Message from '@mapstore/framework/components/I18N/Message';
 import FaIcon from '@js/components/home/FaIcon';
 import isEqual from 'lodash/isEqual';
@@ -101,7 +101,7 @@ function FilterForm({
                 className="gn-filter-form-body"
             >
                 <div className="gn-filter-form-content">
-                    <Form
+                    <form
                         style={style}
                     >
                         <FilterItems
@@ -124,7 +124,7 @@ function FilterForm({
                                 })
                             }
                         />
-                    </Form>
+                    </form>
                 </div>
             </div>
             <div className="gn-filter-form-footer">

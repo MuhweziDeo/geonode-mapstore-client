@@ -8,9 +8,9 @@
 
 import { connect } from 'react-redux';
 import main from '@mapstore/framework/components/app/main';
-import MainLoader from '@js/components/app/MainLoader';
+import MainLoader from '@js/components/MainLoader';
 import GeoStory from '@js/routes/GeoStory';
-import Router, { withRoutes } from '@js/components/app/Router';
+import Router, { withRoutes } from '@js/components/Router';
 import security from '@mapstore/framework/reducers/security';
 import maptype from '@mapstore/framework/reducers/maptype';
 import geostory from '@mapstore/framework/reducers/geostory';

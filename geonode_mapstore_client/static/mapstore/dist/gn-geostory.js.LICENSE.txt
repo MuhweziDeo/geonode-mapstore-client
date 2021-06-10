@@ -56,6 +56,8 @@ object-assign
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
+/** @license MIT License (c) copyright 2010-2014 original author or authors */
+
 /** @license React v0.16.2
  * scheduler.production.min.js
  *

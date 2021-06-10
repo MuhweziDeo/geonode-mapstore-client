@@ -364,7 +364,7 @@ function Home({
 
 
     return (
-        <div className={`gn-home gn-theme-${theme?.variant || 'light'}`}>
+        <div className={`gn-home`}>
             <BrandNavbar
                 ref={brandNavbarNode}
                 logo={castArray(config?.navbar?.logo || [])

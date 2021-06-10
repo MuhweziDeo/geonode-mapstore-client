@@ -8,10 +8,10 @@
 
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown, Button } from 'react-bootstrap-v1';
 import Message from '@mapstore/framework/components/I18N/Message';
 import { getSupportedLocales } from '@mapstore/framework/utils/LocaleUtils';
-
+import Dropdown from '@js/components/Dropdown';
+import Button from '@js/components/Button';
 const LanguageSelector = forwardRef(({
     style,
     value,
@@ -48,11 +48,12 @@ const LanguageSelector = forwardRef(({
                         </Button>
                     );
                 })
-                : <Dropdown alignRight>
+                : <Dropdown pullRight>
                     <Dropdown.Toggle
                         id="language-selector"
-                        variant="default"
-                        size="sm"
+                        bsStyle="default"
+                        bsSize="sm"
+                        noCaret
                     >
                         {selected.description || <Message msgId="gnhome.language" />}
                     </Dropdown.Toggle>

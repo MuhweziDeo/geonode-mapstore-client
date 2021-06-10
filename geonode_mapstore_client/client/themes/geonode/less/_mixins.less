@@ -1,0 +1,101 @@
+/*
+ * Copyright 2020, GeoSolutions Sas.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.color-var(@fallback, @color) {
+    color: @fallback;
+    color: var(@color, @fallback);
+}
+
+.background-color-var(@fallback, @color) {
+    background-color: @fallback;
+    background-color: var(@color, @fallback);
+}
+
+.border-color-var(@fallback, @color) {
+    border-color: @fallback;
+    border-color: var(@color, @fallback);
+}
+
+.outline-color-var(@fallback, @color) {
+    outline-color: @fallback;
+    outline-color: var(@color, @fallback);
+}
+
+.box-shadow-var(@fallback, @color) {
+    box-shadow: 0 0 0 0.2rem @fallback;
+    box-shadow: 0 0 0 0.2rem var(@color, @fallback);
+}
+
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
+}
+
+.shadow {
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+}
+
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%);
+}
+
+.button-variant-with-css-variable(@button-vars, @button-css-vars) {
+    .color-var(@button-vars[button-color], @button-css-vars[button-color]);
+    .background-color-var(@button-vars[button-bg], @button-css-vars[button-bg]);
+    .border-color-var(@button-vars[button-border-color], @button-css-vars[button-border-color]);
+    &:focus,
+    &.focus {
+        .color-var(@button-vars[button-focus-color], @button-css-vars[button-focus-color]);
+        .background-color-var(@button-vars[button-focus-bg], @button-css-vars[button-focus-bg]);
+        .border-color-var(@button-vars[button-focus-border-color], @button-css-vars[button-focus-border-color]);
+    }
+
+    &:hover {
+        .color-var(@button-vars[button-hover-color], @button-css-vars[button-hover-color]);
+        .background-color-var(@button-vars[button-hover-bg], @button-css-vars[button-hover-bg]);
+        .border-color-var(@button-vars[button-hover-border-color], @button-css-vars[button-hover-border-color]);
+    }
+    &:active,
+    &.active,
+    .open > .dropdown-toggle& {
+        .color-var(@button-vars[button-active-color], @button-css-vars[button-active-color]);
+        .background-color-var(@button-vars[button-active-bg], @button-css-vars[button-active-bg]);
+        .border-color-var(@button-vars[button-active-border-color], @button-css-vars[button-active-border-color]);
+
+        &:hover,
+        &:focus,
+        &.focus {
+            .color-var(@button-vars[button-active-hover-color], @button-css-vars[button-active-hover-color]);
+            .background-color-var(@button-vars[button-active-hover-bg], @button-css-vars[button-active-hover-bg]);
+            .border-color-var(@button-vars[button-active-hover-border-color], @button-css-vars[button-active-hover-border-color]);
+        }
+    }
+    &:active,
+    &.active,
+    .open > .dropdown-toggle& {
+        background-image: none;
+    }
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &,
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active {
+            .color-var(@button-vars[button-disabled-color], @button-css-vars[button-disabled-color]);
+            .background-color-var(@button-vars[button-disabled-bg], @button-css-vars[button-disabled-bg]);
+            .border-color-var(@button-vars[button-disabled-border-color], @button-css-vars[button-disabled-border-color]);
+        }
+    }
+
+    .badge {
+        .color-var(@button-vars[button-badge-color], @button-css-vars[button-badge-color]);
+        .background-color-var(@button-vars[button-badge-bg], @button-css-vars[button-badge-bg]);
+    }
+}

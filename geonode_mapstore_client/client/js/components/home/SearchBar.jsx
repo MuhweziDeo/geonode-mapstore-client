@@ -7,10 +7,12 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { FormControl, ListGroup, InputGroup, Button, Spinner } from 'react-bootstrap-v1';
+import { FormControl, ListGroup, InputGroup, ListGroupItem } from 'react-bootstrap';
 import FaIcon from '@js/components/home/FaIcon';
 import useDetectClickOut from '@js/hooks/useDetectClickOut';
 import debounce from 'lodash/debounce';
+import Spinner from '@js/components/Spinner';
+import Button from '@js/components/Button';
 function SearchBar({
     value,
     loading,
@@ -73,7 +75,7 @@ function SearchBar({
         <div
             className={`gn-search-bar ${ outline ? ' focus' : ''}`} style={style}>
             <InputGroup>
-                <InputGroup.Prepend>
+                <InputGroup.Addon>
                     {text &&
                     <Button
                         onClick={() => handleChange('')}
@@ -89,7 +91,7 @@ function SearchBar({
                             </Spinner>
                             : <FaIcon name="search" />}
                     </Button>
-                </InputGroup.Prepend>
+                </InputGroup.Addon>
                 <FormControl
                     placeholder="Search"
                     aria-label="Recipient's username"
@@ -104,9 +106,9 @@ function SearchBar({
                         boxShadow: 'none'
                     }}
                 />
-                <InputGroup.Append>
+                <InputGroup.Addon>
                     {append}
-                </InputGroup.Append>
+                </InputGroup.Addon>
             </InputGroup>
             {suggestions.length > 0 &&
             <div
@@ -123,13 +125,13 @@ function SearchBar({
                 <ListGroup>
                     {suggestions.map(suggestion => {
                         return (
-                            <ListGroup.Item
+                            <ListGroupItem
                                 key={suggestion.id}
                                 action={!loading}
                                 onClick={() => handleChange(suggestion.value)}
                             >
                                 {suggestion.label}
-                            </ListGroup.Item>
+                            </ListGroupItem>
                         );
                     })}
                 </ListGroup>

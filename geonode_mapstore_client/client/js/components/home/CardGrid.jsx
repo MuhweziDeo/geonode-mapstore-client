@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useRef } from 'react';
-import { Spinner } from 'react-bootstrap-v1';
+import Spinner from '@js/components/Spinner';
 import HTML from '@mapstore/framework/components/I18N/HTML';
 import FaIcon from '@js/components/home/FaIcon';
 import ResourceCard from '@js/components/home/ResourceCard';
