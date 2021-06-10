@@ -25,7 +25,7 @@ const PdfViewer = ({src}) => {
         </div>);
     }
 
-    return (<iframe type="application/pdf"
+    return (<iframe className="gn-pdf-viewer" type="application/pdf"
         frameBorder="0"
         scrolling="auto"
         height="100%"

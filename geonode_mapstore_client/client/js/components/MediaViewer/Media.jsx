@@ -36,7 +36,7 @@ const mediaDefaultProps = {
     pdf: {},
     unsupported: {
         showCaption: true,
-        caption: <h3><HTML msgId={'viewer.document.unSupportedMedia'}/></h3>,
+        caption: <h3 className="unsupported-media-caption"><HTML msgId={'viewer.document.unSupportedMedia'}/></h3>,
         enableFullscreen: false
     }
 };
