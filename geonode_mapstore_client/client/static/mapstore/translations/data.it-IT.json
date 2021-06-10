@@ -23,21 +23,24 @@
             "aZ": "A Z",
             "zA": "Z A",
             "mostPopular": "Più popolare",
-            "data": "Dato",
-            "layers": "Layers",
+            "data": "Dati",
+            "layer": "Dataset",
+            "layers": "Datasets",
+            "document": "Documento",
             "documents": "Documenti",
             "remoteServices": "Servizi remoti",
             "maps": "Mappe",
             "map": "Mappa",
-            "layer": "Layer",
             "geostory": "Geostory",
+            "geostories": "GeoStories",
+            "createGeostory": "Create geostory",
             "createNew": "Crea nuova",
             "about": "A proposito",
             "people": "Utenti",
             "groups": "Gruppi",
             "groupsCategories": "Categorie gruppo",
             "view": "View",
-            "viewLayer": "Visualizza layer",
+            "viewLayer": "Visualizza dataset",
             "viewMap": "Visualizza mappa",
             "viewGeoStory": "Visualizza GeoStory",
             "viewDocument": "Visualizza documento",
@@ -66,6 +69,7 @@
             "privacy": "Privacy",
             "extent": "Estensione",
             "enableFilterByExtent": "Abilita filtro per estensione",
+            "advancedSearch": "Ricerca avanzata",
             "apply": "Applica",
             "clearFilters": "Cancella filtri",
 
@@ -85,12 +89,13 @@
             "inbox": "Posta in arrivo",
             "geoServer": "GeoServer",
             "help": "Aiuto",
-            "uploadLayer": "Carica layer",
+            "uploadLayer": "Carica dataset",
             "uploadDocument": "Carica documento",
             "addRemoteService": "Aggiungi servizio remoto",
             "exploreMaps": "Esplora mappe",
             "createMap": "Crea mappa",
             "apps": "Apps",
+            "createApp": "Crea app",
             "announcements": "Notizie",
             "inviteUsers": "Invita utenti",
             "addUser": "Aggiungi utente",
@@ -111,6 +116,9 @@
             "document": {
                 "unSupportedMedia": "Il formato multimediale non è supportato"
             }
+        },
+        "gnviewer":{
+            "edit": "Modifica"
         }
     }
 }

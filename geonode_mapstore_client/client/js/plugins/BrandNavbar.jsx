@@ -36,7 +36,7 @@ function BrandNavbarPlg({
                 top: 0,
                 left: 0,
                 width: '100%',
-                height: 60
+                height: 64
             }}>
             <BrandNavbar
                 logo={castArray(config?.navbar?.logo || [])

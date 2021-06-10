@@ -20,7 +20,7 @@ const usePluginItems = ({
             .sort((a, b) => a.position > b.position ? 1 : -1)
             .map(plg => ({
                 ...plg,
-                Component: getConfiguredPlugin(plg, props.loadedPlugins, props.loaderComponent || <div />)
+                Component: plg.Component || getConfiguredPlugin(plg, props.loadedPlugins, props.loaderComponent || <div />)
             })) || [];
     }
     const props = useRef({});

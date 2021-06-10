@@ -24,20 +24,23 @@
             "zA": "Z A",
             "mostPopular": "Les plus populaires",
             "data": "Données",
-            "layers": "Couches",
+            "layer": "Dataset",
+            "layers": "Datasets",
+            "document": "Document",
             "documents": "Documents",
             "remoteServices": "Services à distance",
             "maps": "Cartes",
             "map": "Carte",
-            "layer": "Couche",
             "geostory": "GeoStory",
+            "geostories": "GeoStories",
+            "createGeostory": "Créer une geostory",
             "createNew": "Créer un nouveau",
             "about": "À propos",
             "people": "Personnes",
             "groups": "Groupe",
             "groupsCategories": "Catégories de groupe",
             "view": "Voir",
-            "viewLayer": "Visualiser la couche",
+            "viewLayer": "Visualiser dataset",
             "viewMap": "Voir la carte",
             "viewGeoStory": "Voir la GeoStory",
             "viewDocument": "Voir document",
@@ -64,6 +67,7 @@
             "privacy": "Privacy",
             "extent": "Étendue",
             "enableFilterByExtent": "Activer le filtre par étendue",
+            "advancedSearch": "Recherche vvancée",
             "apply": "Appliquer",
             "clearFilters": "Effacer les filtres",
 
@@ -83,12 +87,13 @@
             "inbox": "Boîte de réception",
             "geoServer": "GeoServer",
             "help": "Aide",
-            "uploadLayer": "Téléchargez la couche",
+            "uploadLayer": "Téléchargez dataset",
             "uploadDocument": "Télécharger un document",
             "addRemoteService": "Ajouter un service à distance",
             "exploreMaps": "Explorer les cartes",
             "createMap": "Créer une carte",
             "apps": "Apps",
+            "createApp": "Créer une app",
             "announcements": "Annonces",
             "inviteUsers": "Inviter des utilisateurs",
             "addUser": "Ajouter un utilisateur",
@@ -109,6 +114,9 @@
             "document": {
                 "unSupportedMedia": "Le format multimédia n'est pas pris en charge"
             }
+        },
+        "gnviewer":{
+            "edit": "Éditer"
         }
     }
 }

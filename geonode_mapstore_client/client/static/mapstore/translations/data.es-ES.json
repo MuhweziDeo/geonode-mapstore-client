@@ -24,20 +24,23 @@
             "zA": "Z A",
             "mostPopular": "Más popular",
             "data": "Datos",
-            "layers": "Capas",
+            "layer": "Dataset",
+            "layers": "Datasets",
+            "document": "Documento",
             "documents": "Documentos",
             "remoteServices": "Servicios remotos",
             "maps": "Mapas",
             "map": "Mapa",
-            "layer": "Capa",
             "geostory": "GeoStory",
+            "geostories": "GeoStories",
+            "createGeostory": "Crear geostory",
             "createNew": "Crear nuevo",
             "about": "Acerca de",
             "people": "Personas",
             "groups": "Grupos",
             "groupsCategories": "Categorías de grupo",
             "view": "View",
-            "viewLayer": "Ver capa",
+            "viewLayer": "Ver dataset",
             "viewMap": "Ver mapa",
             "viewGeoStory": "Ver GeoStory",
             "viewDocument": "Ver documento",
@@ -64,6 +67,7 @@
             "privacy": "Privacy",
             "extent": "Extensión",
             "enableFilterByExtent": "Habilitar el filtro por extensión",
+            "advancedSearch": "Búsqueda avanzada",
             "apply": "Aplicar",
             "clearFilters": "Quitar filtros",
 
@@ -83,12 +87,13 @@
             "inbox": "Bandeja de entrada",
             "geoServer": "GeoServer",
             "help": "Ayuda",
-            "uploadLayer": "Subir capa",
+            "uploadLayer": "Subir dataset",
             "uploadDocument": "Cargar documento",
             "addRemoteService": "Agregar servicio remoto",
             "exploreMaps": "Explora mapas",
             "createMap": "Crear mapa",
             "apps": "Apps",
+            "createApp": "Crear app",
             "announcements": "Anuncios",
             "inviteUsers": "Invitar usuarios",
             "addUser": "Agregar usuario",
@@ -110,6 +115,11 @@
             "document": {
                 "unSupportedMedia": "El formato de medios no es compatible"
             }
+        },
+        "gnviewer":{
+            "edit": "Editar"
         }
+
+
     }
 }

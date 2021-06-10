@@ -11,6 +11,8 @@
     min-height: 3rem;
     width: 100%;
     padding: 0.5rem 0;
+    color: $gn-primary-color;
+    background-color: $gn-primary-bg;
     z-index: 15;
     display: flex;
     flex-direction: row;
@@ -112,6 +114,15 @@
             border: none;
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
+            &.active {
+                color: $gn-primary-bg;
+                background-color: $gn-primary-color;
+            }
+            @include hover() {
+                color: $gn-primary-bg;
+                background-color: $gn-primary-color;
+                opacity: 1;
+            }
         }
         .gn-language-selector {
             &> .btn-default {
@@ -132,6 +143,6 @@
         .gn-language-selector.inline {
             padding: 0.5rem;
         }
-       
+
     }
 }
