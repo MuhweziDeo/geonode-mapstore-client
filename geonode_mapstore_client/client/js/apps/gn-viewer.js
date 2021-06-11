@@ -173,7 +173,7 @@ Promise.all([
                     },
                     themeCfg: {
                         path: '/static/mapstore/dist/themes',
-                        prefixContainer: '#' + targetId,
+                        prefixContainer: undefined,
                         version: getVersion(),
                         prefix: 'msgapi',
                         theme: 'geonode'

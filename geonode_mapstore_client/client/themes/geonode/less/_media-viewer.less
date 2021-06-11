@@ -40,6 +40,8 @@
 }
 
 // this gives a higher z-index than #ms-container inorder to make lightbox show
-.ReactModal__Overlay.ReactModal__Overlay--after-open {
-    z-index: 100000 !important;
+.ReactModal__Overlay {
+    &--after-open {
+        z-index: 100000 !important;
+    }
 }
