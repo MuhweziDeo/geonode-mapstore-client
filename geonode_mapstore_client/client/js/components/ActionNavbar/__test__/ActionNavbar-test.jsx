@@ -200,10 +200,6 @@ describe('Test GeoNode action navbar component', () => {
         expect(el).toExist();
         const navBarContent = document.querySelector('.gn-action-navbar-content');
         expect(navBarContent).toExist();
-        const navBarContentRight = document.querySelector('.gn-action-navbar-content-right');
-        expect(navBarContentRight).toExist();
-        const navBarContentLeft = document.querySelector('.gn-brand-navbar-left-side');
-        expect(navBarContentLeft).toExist();
 
     });
 
