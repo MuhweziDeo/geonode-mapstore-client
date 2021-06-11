@@ -30,7 +30,7 @@ export function hasPermissionsTo(perms, objResource, objType) {
     return res === undefined
     || (res && res.length === 0)
     || (res && res.some((element) => {
-        return perms.includes(element?.value);
+        return perms && perms.includes(element?.value);
     }));
 }
 

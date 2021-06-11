@@ -33,4 +33,8 @@ describe('Test Menu Utils', () => {
         expect((hasPermissionsTo(resourceNoPerms, menuPerms, 'resource'))).toBe(false);
     });
 
+    it("Test perms undefined return false", () => {
+        expect((hasPermissionsTo(undefined, menuPerms, 'resource'))).toBe(false);
+    });
+
 });
