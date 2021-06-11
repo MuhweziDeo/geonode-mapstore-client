@@ -6,26 +6,35 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useEffect } from 'react';
-import { Spinner, Button } from 'react-bootstrap-v1';
+import React, { useEffect, useState } from 'react';
+import Button from '@js/components/Button';
+import Spinner from '@js/components/Spinner';
 import HTML from '@mapstore/framework/components/I18N/HTML';
 import ResourceCard from '@js/components/home/ResourceCard';
 import FaIcon from '@js/components/home/FaIcon';
-const Cards = ({
+import { withResizeDetector } from 'react-resize-detector';
+
+const Cards = withResizeDetector(({
     resources,
     formatHref,
     isCardActive,
-    width,
     buildHrefByTemplate,
+    containerWidth,
+    width: detectedWidth,
     options,
-    size,
-    margin,
-    count
+    onResize
 }) => {
+
+    const width = detectedWidth || containerWidth;
+    const margin = 24;
+    const size = 320;
+    const count = Math.floor(width / (size + margin));
     const cardWidth = width >= size + margin * 2
         ? Math.floor((width - margin * count) / count)
         : '100%';
-
+    useEffect(() => {
+        onResize(count);
+    }, [ count ]);
     const ulPadding = Math.floor(margin / 2);
     const isSingleCard = count === 0 || count === 1;
 
@@ -76,9 +85,9 @@ const Cards = ({
             })}
         </ul>
     );
-};
+});
 
-const FeaturedList = ({
+const FeaturedList = withResizeDetector(({
     resources,
     loading,
     isNextPageAvailable,
@@ -87,23 +96,14 @@ const FeaturedList = ({
     containerStyle,
     header,
     cardOptions,
-    pageSize,
     buildHrefByTemplate,
     isPreviousPageAvailable,
     loadFeaturedResources,
-    width,
-    onLoad
+    onLoad,
+    width
 }) => {
 
-    const margin = 24;
-    const size = 320;
-    const count = Math.floor(width / (size + margin));
-
-    useEffect(() => {
-        onLoad(undefined, count);
-    }, [count]);
-
-
+    const [count, setCount] = useState();
     const nextIconStyles = {
         fontSize: '2rem',
         ...(!isNextPageAvailable || loading ? {color: 'grey', cursor: 'not-allowed'} : {cursor: 'pointer'})
@@ -114,55 +114,50 @@ const FeaturedList = ({
         ...(!isPreviousPageAvailable || loading ? {color: 'grey', cursor: 'not-allowed'} : {cursor: 'pointer'})};
 
     return (
-        <>
-            {resources?.length  && <div className="gn-card-grid">
-                {header}
-                <div style={{
-                    display: 'flex',
-                    ...(pageSize === 'sm' && {
-                        flexDirection: 'column'
-                    })
-                }}>
-                    <div style={{ flex: 1 }}>
-                        <div className="gn-card-grid-container" style={containerStyle}>
-                            <h3><HTML msgId={`gnhome.featuredList`}/></h3>
-                            <Cards
-                                resources={resources}
-                                formatHref={formatHref}
-                                isCardActive={isCardActive}
-                                options={cardOptions}
-                                buildHrefByTemplate={buildHrefByTemplate}
-                                size={size}
-                                margin={margin}
-                                width={width}
-                                count={count}
-                            />
-                            <div className="gn-card-grid-pagination featured-list">
+        <div className="gn-card-grid" style={resources.length === 0 ? { display: 'none' } : {}}>
+            {header}
+            <div style={{
+                display: 'flex'
+            }}>
+                <div style={{ flex: 1 }}>
+                    <div className="gn-card-grid-container" style={containerStyle}>
+                        <h3><HTML msgId={`gnhome.featuredList`}/></h3>
+                        <Cards
+                            resources={resources}
+                            formatHref={formatHref}
+                            isCardActive={isCardActive}
+                            options={cardOptions}
+                            buildHrefByTemplate={buildHrefByTemplate}
+                            containerWidth={width}
+                            onResize={(cardsCount) => {
+                                onLoad(undefined, cardsCount);
+                                setCount(cardsCount);
+                            }}
+                        />
+                        <div className="gn-card-grid-pagination featured-list">
 
-                                <Button size="sm" onClick={() => loadFeaturedResources("previous", count)} disabled={!isPreviousPageAvailable || loading}
-                                    aria-hidden="true">
-                                    <FaIcon  style={previousIconStyles} name="caret-left"/>
-                                </Button>
+                            <Button size="sm" onClick={() => loadFeaturedResources("previous", count)} disabled={!isPreviousPageAvailable || loading}
+                                aria-hidden="true">
+                                <FaIcon  style={previousIconStyles} name="caret-left"/>
+                            </Button>
 
-                                <div>
-                                    { loading && <Spinner size="sm"  animation="border" role="status">
-                                        <span className="sr-only">Loading...</span>
-                                    </Spinner>}
-                                </div>
-                                <Button size="sm" onClick={() => loadFeaturedResources("next", count)} disabled={!isNextPageAvailable || loading}
-                                    aria-hidden="true">
-                                    <FaIcon style={nextIconStyles} name="caret-right"/>
-
-                                </Button>
-
+                            <div>
+                                { loading && <Spinner size="sm"  animation="border" role="status">
+                                    <span className="sr-only">Loading...</span>
+                                </Spinner>}
                             </div>
+                            <Button size="sm" onClick={() => loadFeaturedResources("next", count)} disabled={!isNextPageAvailable || loading}
+                                aria-hidden="true">
+                                <FaIcon style={nextIconStyles} name="caret-right"/>
+
+                            </Button>
                         </div>
                     </div>
                 </div>
-            </div>}
-        </>
+            </div>
+        </div>
     );
-};
+});
 
 FeaturedList.defaultProps = {
     page: 1,

@@ -438,8 +438,6 @@ function Home({
                                 formatHref={handleFormatHref}
                                 buildHrefByTemplate={buildHrefByTemplate}
                                 onLoad={fetchFeaturedResources}
-                                pageSize={pageSize}
-                                width={width}
                                 containerStyle={{
                                     minHeight: 'auto'
                                 }}/> }
