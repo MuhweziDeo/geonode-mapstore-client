@@ -69,7 +69,7 @@ describe('Test GeoNode Menu', () => {
         ReactDOM.render( <Menu items={MenuConf.items} containerClass={'containerClass'} />, document.getElementById("container"));
         const container = document.getElementById('container');
         const el = container.querySelector('.containerClass');
-        expect(el.getElementsByTagName("li").length).toBe(3);
+        expect(el.getElementsByTagName("li").length).toBe(5);
     });
 
 });
