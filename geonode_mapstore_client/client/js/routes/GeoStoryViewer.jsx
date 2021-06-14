@@ -16,7 +16,7 @@ import { getMonitoredState } from '@mapstore/framework/utils/PluginsUtils';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import PluginsContainer from '@mapstore/framework/components/plugins/PluginsContainer';
 import useLazyPlugins from '@js/hooks/useLazyPlugins';
-import { requestGeoStoryConfig } from '@js/actions/gnviewer';
+import { requestGeoStoryConfig, requestNewGeostoryConfig } from '@js/actions/gnviewer';
 
 const urlQuery = url.parse(window.location.href, true).query;
 
@@ -36,7 +36,8 @@ function GeoStoryViewerRoute({
     loaderComponent,
     lazyPlugins,
     plugins,
-    match
+    match,
+    onCreate = () => {}
 }) {
 
     const { pk } = match.params || {};
@@ -49,7 +50,7 @@ function GeoStoryViewerRoute({
     });
     useEffect(() => {
         if (!loading) {
-            onUpdate(pk);
+            pk === "new" ? onCreate() : onUpdate(pk);
         }
     }, [loading, pk]);
     const Loader = loaderComponent;
@@ -78,7 +79,8 @@ GeoStoryViewerRoute.propTypes = {
 const ConnectedGeoStoryViewerRoute = connect(
     createSelector([], () => ({})),
     {
-        onUpdate: requestGeoStoryConfig
+        onUpdate: requestGeoStoryConfig,
+        onCreate: requestNewGeostoryConfig
     }
 )(GeoStoryViewerRoute);
 

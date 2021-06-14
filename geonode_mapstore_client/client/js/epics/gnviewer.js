@@ -13,14 +13,16 @@ import {
     REQUEST_LAYER_CONFIG,
     REQUEST_MAP_CONFIG,
     REQUEST_GEOSTORY_CONFIG,
-    REQUEST_DOCUMENT_CONFIG
+    REQUEST_DOCUMENT_CONFIG,
+    REQUEST_NEW_GEOSTORY_CONFIG
 } from '@js/actions/gnviewer';
 import { getBaseMapConfiguration } from '@js/api/geonode/config';
 import {
     getLayerByPk,
     getGeoStoryByPk,
     getDocumentByPk,
-    getResourceByPk
+    getResourceByPk,
+    getNewGeoStoryConfig
 } from '@js/api/geonode/v2';
 import { getMapStoreMapById } from '@js/api/geonode/adapter';
 import { configureMap } from '@mapstore/framework/actions/config';
@@ -144,7 +146,27 @@ export const gnViewerRequestGeoStoryConfig = (action$) =>
                 return Observable.empty();
             });
         });
-
+export const gnViewerRequestNewGeoStoryConfig = (action$) =>
+    action$.ofType(REQUEST_NEW_GEOSTORY_CONFIG)
+        .switchMap(() => {
+            return Observable.defer(() => axios.all([
+                getNewGeoStoryConfig()
+            ])).switchMap((response) => {
+                const [gnGeoStory] = response;
+                const { data, ...resource } = gnGeoStory;
+                return Observable.of(
+                    setCurrentStory(data),
+                    setResource(resource),
+                    setResourceId(),
+                    setResourceType('geostory')
+                    // setGeoStoryResource({
+                    //     canEdit: resource?.perms?.includes('change_resourcebase')
+                    // })
+                );
+            }).catch(() => {
+                return Observable.empty();
+            });
+        });
 export const gnViewerRequestDocumentConfig = (action$) =>
     action$.ofType(REQUEST_DOCUMENT_CONFIG)
         .switchMap(({ pk }) => {
@@ -166,5 +188,6 @@ export default {
     gnViewerRequestLayerConfig,
     gnViewerRequestMapConfig,
     gnViewerRequestGeoStoryConfig,
-    gnViewerRequestDocumentConfig
+    gnViewerRequestDocumentConfig,
+    gnViewerRequestNewGeoStoryConfig
 };
