@@ -564,7 +564,7 @@
                         },
                         {
                             "type": "link",
-                            "href": "/apps/new?appType=GeoStory",
+                            "href": "/viewer/#/geostory/new",
                             "labelId": "gnhome.createGeostory",
                             "authenticated": true,
                             "permissions": [],

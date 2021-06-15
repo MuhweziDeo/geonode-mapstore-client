@@ -155,7 +155,6 @@ export const gnViewerRequestNewGeoStoryConfig = (action$, { getState = () => {}}
                 getNewGeoStoryConfig()
             ])).switchMap((response) => {
                 const [gnGeoStory] = response;
-                const {...resource } = gnGeoStory;
                 const canAddResource = getState()?.security?.user?.perms.includes('add_resource');
                 if (!canAddResource) {
                     return Observable.of(
@@ -166,9 +165,8 @@ export const gnViewerRequestNewGeoStoryConfig = (action$, { getState = () => {}}
                     );
                 }
                 return Observable.of(
-                    setCurrentStory({}),
                     setNewResource(),
-                    setResource(resource),
+                    setResource(gnGeoStory),
                     setResourceType('geostory'),
                     setGeoStoryResource({
                         canEdit: true

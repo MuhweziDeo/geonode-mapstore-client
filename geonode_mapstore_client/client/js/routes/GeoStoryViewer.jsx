@@ -57,7 +57,7 @@ function GeoStoryViewerRoute({
     }, [loading, pk]);
 
     useEffect(() => {
-        if (pk === "new" && !isUndefined(resource?.canEdit) && !isUndefined(resource?.canEdit)) {
+        if (pk === "new" && !isUndefined(resource?.canEdit) && !(resource?.canEdit)) {
             window.location.replace('/account/login');
         }
     }, [pk, resource]);
