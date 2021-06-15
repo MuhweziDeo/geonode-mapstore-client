@@ -116,6 +116,9 @@
         "viewer":{
             "document": {
                 "unSupportedMedia": "Media format is unsupported"
+            },
+            "errors": {
+                "noPermissions": "You dont have permissions to add a geostory"
             }
         },
         "gnviewer":{

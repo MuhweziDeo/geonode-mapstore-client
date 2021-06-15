@@ -24,6 +24,7 @@ import {
     getResourceByPk,
     getNewGeoStoryConfig
 } from '@js/api/geonode/v2';
+import { error as errorNotification } from '@mapstore/framework/actions/notifications';
 import { getMapStoreMapById } from '@js/api/geonode/adapter';
 import { configureMap } from '@mapstore/framework/actions/config';
 import { zoomToExtent } from '@mapstore/framework/actions/map';
@@ -35,6 +36,7 @@ import {
     setResourceId,
     setResource
 } from '@js/actions/gnresource';
+
 import {
     setCurrentStory,
     setResource as setGeoStoryResource
@@ -154,6 +156,14 @@ export const gnViewerRequestNewGeoStoryConfig = (action$, { getState = () => {}}
             ])).switchMap((response) => {
                 const [gnGeoStory] = response;
                 const {...resource } = gnGeoStory;
+                const canAddResource = getState()?.security?.user?.perms.includes('add_resource');
+                // account/logout/?next=/
+                // handle when user doesnot have permission and show notification
+                if (!canAddResource) {
+                    return Observable.of(
+                        errorNotification({title: "geostory.errors.loading.title", message: "viewer.errors.noPermissions"})
+                    );
+                }
                 return Observable.of(
                     setCurrentStory({}),
                     setNewResource(),

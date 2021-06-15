@@ -116,6 +116,9 @@
         "viewer":{
             "document": {
                 "unSupportedMedia": "El formato de medios no es compatible"
+            },
+            "errors": {
+                "noPermissions": "No tienes permisos para agregar una geohistoria"
             }
         },
         "gnviewer":{

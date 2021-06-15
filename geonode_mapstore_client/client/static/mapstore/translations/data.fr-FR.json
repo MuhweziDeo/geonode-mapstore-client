@@ -115,6 +115,9 @@
         "viewer":{
             "document": {
                 "unSupportedMedia": "Le format multimédia n'est pas pris en charge"
+            },
+            "errors": {
+                "noPermissions": "Vous n'êtes pas autorisé à ajouter une géohistoire"
             }
         },
         "gnviewer":{
