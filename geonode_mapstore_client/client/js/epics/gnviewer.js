@@ -157,10 +157,11 @@ export const gnViewerRequestNewGeoStoryConfig = (action$, { getState = () => {}}
                 const [gnGeoStory] = response;
                 const {...resource } = gnGeoStory;
                 const canAddResource = getState()?.security?.user?.perms.includes('add_resource');
-                // account/logout/?next=/
-                // handle when user doesnot have permission and show notification
                 if (!canAddResource) {
                     return Observable.of(
+                        setGeoStoryResource({
+                            canEdit: false
+                        }),
                         errorNotification({title: "geostory.errors.loading.title", message: "viewer.errors.noPermissions"})
                     );
                 }
@@ -170,7 +171,7 @@ export const gnViewerRequestNewGeoStoryConfig = (action$, { getState = () => {}}
                     setResource(resource),
                     setResourceType('geostory'),
                     setGeoStoryResource({
-                        canEdit: getState()?.security?.user?.perms.includes('add_resource')
+                        canEdit: true
                     })
                 );
             }).catch(() => {

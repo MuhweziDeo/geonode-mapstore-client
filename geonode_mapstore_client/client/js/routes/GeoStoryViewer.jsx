@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import url from 'url';
+import isUndefined from 'lodash/isUndefined';
 import { createSelector } from 'reselect';
 import BorderLayout from '@mapstore/framework/components/layout/BorderLayout';
 import { getMonitoredState } from '@mapstore/framework/utils/PluginsUtils';
@@ -37,7 +38,8 @@ function GeoStoryViewerRoute({
     lazyPlugins,
     plugins,
     match,
-    onCreate = () => {}
+    onCreate = () => {},
+    resource
 }) {
 
     const { pk } = match.params || {};
@@ -53,6 +55,12 @@ function GeoStoryViewerRoute({
             pk === "new" ? onCreate() : onUpdate(pk);
         }
     }, [loading, pk]);
+
+    useEffect(() => {
+        if (pk === "new" && !isUndefined(resource?.canEdit) && !isUndefined(resource?.canEdit)) {
+            window.location.replace('/account/login');
+        }
+    }, [pk, resource]);
     const Loader = loaderComponent;
 
     return (
@@ -77,7 +85,9 @@ GeoStoryViewerRoute.propTypes = {
 };
 
 const ConnectedGeoStoryViewerRoute = connect(
-    createSelector([], () => ({})),
+    createSelector([
+        state => state?.geostory?.resource
+    ], (resource) => ({resource})),
     {
         onUpdate: requestGeoStoryConfig,
         onCreate: requestNewGeostoryConfig
