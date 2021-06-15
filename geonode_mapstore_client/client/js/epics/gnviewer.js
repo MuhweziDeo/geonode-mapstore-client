@@ -30,7 +30,7 @@ import { zoomToExtent } from '@mapstore/framework/actions/map';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import {
     // setResourcePermissions,
-    // setNewResource,
+    setNewResource,
     setResourceType,
     setResourceId,
     setResource
@@ -146,22 +146,22 @@ export const gnViewerRequestGeoStoryConfig = (action$) =>
                 return Observable.empty();
             });
         });
-export const gnViewerRequestNewGeoStoryConfig = (action$) =>
+export const gnViewerRequestNewGeoStoryConfig = (action$, { getState = () => {}}) =>
     action$.ofType(REQUEST_NEW_GEOSTORY_CONFIG)
         .switchMap(() => {
             return Observable.defer(() => axios.all([
                 getNewGeoStoryConfig()
             ])).switchMap((response) => {
                 const [gnGeoStory] = response;
-                const { data, ...resource } = gnGeoStory;
+                const {...resource } = gnGeoStory;
                 return Observable.of(
-                    setCurrentStory(data),
+                    setCurrentStory({}),
+                    setNewResource(),
                     setResource(resource),
-                    setResourceId(),
-                    setResourceType('geostory')
-                    // setGeoStoryResource({
-                    //     canEdit: resource?.perms?.includes('change_resourcebase')
-                    // })
+                    setResourceType('geostory'),
+                    setGeoStoryResource({
+                        canEdit: getState()?.security?.user?.perms.includes('add_resource')
+                    })
                 );
             }).catch(() => {
                 return Observable.empty();
