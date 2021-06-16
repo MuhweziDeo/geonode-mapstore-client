@@ -130,7 +130,7 @@ const FeaturedList = withResizeDetector(({
                             buildHrefByTemplate={buildHrefByTemplate}
                             containerWidth={width}
                             onResize={(cardsCount) => {
-                                onLoad(undefined, cardsCount);
+                                !isNaN(cardsCount) && onLoad(undefined, cardsCount);
                                 setCount(cardsCount);
                             }}
                         />
