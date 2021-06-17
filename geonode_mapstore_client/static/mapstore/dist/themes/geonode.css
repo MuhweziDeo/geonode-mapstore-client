@@ -4267,7 +4267,7 @@
 }
 .msgapi output {
   display: block;
-  padding-top: 5px;
+  padding-top: 1.25rem;
   font-size: 0.875rem;
   line-height: 1.42857143;
   color: #333333;
@@ -4275,8 +4275,8 @@
 .msgapi .form-control {
   display: block;
   width: 100%;
-  height: 11rem;
-  padding: 4px 8px;
+  height: 2rem;
+  padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   line-height: 1.42857143;
   color: #333333;
@@ -4341,7 +4341,7 @@
   .msgapi input[type="time"].form-control,
   .msgapi input[type="datetime-local"].form-control,
   .msgapi input[type="month"].form-control {
-    line-height: 11rem;
+    line-height: 2rem;
   }
   .msgapi input[type="date"].input-sm,
   .msgapi input[type="time"].input-sm,
@@ -4430,8 +4430,8 @@
   cursor: not-allowed;
 }
 .msgapi .form-control-static {
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
   margin-bottom: 0;
   min-height: 1.875rem;
 }
@@ -4518,7 +4518,7 @@
   position: relative;
 }
 .msgapi .has-feedback .form-control {
-  padding-right: 13.75rem;
+  padding-right: 2.5rem;
 }
 .msgapi .form-control-feedback {
   position: absolute;
@@ -4526,9 +4526,9 @@
   right: 0;
   z-index: 2;
   display: block;
-  width: 11rem;
-  height: 11rem;
-  line-height: 11rem;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
   text-align: center;
   pointer-events: none;
 }
@@ -4704,11 +4704,11 @@
 .msgapi .form-horizontal .checkbox-inline {
   margin-top: 0;
   margin-bottom: 0;
-  padding-top: 5px;
+  padding-top: 1.25rem;
 }
 .msgapi .form-horizontal .radio,
 .msgapi .form-horizontal .checkbox {
-  min-height: 6rem;
+  min-height: 2.25rem;
 }
 .msgapi .form-horizontal .form-group {
   margin-left: -15px;
@@ -4718,7 +4718,7 @@
   .msgapi .form-horizontal .control-label {
     text-align: right;
     margin-bottom: 0;
-    padding-top: 5px;
+    padding-top: 1.25rem;
   }
 }
 .msgapi .form-horizontal .has-feedback .form-control-feedback {
@@ -4747,7 +4747,7 @@
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   line-height: 1.42857143;
   border-radius: 0;
@@ -5627,7 +5627,7 @@
   vertical-align: middle;
 }
 .msgapi .input-group-addon {
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   font-weight: normal;
   line-height: 1;
@@ -6100,8 +6100,8 @@
   border-bottom: 1px solid transparent;
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
-  margin-top: 19.5px;
-  margin-bottom: 19.5px;
+  margin-top: 24px;
+  margin-bottom: 24px;
 }
 @media (min-width: 768px) {
   .msgapi .navbar-form .form-group {
@@ -6190,8 +6190,8 @@
   border-bottom-left-radius: 0;
 }
 .msgapi .navbar-btn {
-  margin-top: 19.5px;
-  margin-bottom: 19.5px;
+  margin-top: 24px;
+  margin-bottom: 24px;
 }
 .msgapi .navbar-btn.btn-sm {
   margin-top: 18.5px;
@@ -6453,7 +6453,7 @@
 .msgapi .pagination > li > span {
   position: relative;
   float: left;
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
   line-height: 1.42857143;
   text-decoration: none;
   color: #397AAB;
@@ -8532,6 +8532,9 @@
   .msgapi .hidden-print {
     display: none !important;
   }
+}
+.msgapi .gn-legacy .modal {
+  display: none;
 }
 @font-face {
   font-family: "mapstore2";
@@ -24123,6 +24126,19 @@ Ported to CodeMirror by Peter Kroon
 }
 /* mapstore2 variables */
 /* override bootstrap variables */
+.msgapi #drawer-menu-button {
+  z-index: 5;
+}
+.msgapi #mapstore-navbar-container {
+  z-index: 5;
+}
+.msgapi .page-geostory-viewer .gn-viewer-layout-center {
+  display: flex;
+  flex-direction: column;
+}
+.msgapi .page-geostory-viewer .ms-geostory {
+  flex: 1;
+}
 [data-ms2-container] {
   margin: 0;
   font-family: "Montserrat", sans-serif;
@@ -24333,6 +24349,12 @@ Ported to CodeMirror by Peter Kroon
   width: 100%;
   min-height: 100vh;
 }
+.msgapi .gn-card-grid h3 {
+  margin-left: 1rem;
+  margin-top: 1rem;
+  font-weight: 600;
+  color: grey;
+}
 .msgapi .gn-card-grid .gn-card-grid-container > ul {
   list-style-type: none;
   padding: 0;
@@ -24366,6 +24388,19 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .gn-card-grid .gn-card-grid-pagination {
   padding: 1rem;
   text-align: center;
+}
+.msgapi .gn-card-grid .gn-card-grid-pagination.featured-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.msgapi .gn-card-grid .gn-card-grid-pagination.featured-list button,
+.msgapi .gn-card-grid .gn-card-grid-pagination.featured-list button:focus {
+  color: black;
+  background: none;
+  border: none;
+  box-shadow: none !important;
+  outline: none !important;
 }
 .msgapi .gn-card-grid .card-resource-list {
   display: flex;
@@ -24649,6 +24684,8 @@ Ported to CodeMirror by Peter Kroon
   z-index: 18;
   padding: 0.5rem;
   width: 100%;
+  display: flex;
+  align-items: center;
 }
 .msgapi .gn-footer ul {
   list-style-type: none;
@@ -24657,7 +24694,6 @@ Ported to CodeMirror by Peter Kroon
   display: flex;
   flex-wrap: wrap;
   margin: auto;
-  width: 100%;
 }
 .msgapi .gn-footer ul li {
   padding: 0;
@@ -25262,6 +25298,47 @@ Ported to CodeMirror by Peter Kroon
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
+.msgapi .gn-media-viewer {
+  top: 0;
+  left: 0;
+  width: calc(100% - 2rem);
+  height: calc(100% - 2rem);
+  position: absolute;
+  margin: 1rem;
+}
+.msgapi .gn-media-viewer .ms-media,
+.msgapi .gn-media-viewer .ms-media img {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.msgapi .gn-media-viewer .pdf-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.msgapi .gn-media-viewer .pdf-loader {
+  position: 'absolute';
+  top: 0;
+  left: 0;
+  width: '100%';
+  height: '100%';
+  background-color: 'rgba(255, 255, 255, 0.8)';
+  z-index: 2;
+  display: 'flex';
+  align-items: 'center';
+  justify-content: 'center';
+}
+.msgapi .ReactModal__Overlay--after-open {
+  z-index: 100000 !important;
+}
 .msgapi :root {
   font-size: 16px;
 }
@@ -25474,6 +25551,7 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .gn-theme-light input,
 .msgapi .gn-theme-light input:focus,
 .msgapi .gn-theme-light .gn-suggestions,
+.msgapi .gn-theme-light .gn-home-section .gn-card-grid,
 .msgapi .gn-theme-light .dropdown-menu {
   color: #000000;
   color: var(--gn-body-color, #000000);
@@ -26187,6 +26265,7 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .gn-theme-dark input,
 .msgapi .gn-theme-dark input:focus,
 .msgapi .gn-theme-dark .gn-suggestions,
+.msgapi .gn-theme-dark .gn-home-section .gn-card-grid,
 .msgapi .gn-theme-dark .dropdown-menu {
   color: #dddddd;
   color: var(--gn-body-color, #dddddd);

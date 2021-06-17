@@ -61,6 +61,7 @@
             "register": "S'inscrire",
             "signIn": "Connexion",
             "filters": "Filtres",
+            "filtersCount": "{count, plural, =0 { Filtres } other {Filtres (#)}}",
             "admin": "Administration",
             "logOut": "Se déconnecter",
             "terms": "Terms",
@@ -108,10 +109,17 @@
             "delete": "Effacer",
             "customFiltersTitle": "Ressources",
             "myResources": "Mes ressources",
-            "pendingApproval": "En attente de validation"
+            "pendingApproval": "En attente de validation",
+            "featuredList": "Mis en exergue"
+        },
+        "viewer":{
+            "document": {
+                "unSupportedMedia": "Le format multimédia n'est pas pris en charge"
+            }
         },
         "gnviewer":{
-            "edit": "Éditer"
+            "edit": "Éditer",
+            "details": "Des détails"
         }
     }
 }

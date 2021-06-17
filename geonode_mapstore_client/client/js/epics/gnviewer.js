@@ -14,7 +14,8 @@ import {
     REQUEST_MAP_CONFIG,
     REQUEST_GEOSTORY_CONFIG,
     REQUEST_DOCUMENT_CONFIG,
-    REQUEST_NEW_GEOSTORY_CONFIG
+    REQUEST_NEW_GEOSTORY_CONFIG,
+    REQUEST_NEW_MAP_CONFIG
 } from '@js/actions/gnviewer';
 import { getBaseMapConfiguration, getNewGeoStoryConfig } from '@js/api/geonode/config';
 import {
@@ -125,6 +126,18 @@ export const gnViewerRequestMapConfig = (action$) =>
             });
         });
 
+export const gnViewerRequestNewMapConfig = (action$) =>
+    action$.ofType(REQUEST_NEW_MAP_CONFIG)
+        .switchMap(() => {
+            return Observable.defer(getBaseMapConfiguration
+            ).switchMap((response) => {
+                return Observable.of(configureMap(response));
+            }).catch(() => {
+                // TODO: implement various error cases
+                return Observable.empty();
+            });
+        });
+
 export const gnViewerRequestGeoStoryConfig = (action$) =>
     action$.ofType(REQUEST_GEOSTORY_CONFIG)
         .switchMap(({ pk }) => {
@@ -193,6 +206,7 @@ export const gnViewerRequestDocumentConfig = (action$) =>
 export default {
     gnViewerRequestLayerConfig,
     gnViewerRequestMapConfig,
+    gnViewerRequestNewMapConfig,
     gnViewerRequestGeoStoryConfig,
     gnViewerRequestDocumentConfig,
     gnViewerRequestNewGeoStoryConfig

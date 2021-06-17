@@ -20,11 +20,9 @@ const Footer = forwardRef(({
             className="gn-footer"
             style={style}
         >
-            <div>
-                <Menu
-                    items={footerItems}
-                />
-            </div>
+            <Menu
+                items={footerItems}
+            />
         </footer>
     );
 });

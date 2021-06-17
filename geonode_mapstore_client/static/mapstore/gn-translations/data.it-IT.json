@@ -61,6 +61,7 @@
             "register": "Registrati",
             "signIn": "Accedi",
             "filters": "Filtri",
+            "filtersCount": "{count, plural, =0 { Filtri } other {Filtri (#)}}",
             "myresources": "Risorse",
             "mylink": "I miei Link",
             "admin": "Amministrazione",
@@ -110,10 +111,17 @@
             "delete": "Cancella",
             "customFiltersTitle": "Risorse",
             "myResources": "Le mie risorse",
-            "pendingApproval": "In attesa di approvazione"
+            "pendingApproval": "In attesa di approvazione",
+            "featuredList": "In primo piano"
+        },
+        "viewer":{
+            "document": {
+                "unSupportedMedia": "Il formato multimediale non è supportato"
+            }
         },
         "gnviewer":{
-            "edit": "Modifica"
+            "edit": "Modifica",
+            "details": "Dettagli"
         }
     }
 }

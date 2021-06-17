@@ -346,7 +346,7 @@
                             "labelId": "gnhome.map",
                             "value": "map",
                             "type": "link",
-                            "href": "/maps/new",
+                            "href": "/viewer/#/map/new",
                             "authenticated": true,
                             "perms": [{ "type": "user", "value": "add_resource" }]
                         },
@@ -536,7 +536,7 @@
                         },
                         {
                             "type": "link",
-                            "href": "/maps/new",
+                            "href": "/viewer/#/map/new",
                             "labelId": "gnhome.createMap",
                             "authenticated": true,
                             "permissions": [],

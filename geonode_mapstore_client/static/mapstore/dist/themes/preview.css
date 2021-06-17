@@ -38890,6 +38890,10 @@ Ported to CodeMirror by Peter Kroon
 .msgapi #mapstore-navbar-container {
   z-index: 1;
 }
+.msgapi .ms-media .ms-media-image img {
+  width: 100%;
+  height: 100%;
+}
 .msgapi .add-bar-popover {
   max-width: 500px;
 }

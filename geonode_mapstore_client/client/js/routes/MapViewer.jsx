@@ -16,7 +16,7 @@ import { getMonitoredState } from '@mapstore/framework/utils/PluginsUtils';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import PluginsContainer from '@mapstore/framework/components/plugins/PluginsContainer';
 import useLazyPlugins from '@js/hooks/useLazyPlugins';
-import { requestMapConfig } from '@js/actions/gnviewer';
+import { requestMapConfig, requestNewMapConfig } from '@js/actions/gnviewer';
 
 const urlQuery = url.parse(window.location.href, true).query;
 
@@ -33,6 +33,7 @@ function MapViewerRoute({
     pluginsConfig: propPluginsConfig,
     params,
     onUpdate,
+    onCreate = () => {},
     loaderComponent,
     lazyPlugins,
     plugins,
@@ -47,10 +48,9 @@ function MapViewerRoute({
         pluginsEntries: lazyPlugins,
         pluginsConfig
     });
-
     useEffect(() => {
-        if (!loading) {
-            onUpdate(pk);
+        if (!loading && pk !== undefined) {
+            (pk === "new") ? onCreate() : onUpdate(pk);
         }
     }, [loading, pk]);
 
@@ -80,7 +80,9 @@ MapViewerRoute.propTypes = {
 const ConnectedMapViewerRoute = connect(
     createSelector([], () => ({})),
     {
-        onUpdate: requestMapConfig
+        onUpdate: requestMapConfig,
+        onCreate: requestNewMapConfig
+
     }
 )(MapViewerRoute);
 

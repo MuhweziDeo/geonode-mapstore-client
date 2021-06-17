@@ -61,6 +61,7 @@
             "register": "Register",
             "signIn": "Sign in",
             "filters": "Filters",
+            "filtersCount": "{count, plural, =0 { Filters } other {Filters (#)}}",
             "admin": "Admin",
             "logOut": "Log out",
             "terms": "Terms",
@@ -108,11 +109,18 @@
             "delete": "Delete",
             "customFiltersTitle": "Resources",
             "myResources": "My resources",
-            "pendingApproval": "Pending approval"
+            "pendingApproval": "Pending approval",
+            "featuredList": "Featured"
 
         },
+        "viewer":{
+            "document": {
+                "unSupportedMedia": "Media format is unsupported"
+            }
+        },
         "gnviewer":{
-            "edit": "Edit"
+            "edit": "Edit",
+            "details": "Details"
         }
     }
 }

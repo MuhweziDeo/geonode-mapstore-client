@@ -71,7 +71,8 @@ Menu.defaultProps = {
     items: [],
     query: {},
     user: undefined,
-    formatHref: () => '#'
+    formatHref: () => '#',
+    containerClass: ''
 };
 
 
