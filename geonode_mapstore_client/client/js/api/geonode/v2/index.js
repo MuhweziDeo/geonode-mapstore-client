@@ -303,9 +303,6 @@ export const updateGeoStory = (pk, body) => {
         .then(({ data }) => data.geostory);
 };
 
-export const getNewGeoStoryConfig = () => {
-    return axios.get('/static/mapstore/configs/geostory.json').then(({ data }) => data);
-};
 
 export const getUserByPk = (pk) => {
     return axios.get(parseDevHostname(`${endpoints[USERS]}/${pk}`))

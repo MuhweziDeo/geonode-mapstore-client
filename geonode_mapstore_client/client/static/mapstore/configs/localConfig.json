@@ -354,7 +354,7 @@
                             "labelId": "gnhome.geostory",
                             "value": "geostory",
                             "type": "link",
-                            "href": "/apps/new?appType=GeoStory",
+                            "href": "/viewer/#/geostory/new",
                             "authenticated": true,
                             "perms": [{ "type": "user", "value": "add_resource" }]
                         }

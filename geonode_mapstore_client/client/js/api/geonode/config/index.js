@@ -13,6 +13,12 @@ export const getBaseMapConfiguration = (baseMapUrl = '/static/mapstore/configs/m
         .then(({ data }) => data);
 };
 
-export default {
-    getBaseMapConfiguration
+export const getNewGeoStoryConfig = () => {
+    return axios.get('/static/mapstore/configs/geostory.json').then(({ data }) => data);
 };
+
+export default {
+    getBaseMapConfiguration,
+    getNewGeoStoryConfig
+};
+
