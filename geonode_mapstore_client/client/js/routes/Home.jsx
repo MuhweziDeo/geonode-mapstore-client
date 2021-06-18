@@ -377,11 +377,14 @@ function Home({
     const isHeroVisible = !hideHero && inView;
     const stickyFiltersMaxHeight = (window.innerHeight - dimensions.brandNavbarHeight - dimensions.actionNavbarNodeHeight - dimensions.footerNodeHeight);
     const filterFormTop = dimensions.brandNavbarHeight + dimensions.actionNavbarNodeHeight;
-
-
     return (
         <div className={`gn-home`}>
-            <MetaTags logo={config?.navbar?.logo[0]} siteName={siteName}/>
+            <MetaTags
+                logo={resource ? resource.thumbnail_url : window.location.origin + config?.navbar?.logo[0]?.src}
+                siteName={siteName}
+                contentURL={ resource?.detail_url}
+                content={resource?.abstract}
+            />
             <BrandNavbar
                 ref={brandNavbarNode}
                 logo={castArray(config?.navbar?.logo || [])
