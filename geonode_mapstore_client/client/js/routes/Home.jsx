@@ -45,6 +45,7 @@ import Footer from '@js/components/home/Footer';
 import { useInView } from 'react-intersection-observer';
 
 import { getResourceTypes, getCategories, getRegions, getOwners, getKeywords } from '@js/api/geonode/v2';
+import MetaTags from "@js/components/home/Meta";
 
 import {
     getPageSize
@@ -188,7 +189,8 @@ function Home({
     resource,
     totalResources,
     disableFeatured = false,
-    fetchFeaturedResources = () => {}
+    fetchFeaturedResources = () => {},
+    siteName
 }) {
 
     const {
@@ -203,9 +205,9 @@ function Home({
         filters,
         menu: {cfg: actionNavbarCfg} = {}
     } = config;
-
     const pageSize = getPageSize(width);
     const isMounted = useRef();
+
     useEffect(() => {
         isMounted.current = true;
         return () => {
@@ -379,6 +381,7 @@ function Home({
 
     return (
         <div className={`gn-home`}>
+            <MetaTags logo={config?.navbar?.logo[0]} siteName={siteName}/>
             <BrandNavbar
                 ref={brandNavbarNode}
                 logo={castArray(config?.navbar?.logo || [])
@@ -567,14 +570,16 @@ const ConnectedHome = connect(
         state => state?.gnresource?.data || null,
         state => state?.controls?.gnFiltersPanel?.enabled || null,
         getParsedGeoNodeConfiguration,
-        state => state?.gnsearch?.total || 0
-    ], (params, user, resource, isFiltersPanelEnabled, config, totalResources) => ({
+        state => state?.gnsearch?.total || 0,
+        state => state?.localConfig?.siteName || "Geonode"
+    ], (params, user, resource, isFiltersPanelEnabled, config, totalResources, siteName) => ({
         params,
         user,
         resource,
         isFiltersPanelEnabled,
         config,
-        totalResources
+        totalResources,
+        siteName
     })),
     {
         onSearch: searchResources,

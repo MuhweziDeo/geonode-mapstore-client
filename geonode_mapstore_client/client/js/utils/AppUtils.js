@@ -97,7 +97,6 @@ export function setupConfiguration({
     } = localConfig;
     const geoNodePageConfig = window.__GEONODE_CONFIG__ || {};
     const perms = geoNodePageConfig.perms || [];
-
     const canEdit = geoNodePageConfig.isNewResource || perms.indexOf('change_resourcebase') !== -1;
     const canView = geoNodePageConfig.isNewResource || perms.indexOf('view_resourcebase') !== -1;
     Object.keys(config).forEach((key) => {
