@@ -9,6 +9,49 @@ import { testEpic } from '@mapstore/framework/epics/__tests__/epicTestUtils';
 
 let mockAxios;
 
+export const newGeostoryConfig = {
+    "type": "cascade",
+    "resources": [],
+    "settings": {
+        "theme": {
+            "general": {
+                "color": "#333333",
+                "backgroundColor": "#ffffff",
+                "borderColor": "#e6e6e6"
+            },
+            "overlay": {
+                "backgroundColor": "rgba(255, 255, 255, 0.75)",
+                "borderColor": "#dddddd",
+                "boxShadow": "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)",
+                "color": "#333333"
+            }
+        }
+    },
+    "sections": [
+        {
+            "type": "title",
+            "id": "section_id",
+            "title": "Abstract",
+            "cover": true,
+            "contents": [
+                {
+                    "id": "content_id",
+                    "type": "text",
+                    "size": "large",
+                    "align": "center",
+                    "theme": "",
+                    "html": "",
+                    "background": {
+                        "fit": "cover",
+                        "size": "full",
+                        "align": "center"
+                    }
+                }
+            ]
+        }
+    ]
+};
+
 describe("gnviewer epics", () => {
     beforeEach(done => {
         mockAxios = new MockAdapter(axios);
@@ -39,7 +82,7 @@ describe("gnviewer epics", () => {
     });
 
     it("should call setNewResource, setResource, setResourceType, setGeoStoryResource when user has permissions", (done) => {
-        mockAxios.onGet().reply(() => [200, {}]);
+        mockAxios.onGet().reply(() => [200, newGeostoryConfig]);
         const NUM_ACTIONS = 4;
         testEpic(
             gnViewerRequestNewGeoStoryConfig,
@@ -47,7 +90,7 @@ describe("gnviewer epics", () => {
             requestNewGeostoryConfig(),
             (actions) => {
                 try {
-                    expect(actions.map(({type}) => type )).toEqual(["GEONODE:SET_NEW_RESOURCE", "GEONODE:SET_RESOURCE", "GEONODE:SET_RESOURCE_TYPE", "GEOSTORY:SET_RESOURCE"]);
+                    expect(actions.map(({type}) => type )).toEqual(["GEONODE:SET_NEW_RESOURCE", "GEOSTORY:SET_CURRENT_STORY", "GEONODE:SET_RESOURCE_TYPE", "GEOSTORY:SET_RESOURCE"]);
                     done();
                 } catch (error) {
                     done(error);
