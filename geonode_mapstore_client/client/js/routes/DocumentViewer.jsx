@@ -17,6 +17,7 @@ import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import PluginsContainer from '@mapstore/framework/components/plugins/PluginsContainer';
 import useLazyPlugins from '@js/hooks/useLazyPlugins';
 import { requestDocumentConfig } from '@js/actions/gnviewer';
+import MetaTags from "@js/components/MetaTags";
 
 const urlQuery = url.parse(window.location.href, true).query;
 
@@ -36,7 +37,9 @@ function DocumentViewerRoute({
     loaderComponent,
     lazyPlugins,
     plugins,
-    match
+    match,
+    siteName,
+    resource
 }) {
 
     const { pk } = match.params || {};
@@ -56,6 +59,12 @@ function DocumentViewerRoute({
 
     return (
         <>
+            {resource &&   <MetaTags
+                logo={resource.thumbnail_url}
+                siteName={siteName + " " + resource.title}
+                contentURL={resource.detail_url}
+                content={resource.abstract}
+            />}
             <ConnectedPluginsContainer
                 key="page-document-viewer"
                 id="page-document-viewer"
@@ -76,7 +85,10 @@ DocumentViewerRoute.propTypes = {
 };
 
 const ConnectedDocumentViewerRoute = connect(
-    createSelector([], () => ({})),
+    createSelector([
+        state => state?.localConfig?.siteName || "Geonode",
+        state => state?.gnresource?.data || null
+    ], (siteName, resource) => ({siteName, resource})),
     {
         onUpdate: requestDocumentConfig
     }

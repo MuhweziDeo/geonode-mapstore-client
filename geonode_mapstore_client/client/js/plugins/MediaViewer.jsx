@@ -25,19 +25,17 @@ const ConnectedMediaViewer = connect(
 )(MediaViewerComponent);
 
 
-function MediaViewer({siteName}) {
+function MediaViewer() {
     return (
         <div
             className="gn-media-viewer">
-            <ConnectedMediaViewer siteName={siteName}/>
+            <ConnectedMediaViewer />
         </div>
     );
 }
 
 const MediaViewerPlugin = connect(
-    createSelector([
-        state => state?.localConfig?.siteName || "Geonode"
-    ], (siteName) => ({siteName})),
+    createSelector([], () => ({})),
     {}
 )(MediaViewer);
 
