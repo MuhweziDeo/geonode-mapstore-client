@@ -83,14 +83,15 @@ describe("gnviewer epics", () => {
 
     it("should call setNewResource, setResource, setResourceType, setGeoStoryResource when user has permissions", (done) => {
         mockAxios.onGet().reply(() => [200, newGeostoryConfig]);
-        const NUM_ACTIONS = 4;
+        const NUM_ACTIONS = 5;
         testEpic(
             gnViewerRequestNewGeoStoryConfig,
             NUM_ACTIONS,
             requestNewGeostoryConfig(),
             (actions) => {
                 try {
-                    expect(actions.map(({type}) => type )).toEqual(["GEONODE:SET_NEW_RESOURCE", "GEOSTORY:SET_CURRENT_STORY", "GEONODE:SET_RESOURCE_TYPE", "GEOSTORY:SET_RESOURCE"]);
+                    expect(actions.map(({type}) => type )).toEqual(["GEONODE:SET_NEW_RESOURCE", "GEOSTORY:SET_CURRENT_STORY", "GEONODE:SET_RESOURCE_TYPE",
+                        "GEOSTORY:CHANGE_MODE", "GEOSTORY:SET_RESOURCE"]);
                     done();
                 } catch (error) {
                     done(error);

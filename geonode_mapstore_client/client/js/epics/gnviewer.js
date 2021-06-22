@@ -40,7 +40,7 @@ import {
 
 import {
     setCurrentStory,
-    setResource as setGeoStoryResource
+    setResource as setGeoStoryResource, setEditing
 } from '@mapstore/framework/actions/geostory';
 
 export const gnViewerRequestLayerConfig = (action$) =>
@@ -180,6 +180,7 @@ export const gnViewerRequestNewGeoStoryConfig = (action$, { getState = () => {}}
                         setCurrentStory({...gnGeoStory, sections: [{...gnGeoStory.sections[0], id: uuid(),
                             contents: [{...gnGeoStory.sections[0].contents[0], id: uuid()}]}]}),
                         setResourceType('geostory'),
+                        setEditing(true),
                         setGeoStoryResource({
                             canEdit: true
                         })
