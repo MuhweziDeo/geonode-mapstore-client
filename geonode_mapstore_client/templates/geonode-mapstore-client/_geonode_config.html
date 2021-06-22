@@ -43,7 +43,7 @@
                 geoserverUrl: '{{ OGC_SERVER.default.PUBLIC_LOCATION|default:"" }}',
                 printUrl: '{{ GEOSERVER_PUBLIC_LOCATION }}pdf/info.json',
                 bingApiKey: '{% bing_api_key %}',
-                siteName: '{{ SITE_HOST_NAME|default:"Geonode" }}',
+                siteName: '{{ SITE_NAME|default:"Geonode" }}',
             }, 
         };
     })();
