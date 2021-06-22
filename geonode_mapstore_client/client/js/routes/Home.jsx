@@ -45,7 +45,7 @@ import Footer from '@js/components/home/Footer';
 import { useInView } from 'react-intersection-observer';
 
 import { getResourceTypes, getCategories, getRegions, getOwners, getKeywords } from '@js/api/geonode/v2';
-import MetaTags from "@js/components/home/Meta";
+import MetaTags from "@js/components/MetaTags";
 
 import {
     getPageSize

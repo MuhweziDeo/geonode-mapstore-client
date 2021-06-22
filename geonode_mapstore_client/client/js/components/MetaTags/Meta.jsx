@@ -12,7 +12,7 @@ export const MetaTags = ({siteName, content, logo, contentURL =  window.location
         <meta property="og:image" content={logo} />
 
         <meta name="twitter:site" content={siteName} />
-        <meta name="twitter:card" content={logo} />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={siteName} />
         <meta name="twitter:description" content={content} />
         <meta name="twitter:image:src" content={logo}/>
@@ -22,6 +22,6 @@ export const MetaTags = ({siteName, content, logo, contentURL =  window.location
 MetaTags.defaultProps = {
     content: "Sharing geospatial data and maps",
     siteName: "Geonode",
-    logo: " "
+    logo: ""
 };
 export default MetaTags;

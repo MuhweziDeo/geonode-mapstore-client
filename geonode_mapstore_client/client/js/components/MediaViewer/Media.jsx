@@ -12,6 +12,7 @@ import HTML from '@mapstore/framework/components/I18N/HTML';
 import PdfViewer from '@js/components/MediaViewer/PdfViewer';
 import { determineResourceType } from '@js/utils/FileUtils';
 import Loader from '@mapstore/framework/components/misc/Loader';
+import MetaTags from "@js/components/MetaTags";
 
 
 const mediaMap = {
@@ -41,18 +42,26 @@ const mediaDefaultProps = {
     }
 };
 
-const Media = ({resource}) => {
+const Media = ({resource, siteName}) => {
     if (resource) {
         const mediaType = determineResourceType(resource.extension);
         const MediaViewer =  mediaMap[mediaType];
-        return (<MediaViewer
-            mediaType={mediaType}
-            {...mediaDefaultProps[mediaType]}
-            description={resource.abstract}
-            id={resource.pk}
-            thumbnail={resource.thumbnail_url}
-            src={mediaType === 'unsupported' ? resource.thumbnail_url : resource.href}
-        />);
+        return (<>
+            <MetaTags
+                logo={resource.thumbnail_url}
+                siteName={siteName + " " + resource.title}
+                contentURL={resource.detail_url}
+                content={resource.abstract}
+            />
+            <MediaViewer
+                mediaType={mediaType}
+                {...mediaDefaultProps[mediaType]}
+                description={resource.abstract}
+                id={resource.pk}
+                thumbnail={resource.thumbnail_url}
+                src={mediaType === 'unsupported' ? resource.thumbnail_url : resource.href}
+            />
+        </>);
     }
     return null;
 };
