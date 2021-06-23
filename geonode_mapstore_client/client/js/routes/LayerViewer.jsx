@@ -17,6 +17,8 @@ import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import PluginsContainer from '@mapstore/framework/components/plugins/PluginsContainer';
 import useLazyPlugins from '@js/hooks/useLazyPlugins';
 import { requestLayerConfig } from '@js/actions/gnviewer';
+import MetaTags from "@js/components/MetaTags";
+
 
 const urlQuery = url.parse(window.location.href, true).query;
 
@@ -36,7 +38,9 @@ function LayerViewerRoute({
     loaderComponent,
     lazyPlugins,
     plugins,
-    match
+    match,
+    siteName,
+    resource
 }) {
 
     const { pk } = match.params || {};
@@ -56,6 +60,12 @@ function LayerViewerRoute({
 
     return (
         <>
+            {resource &&  <MetaTags
+                logo={resource.thumbnail_url}
+                siteName={siteName + " " + resource.title}
+                contentURL={resource.detail_url}
+                content={resource.abstract}
+            />}
             <ConnectedPluginsContainer
                 key="page-layer-viewer"
                 id="page-layer-viewer"
@@ -76,7 +86,10 @@ LayerViewerRoute.propTypes = {
 };
 
 const ConnectedLayerViewerRoute = connect(
-    createSelector([], () => ({})),
+    createSelector([
+        state => state?.gnresource?.data,
+        state => state?.localConfig?.siteName || "Geonode"
+    ], (resource, siteName) => ({resource, siteName})),
     {
         onUpdate: requestLayerConfig
     }
